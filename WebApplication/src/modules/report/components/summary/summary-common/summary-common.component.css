@@ -1,0 +1,31 @@
+td {
+  word-break: break-word;
+}
+
+.summary {
+  margin-bottom: 4em;
+}
+
+.years-box {
+  border: 1px solid black;
+  padding: 1em 0.5em 1em 0.5em;
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+
+.case-title,
+.case-name {
+  text-align: center;
+  font-size: 18px;
+}
+
+.case-title {
+  font-weight: bold;
+}
+
+.main-information-title,
+.additional-information-title {
+  text-align: center;
+  font-weight: bold;
+}

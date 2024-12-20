@@ -1,0 +1,128 @@
+<form #operatorInfoForm="ngForm"
+      id="operatorInfoForm">
+
+  <div class="row">
+    <label class="mt-2 fw-bold">{{ "operator.common.operatorData" | translate }}</label>
+    <div class="form-group col-sm-12 col-md-5">
+      <label>
+        {{ 'operator.common.operator' | translate }}
+      </label>
+      <app-async-select #operator="ngModel"
+                        name="operator"
+                        restUrl="OperatorNomenclature/Select"
+                        [(ngModel)]="model"
+                        (ngModelChange)="operatorChangeEvent.emit($event)"
+                        [allowClear]="true"
+                        [disabled]="!isEditMode || applicantType === this.applicantTypes.operator">
+      </app-async-select>
+    </div>
+
+    <ng-container *ngIf="model?.id > 0 && model?.type === operatorTypes.legalEntity">
+      <div class="form-group col-sm-12 col-md-3">
+        <label>
+          {{ "operator.common.legalEntityUic" | translate }}
+        </label>
+        <div class="input-group input-group-sm">
+          <input name="legalEntityUic"
+                 #legalEntityUic="ngModel"
+                 class="form-control"
+                 [disabled]="isDisabled"
+                 [required]="true"
+                 [(ngModel)]="model.legalEntityUic">
+        </div>
+      </div>
+
+      <div class="form-group col-sm-12 col-md-4">
+        <label>
+          {{ "operator.common.settlement" | translate }}
+        </label>
+        <app-async-select name="settlement"
+                          #settlement="ngModel"
+                          restUrl="Settlement/Select"
+                          [allowClear]="true"
+                          [disabled]="isDisabled"
+                          [required]="true"
+                          [(ngModel)]="model.settlement"
+                          (ngModelChange)="model.settlementId= $event?.id">
+        </app-async-select>
+      </div>
+
+    </ng-container>
+  </div>
+
+  <ng-container *ngIf="model?.id > 0">
+    <div class="row">
+      <div class="form-group col-sm-12 col-md-6">
+        <label>
+          {{ "operator.common.managementAddress" | translate }}
+        </label>
+        <div class="input-group input-group-sm">
+          <input name="managementAddress"
+                 class="form-control"
+                 #managementAddress="ngModel"
+                 [(ngModel)]="model.managementAddress"
+                 [disabled]="isDisabled"
+                 [required]="true">
+        </div>
+      </div>
+
+      <div class="form-group col-sm-12 col-md-6">
+        <label>
+          {{ "operator.common.operatorCorrespondence.address" | translate }}
+        </label>
+        <div class="input-group input-group-sm">
+          <input name="correspondenceAddress"
+                 class="form-control"
+                 #correspondenceAddress="ngModel"
+                 [disabled]="isDisabled"
+                 [required]="true"
+                 [(ngModel)]="model.operatorCorrespondence.correspondenceAddress">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-sm-12 col-md-4">
+        <label>
+          {{ "operator.common.phone" | translate }}
+        </label>
+        <div class="input-group input-group-sm">
+          <input name="correspondencePhone"
+                 class="form-control"
+                 #correspondencePhone="ngModel"
+                 [disabled]="isDisabled"
+                 [required]="true"
+                 [(ngModel)]="model.operatorCorrespondence.phone">
+        </div>
+      </div>
+
+      <div class="form-group col-sm-12 col-md-4">
+        <label>
+          {{ "operator.common.email" | translate }}
+        </label>
+        <div class="input-group input-group-sm">
+          <input name="operatorEmail"
+                 class="form-control"
+                 #operatorEmail="ngModel"
+                 [disabled]="isDisabled"
+                 [required]="true"
+                 [(ngModel)]="model.operatorCorrespondence.email">
+        </div>
+      </div>
+
+      <div class="form-group col-sm-12 col-md-4">
+        <label>
+          {{ "operator.common.operatorCorrespondence.contactPerson" | translate }}
+        </label>
+        <div class="input-group input-group-sm">
+          <input name="operatorContactPerson"
+                 class="form-control"
+                 #operatorContactPerson="ngModel"
+                 [disabled]="isDisabled"
+                 [required]="true"
+                 [(ngModel)]="model.operatorCorrespondence.contactPerson">
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</form>

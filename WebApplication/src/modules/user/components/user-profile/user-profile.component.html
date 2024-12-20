@@ -1,0 +1,9 @@
+<user-common [model]="model"
+             [isEditMode]="isEditMode"
+             [isPasswordRequired]="isPasswordRequired"
+             (isValidForm)="changeFormValidStatus($event)">
+  <div header-buttons>
+    <button class="btn btn-primary btn-sm"
+            (click)="changePassword()">{{ "user.profile.changePassword" | translate }}</button>
+  </div>
+</user-common>

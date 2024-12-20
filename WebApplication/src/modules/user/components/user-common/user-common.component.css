@@ -1,0 +1,7 @@
+.red-border {
+  border: 1px solid #dc3545;
+}
+
+.custom-select {
+  transition: none;
+}

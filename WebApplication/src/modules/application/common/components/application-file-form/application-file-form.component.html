@@ -1,0 +1,63 @@
+<form #applicationFileForm="ngForm">
+  <table class="table search-table table-bordered mt-2">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col"
+            class="col-md-5 align-middle">
+          {{ 'application.files.description' | translate }}
+        </th>
+        <th scope="col"
+            class="col-md-6 align-middle">
+          {{ 'application.files.file' | translate }}
+        </th>
+        <th *ngIf="isEditMode"
+            scope="col"
+            class="col-md-1 text-center">
+          <button class="btn btn-sm btn-success"
+                  type="button"
+                  [disabled]="!canAddFile"
+                  (click)="add()">
+            <app-icon icon="plus-lg"
+                      width="12"
+                      height="12"
+                      class="t"></app-icon>
+          </button>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <ng-container *ngIf="files && files.length > 0">
+        <tr *ngFor="let item of files; let i = index">
+          <td>
+            <input type="text"
+                   class="form-control form-control-sm"
+                   name="description-{{ i }}"
+                   [(ngModel)]="item.description"
+                   (ngModelChange)="validateFiles()"
+                   [disabled]="!isEditMode"
+                   required>
+          </td>
+          <td>
+            <file-upload [(ngModel)]="item.zopoeshtAttachedFile"
+                         name="file-{{ i }}"
+                         [disabled]="!isEditMode"
+                         (ngModelChange)="validateFiles()"
+                         [required]="true">
+            </file-upload>
+          </td>
+          <td *ngIf="isEditMode"
+              class="text-center">
+            <button class="btn btn-sm btn-danger"
+                    type="button"
+                    (click)="remove(i)">
+              <app-icon icon="trash"
+                        width="12"
+                        height="12"></app-icon>
+            </button>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</form>

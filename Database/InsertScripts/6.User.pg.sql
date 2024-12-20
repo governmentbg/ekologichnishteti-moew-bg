@@ -1,0 +1,1 @@
+insert into "user"(username, password, passwordsalt, firstname, lastname, email, roleid, status, authorityid) values('admin', 'AAAAAQAAJxCo7obslXCCYQXWq3lmH2KIpSIDWKENsQujKmFraTIQ1Q==', 'e6YREwX86vbalBR9jTKBoA==', 'Админ', 'Админов', 'test@gmail.com', 1, 1, 1);

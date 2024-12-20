@@ -1,0 +1,211 @@
+<div *ngFor="let summary of summaries"
+     class="summary">
+  <div class="case-title">
+    {{ (isBg ? summaryTypeBasedOnApplicationOneLocalizaiton[summary.applicationOneType] :
+    summaryTypeBasedOnApplicationOneEnLocalizaiton[summary.applicationOneType]) }}
+  </div>
+  <div class="case-name">
+    {{ (isBg ? summary.description : sumamry?.descriptionAlt) }}
+  </div>
+  <div class="years-box">
+    {{ summary.startYear }} <span *ngIf="summary.endYear">- {{ summary.endYear }}</span>
+  </div>
+  <div class="main-information">
+    <div class="main-information-title">
+      {{ (isBg ? "report.summary.common.necessarySummaryInfo" : "report.summaryEn.common.necessarySummaryInfo") |
+      translate }}
+    </div>
+    <table class="table report-table table-bordered mt-2">
+      <thead class="thead-light">
+        <tr>
+          <td scope="col"
+              class="col-md-1">
+            1.
+          </td>
+          <td scope="col"
+              class="col-md-6">
+            <ng-container *ngIf="summary.applicationOneType === applicationOneType.threat; else damageType">
+              {{ (isBg ? "report.summary.common.threatType" : "report.summaryEn.common.threatType") | translate }}
+            </ng-container>
+            <ng-template #damageType>
+              {{ (isBg ? "report.summary.common.damageType" : "report.summaryEn.common.damageType") | translate }}
+            </ng-template>
+            <br>
+            {{ (isBg ? "report.summary.common.a" : "report.summaryEn.common.a") | translate }}<span>&#41;</span>
+            {{ (isBg ? "report.summary.common.species" : "report.summaryEn.common.species") | translate }}
+            <br>
+            {{ (isBg ? "report.summary.common.b" : "report.summaryEn.common.b") | translate }}<span>&#41;</span>
+            {{ (isBg ? "report.summary.common.water" : "report.summaryEn.common.water") | translate }}
+            <br>
+            {{ (isBg ? "report.summary.common.c" : "report.summaryEn.common.c") | translate }}<span>&#41;</span>
+            {{ (isBg ? "report.summary.common.soil" : "report.summaryEn.common.soil") | translate }}
+          </td>
+          <td scope="col"
+              class="col-md-5">
+            <span *ngIf="summary.hasSpeciesDamage">{{ (isBg ? "report.summary.common.a" : "report.summaryEn.common.a") |
+              translate }}<span>&#41;</span>
+              {{ (isBg ? "report.summary.common.species" : "report.summaryEn.common.species") | translate }}<br></span>
+            <span *ngIf="summary.hasWaterDamage">{{ (isBg ? "report.summary.common.b" : "report.summaryEn.common.b") |
+              translate }}<span>&#41;</span>
+              {{ (isBg ? "report.summary.common.water" : "report.summaryEn.common.water") | translate }}<br></span>
+            <span *ngIf="summary.hasSoilDamage">{{ (isBg ? "report.summary.common.c" : "report.summaryEn.common.c") |
+              translate }}<span>&#41;</span>
+              {{ (isBg ? "report.summary.common.soil" : "report.summaryEn.common.soil") | translate }}</span>
+          </td>
+        </tr>
+        <tr>
+          <td scope="col"
+              class="col-md-1">
+            2.
+          </td>
+          <td scope="col"
+              class="col-md-6">
+            <ng-container *ngIf="summary.applicationOneType === applicationOneType.threat; else damageDate">
+              {{ (isBg ? "report.summary.common.threatDate" : "report.summaryEn.common.threatDate") | translate }}
+            </ng-container>
+            <ng-template #damageDate>
+              {{ (isBg ? "report.summary.common.damageDate" : "report.summaryEn.common.damageDate") | translate }}
+            </ng-template>
+          </td>
+          <td scope="col"
+              class="col-md-5">
+            <ng-container *ngIf="isBg; else isEnOccurence">
+              {{ summary.occurrenceDate | date: 'dd.MM.yyyy' }}г.<br>
+            </ng-container>
+            <ng-template #isEnOccurence>
+              {{ summary.occurrenceDate | date: 'dd.MM.yyyy' }}<br>
+            </ng-template>
+
+            {{ (isBg ? summary.occurrenceDateDescription : summary.occurrenceDateDescriptionAlt) }}
+          </td>
+        </tr>
+        <tr>
+          <td scope="col"
+              class="col-md-1">
+            3.
+          </td>
+          <td scope="col"
+              class="col-md-6">
+            {{ (isBg ? "report.summary.common.activityOffering" : "report.summaryEn.common.activityOffering") |
+            translate }}
+          </td>
+          <td scope="col"
+              class="col-md-5">
+            <ng-congainer *ngIf="summary.activityOfferings.length; else noOfferings">
+              <ng-container *ngFor="let item of summary.activityOfferings">
+                {{ (isBg ? item.activity.name : item.activity.nameAlt) }}<br><br>
+              </ng-container>
+            </ng-congainer>
+            <ng-template #noOfferings>
+              {{ (isBg ? "report.summary.common.unknown" : "report.summaryEn.common.unknown") | translate }}
+            </ng-template>
+          </td>
+        </tr>
+      </thead>
+    </table>
+  </div>
+
+  <div class="additional-information">
+    <div class="additional-information-title">
+      {{ (isBg ? "report.summary.common.additionalSummaryInfo" : "report.summaryEn.common.additionalSummaryInfo") |
+      translate }}
+    </div>
+    <table class="table report-table table-bordered mt-2">
+      <thead class="thead-light">
+        <tr>
+          <td scope="col"
+              class="col-md-1">
+            4.
+          </td>
+          <td scope="col"
+              class="col-md-6">
+            <ng-container *ngIf="summary.applicationOneType === applicationOneType.threat; else damageDateProcedure">
+              {{ (isBg ? "report.summary.common.threatDateProcedure" : "report.summaryEn.common.threatDateProcedure") |
+              translate }}
+            </ng-container>
+            <ng-template #damageDateProcedure>
+              {{ (isBg ? "report.summary.common.damageDateProcedure" : "report.summaryEn.common.damageDateProcedure") |
+              translate }}
+            </ng-template>
+          </td>
+          <td scope="col"
+              class="col-md-5">
+            <ng-container *ngIf="isBg; else isEnInitiated">
+              {{ summary.procedureInitiatedDate | date: 'dd.MM.yyyy' }}г.<br>
+            </ng-container>
+            <ng-template #isEnInitiated>
+              {{ summary.procedureInitiatedDate | date: 'dd.MM.yyyy' }}<br>
+            </ng-template>
+
+            {{ (isBg ? summary.procedureInitiatedDateDescription : summary.procedureInitiatedDateDescriptionAlt) }}
+          </td>
+        </tr>
+        <tr>
+          <td scope="col"
+              class="col-md-1">
+            5.
+          </td>
+          <td scope="col"
+              class="col-md-6">
+            <ng-container *ngIf="summary.applicationOneType === applicationOneType.threat; else applicantDamage">
+              {{ (isBg ? "report.summary.common.applicantThreat" : "report.summaryEn.common.applicantThreat") |
+              translate }}
+            </ng-container>
+            <ng-template #applicantDamage>
+              {{ (isBg ? "report.summary.common.applicantDamage" : "report.summaryEn.common.applicantDamage") |
+              translate }}
+            </ng-template>
+          </td>
+          <td scope="col"
+              class="col-md-5">
+            <ng-container *ngIf="summary.applicant.applicantType === applicantType.operator">
+              <i>{{ (isBg ? "report.summary.common.applicantTypes.operator" :
+                "report.summaryEn.common.applicantTypes.operator") | translate
+                }}</i><br>
+              ({{ summary.applicant.operator?.name }})
+            </ng-container>
+            <ng-container *ngIf="summary.applicant.applicantType === applicantType.authority">
+              <i>{{ (isBg ? "report.summary.common.applicantTypes.authority" :
+                "report.summaryEn.common.applicantTypes.authority") | translate
+                }}</i><br>
+              ({{ (isBg ? summary.applicant.authority?.name : summary.applicant.authority?.nameAlt) }})
+            </ng-container>
+            <ng-container *ngIf="summary.applicant.applicantType === applicantType.individual">
+              <i>{{ (isBg ? "report.summary.common.applicantTypes.individual" :
+                "report.summaryEn.common.applicantTypes.individual") | translate
+                }}</i><br>
+              ({{ summary.applicant.individual?.firstName }} {{ summary.applicant.individual?.lastName }})
+            </ng-container>
+            <ng-container
+                          *ngIf="summary.applicant.applicantType === applicantType.legalEntity || summary.applicant.applicantType == applicantType.nonGovernmentalOrganization">
+              <i>
+                {{ (isBg ? "report.summary.common.applicantTypes.legalEntityAndNonGovernmentalOrganization" :
+                "report.summaryEn.common.applicantTypes.legalEntityAndNonGovernmentalOrganization") | translate }}
+              </i><br>
+              ({{ summary.applicant.legalEntity?.legalEntityName }})
+            </ng-container>
+          </td>
+        </tr>
+        <tr>
+          <td scope="col"
+              class="col-md-1">
+            6.
+          </td>
+          <td scope="col"
+              class="col-md-6">
+            {{ (isBg ? "report.summary.common.actionsTaken" : "report.summaryEn.common.actionsTaken") | translate }}
+          </td>
+          <td scope="col"
+              class="col-md-5 test">
+            <ng-container *ngIf="summary.actionsTaken?.length; else noAction">
+              {{ (isBg ? summary.actionsTaken : summary.actionsTakenAlt) }}
+            </ng-container>
+            <ng-template #noAction>
+              {{ (isBg ? "report.summary.common.noActions" : "report.summaryEn.common.noActions") | translate }}
+            </ng-template>
+          </td>
+        </tr>
+      </thead>
+    </table>
+  </div>
+</div>

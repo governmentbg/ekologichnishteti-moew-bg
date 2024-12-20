@@ -1,0 +1,77 @@
+<form #applicationOneThreadForm="ngForm">
+  <div class="row">
+    <div class="form-group col-sm-12 col-md-12">
+      <label>
+        {{ 'application.threat.preventiveMeasuresTaken' | translate }}
+      </label>
+      <div class="textarea-wrapper">
+        <textarea name="preventiveMeasuresTaken"
+                  #preventiveMeasuresTaken="ngModel"
+                  class="form-control form-control-sm"
+                  [maxlength]="maxTextLength1024"
+                  [disabled]="!isEditMode"
+                  [(ngModel)]="model.applicationOneThreat.preventiveMeasuresTaken"
+                  required
+                  rows="3"></textarea>
+        <span class="used-chars">
+          {{ model.applicationOneThreat.preventiveMeasuresTaken === undefined ||
+          model.applicationOneThreat.preventiveMeasuresTaken === null ?
+          0 :
+          model.applicationOneThreat.preventiveMeasuresTaken?.length }}/{{ maxTextLength1024 }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-sm-12 col-md-12">
+      <label>
+        {{ 'application.threat.analyticProtocols' | translate }}
+      </label>
+      <input type="text"
+             name="analyticProtocols"
+             #analyticProtocols="ngModel"
+             class="form-control form-control-sm"
+             [disabled]="!isEditMode"
+             [(ngModel)]="model.applicationOneThreat.analyticProtocols"
+             required>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-sm-12 col-md-12">
+      <label>
+        {{ 'application.threat.financialStatement' | translate }}
+      </label>
+      <input type="text"
+             name="financialStatement"
+             #financialStatement="ngModel"
+             class="form-control form-control-sm"
+             [disabled]="!isEditMode"
+             [(ngModel)]="model.applicationOneThreat.financialStatement"
+             required>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-sm-12 col-md-12">
+      <label>
+        {{ 'application.threat.measuresAdvice' | translate }}
+      </label>
+      <div class="textarea-wrapper">
+        <textarea name="measuresAdvice"
+                  #measuresAdvice="ngModel"
+                  class="form-control form-control-sm"
+                  [maxlength]="maxTextLength1024"
+                  [disabled]="!isEditMode"
+                  [(ngModel)]="model.applicationOneThreat.measuresAdvice"
+                  required
+                  rows="3"></textarea>
+        <span class="used-chars">
+          {{ model.applicationOneThreat.measuresAdvice === undefined ||
+          model.applicationOneThreat.measuresAdvice === null ?
+          0 :
+          model.applicationOneThreat.measuresAdvice?.length }}/{{ maxTextLength1024 }}</span>
+      </div>
+    </div>
+  </div>
+</form>

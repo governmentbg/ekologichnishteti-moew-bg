@@ -1,0 +1,599 @@
+{
+  "loadingIndicator": "Моля, изчакайте...",
+  "common": {
+    "moew": "МОСВ",
+    "zopoesht": "ЗОПОЕЩ",
+    "fileUpload": "Прикачен файл"
+  },
+  "buttons": {
+    "exit": "Изход",
+    "continue": "Да, искам",
+    "cancel": "Откажи",
+    "clear": "Изчисти филтъра",
+    "search": "Търсене",
+    "newApplication": "Нов случай",
+    "generateReport": "Генериране на справка",
+    "export": "Експорт",
+    "send": "Изпрати",
+    "profile": "Профил",
+    "users": "Потребители",
+    "operators": "Оператори",
+    "newUser": "Нов потребител",
+    "newOperator": "Нов оператор",
+    "create": "Създай",
+    "modification": "Редакция",
+    "back": "Назад",
+    "attachFile": "Прикачи файл",
+    "loadMore": "Покажи още",
+    "loadAll": "Покажи всички",
+    "change": "Промени",
+    "removeOption": "Премахни избора",
+    "en": "English",
+    "bg": "Български"
+  },
+  "filter": {
+    "outOf": " от общо ",
+    "records": "записа"
+  },
+  "user": {
+    "repeatable": {
+      "usernameLong": "Потребителско име (имейл адрес)",
+      "password": "Парола"
+    },
+    "login": {
+      "title": "Вход",
+      "button": "Вход",
+      "forgottenPassword": "Забравена парола"
+    },
+    "forgottenPassword": {
+      "title": "Забравена парола",
+      "email": "Електронна поща",
+      "back": "Назад"
+    },
+    "search": {
+      "firstName": "Първо име",
+      "middleName": "Презиме",
+      "lastName": "Фамилия",
+      "email": "Електронна поща",
+      "status": "Статус",
+      "all": "Всички"
+    },
+    "table": {
+      "fullname": "Имена",
+      "phoneAndEmail": "Телефон и имейл",
+      "roleAndAuthority": "Роля и компетентен орган",
+      "status": "Статус",
+      "details": "Детайли",
+      "noResults": "Няма намерени резултати по зададените критерии."
+    },
+    "common": {
+      "userData": "Данни на потребител",
+      "firstName": "Първо име",
+      "middleName": "Презиме",
+      "lastName": "Фамилия",
+      "email": "Електронна поща",
+      "status": "Статус",
+      "password": "Парола",
+      "role": "Роля",
+      "phone": "Телефон",
+      "username": "Потребителско име",
+      "authorityName": "Компетентен орган",
+      "position": "Длъжност"
+    },
+    "view": {
+      "edit": "Редактирай",
+      "save": "Запази",
+      "cancel": "Откажи"
+    },
+    "new": {
+      "add": "Добави"
+    },
+    "profile": {
+      "changePassword": "Промени парола",
+      "currentPassword": "Текуща парола",
+      "newPassword": "Нова парола",
+      "newPasswordConfirmation": "Потвърждение на новата парола",
+      "passwordsDoNotMatch": "Паролите не съвпадат"
+    }
+  },
+  "operator": {
+    "search": {
+      "firstName": "Първо име",
+      "middleName": "Презиме",
+      "lastName": "Фамилия",
+      "operatorType": "Тип на оператор",
+      "legalEntityName": "Наименование",
+      "legalEntityUic": "ЕИК/БУЛСТАТ",
+      "settlement": "Населено място",
+      "district": "Област",
+      "municipality": "Община",
+      "authorityRiosv": "РИОСВ",
+      "authorityBasin": "БД"
+    },
+    "table": {
+      "operatorType": "Тип на оператор",
+      "fullname": "Имена",
+      "settlement": "Населено място",
+      "legalEntityUic": "ЕИК/БУЛСТАТ",
+      "authorityUnits": "РИОСВ/БД",
+      "details": "Детайли",
+      "noResults": "Няма намерени резултати по зададените критерии."
+    },
+    "common": {
+      "operator": "Оператор",
+      "operatorData": "Данни на оператор",
+      "firstName": "Име",
+      "middleName": "Презиме",
+      "lastName": "Фамилия",
+      "fullname": "Имена",
+      "legalEntityName": "Наименование",
+      "legalEntityUic": "ЕИК/БУЛСТАТ",
+      "settlement": "Населено място",
+      "managementAddress": "Адрес на управление",
+      "postalCode": "ПК",
+      "street": "Ул./бул.",
+      "streetNumber": "Улица №",
+      "apartmentBuildingNumber": "Блок №",
+      "apartmentBuildingEntrance": "Вход",
+      "apartmentBuildingFloor": "Етаж",
+      "apartmentBuildingFlat": "Ап.",
+      "phone": "Телефон",
+      "fax": "Факс",
+      "email": "Електронна поща",
+      "modify": "Редактирай",
+      "save": "Запази",
+      "cancel": "Откажи",
+      "operatorCorrespondence": {
+        "correspondenceData": "Данни за кореспонденция",
+        "address": "Адрес за кореспонденция",
+        "contactPerson": "Лице за връзка (три имена)",
+        "correspondenceAddress": "Адрес за кореспонденция"
+      },
+      "terrains": {
+        "name": "Наименование",
+        "settlement": "Местоположение на площадката",
+        "district": "Област на площадката",
+        "municipality": "Община на площадката",
+        "address": "Адрес",
+        "newTerrain": "Нов терен"
+      },
+      "activityOfferings": "Дейности на оператора",
+      "activity": "Дейност",
+      "subActivity": "Конкретна дейност",
+      "operatorAuthorityRiosv": "РИОСВ",
+      "operatorAuthorityBasin": "БД",
+      "operatorTerrain": "Площадка",
+      "addActivityOffering": "Добави дейност",
+      "removeActivityOffering": "Премахни дейност",
+      "modifyActivityOffering": "Редактирай дейност",
+      "notListedDescription": "Описание на дейност извън приложение № 1",
+      "diffuseNatureDescription": "Описание на дейност с дифузен характер",
+      "addTerrain": "Добави площадка",
+      "modifyTerrain": "Редактирай площадка",
+      "operatorType": "Тип на оператор",
+      "noResults": "Няма намерени резултати.",
+      "activityOptions": "Избор на тип дейност - за повече информация вижте кодовете в секция \"Номенклатури\" - \"Поддейност по Приложение № 1\"",
+      "listedActivity": "Дейност по приложение № 1",
+      "notListed": "Дейност извън приложение № 1",
+      "diffuseNature": "Дейност с дифузен характер"
+    },
+    "view": {
+      "edit": "Редактирай",
+      "save": "Запази",
+      "cancel": "Откажи"
+    },
+    "new": {
+      "add": "Добави"
+    }
+  },
+  "nomenclature": {
+    "title": "Наименование",
+    "isActive": "Активен",
+    "add": "Добави",
+    "noResults": "Няма намерени резултати.",
+    "code": "Код",
+    "mainId": "Дейност по т."
+  },
+  "application": {
+    "hasInternationalElement": "Има трансграничен характер",
+    "affectedCountry": "Засегната държава",
+    "culpritCountry": "Причинител",
+    "internationalElementDescription": "Описание на трансграничния характер",
+    "applicationTwo": {
+      "title": "Информация по чл.19а от ЗОПОЕЩ",
+      "expenseTitle": "Разходи за съответните превантивни или оздравителни мерки",
+      "missingCode": "Липсва код",
+      "common": {
+        "threatType": "Вид на непосредствената заплаха за екологични щети",
+        "damageType": "Вид на причинените екологични щети",
+        "threatOccurrenceDate": "Дата на възникване на непосредствената заплаха за екологични щети",
+        "occurrenceDateDescription": "Описание на възникването",
+        "threatConfirmedDate": "Дата на установяване",
+        "damageOccurrenceDate": "Дата на причинените екологични щети",
+        "damageConfirmedDate": "Дата на установяване",
+        "proceedingInfo": "Допълнителна информация за образувани досъдебни производства или съдебни дела",
+        "procedureInitiatedDate": "Дата, на която е започнала процедура за предотвратяване или отстраняване на непосредствена заплаха за екологични щети или на причинените екологични щети",
+        "procedureInitiatedDateDescription": "Описание на процедурата",
+        "actionsTaken": "Предприети действия по ЗОПОЕЩ",
+        "applicant": "Заявител на процедурата по предотвратяване или отстраняване на непосредствена заплаха за екологични щети или на причинени екологични щети",
+        "applicantTypes": {
+          "operator": "Оператор",
+          "authority": "Компетентен орган",
+          "individual": "ФЛ",
+          "legalEntity": "ЮЛ",
+          "nonGovernmentalOrganization": "НПО"
+        },
+        "proceedingType": {
+          "preTrial": "Досъдебно производство",
+          "legal": "Съдебно производство",
+          "both": "Досъдебно производство и съдебно производство"
+        },
+        "individual": {
+          "firstName": "Име",
+          "middleName": "Презиме",
+          "lastName": "Фамилия",
+          "email": "Имейл"
+        },
+        "legalEntity": {
+          "name": "Наименование",
+          "uin": "ЕИК/БУЛСТАТ",
+          "email": "Имейл"
+        },
+        "buttons": {
+          "addCode": "Добави код по КИД на НСИ",
+          "addProsecutor": "Добави прокуратура",
+          "addMinistryOfInterior": "Добави дирекция на МВР",
+          "addAdministrativeCourt": "Добави административен съд"
+        },
+        "legalProcedureResult": "Резултат от досъдебните производства или съдебните дела",
+        "preventionProcedureResult": "Резултат от процедурата по предотвратяване на непосредствената заплаха за екологични щети или на причинените екологични щети",
+        "removalProcedureResult": "Резултат от процедурата по отстраняване на непосредствената заплаха за екологични щети или причинените екологични щети",
+        "inapplicable": "Неприложимо",
+        "status": "Статус",
+        "preventionOrRemovalProcedureFinishDate": "Дата на приключване на процедурата по предотвратяване или отстраняване на непосредствената заплаха за екологични щети или на причинените екологични щети",
+        "preventionOrRemovalProcedureFinishInformation": "Допълнителна информация отностно приключването на процедурата",
+        "paidByResponsibleParties": "Заплатени разходи пряко от отговорните страни (сумата е в лева)",
+        "recoveredSubsequentlyByResponsibleParties": "Възстановени разходи впоследствие от отговорните страни (сумата е в лева)",
+        "unreimbursedExpenseValue": "Невъзстановени разходи от отговорните страни, като се посочват причините за невъзстановяването (сумата е в лева)",
+        "unreimbursedExpense": "Информация за невъзстановените суми",
+        "hasUnreimbursedExpense": "Не е налична информация",
+        "proceedingInfoAbsence": "Не е образувано",
+        "additionalExpenseText": "Други разходи",
+        "paymentSource": "Източник за заплащане на разходите",
+        "otherPaymentSource": "Друг източник",
+        "additionalInformation": "Друга информация",
+        "code": "Код по КИД на НСИ",
+        "proceedings": "Oбразувани досъдебни производства или съдебни дела във връзка с непосредствена заплаха за екологични щети/причинени екологични щети",
+        "prosecutor": "Прокуратура",
+        "ministryOfInterior": "Дирекция на МВР",
+        "administrativeCourt": "Административен съд",
+        "hasInsurancePolicy": "Застрахователна полица",
+        "hasBankGuarantee": "Банкова гаранция",
+        "hasMortgage": "Ипотека върху недвижими имоти и/или вещни права върху тях",
+        "hasStake": "Залог върху вземания, движими вещи или ценни книжа",
+        "hasNoCollateral": "Няма обезпечение",
+        "noCollateralAdditionalInformation": "Допълнителна информация за липсата на обезпечение",
+        "insurancePolicy": {
+          "companyName": "Застрахователно дружество",
+          "policyNumber": "Номер на застрахователната полица",
+          "policyDate": "Дата на застрахователната полица",
+          "insuranceStart": "От дата",
+          "insuranceEnd": "До дата",
+          "responsibilityLimit": "Лимит на отговорност (сумата е в лева)",
+          "additionalInformation": "Допълнителна информация"
+        },
+        "bankGuarantee": {
+          "bankName": "Банка",
+          "guaranteeNumber": "Номер на банковата гаранция",
+          "guaranteeDate": "Дата на банковата гаранция",
+          "guaranteeStart": "От дата",
+          "guaranteeEnd": "До дата",
+          "value": "Стойност (сумата е в лева)",
+          "additionalInformation": "Допълнителна информация"
+        },
+        "mortgage": {
+          "mortgageType": "Тип ипотека",
+          "mortgageNumber": "Номер на ипотеката",
+          "mortgageDate": "Дата на ипотеката",
+          "mortgageDescription": "Описание на ипотеката",
+          "value": "Стойност (сумата е в лева)",
+          "additionalInformation": "Допълнителна информация"
+        },
+        "stake": {
+          "stakeNumber": "Номер на залога",
+          "stakeDate": "Дата на залога",
+          "stakeDescription": "Описание на залога",
+          "value": "Стойност (сумата е в лева)",
+          "additionalInformation": "Допълнителна информация"
+        }
+      }
+    },
+    "applicationOne": "Нов случай",
+    "common": {
+      "infoSource": "Източник на информация",
+      "infoBase": "Основна информация",
+      "infoFull": "Пълна информация",
+      "files": "Файлове"
+    },
+    "view": {
+      "application": "Случай",
+      "currentState": "Текущ статус",
+      "buttons": {
+        "complete": "Приключи",
+        "submit": "Запис",
+        "enableModification": "Редактирай",
+        "modification": "Редакция",
+        "history": "История",
+        "cancel": "Откажи",
+        "finishModification": "Завърши редакция",
+        "cancelModification": "Откажи редакция",
+        "addApplicationTwo": "Добави информация по чл.19а от ЗОПОЕЩ",
+        "delete": "Изтрий случай",
+        "restore": "Възстанови"
+      }
+    },
+    "applicantForm": {
+      "authority": {
+        "authority": "Компетентен орган",
+        "mainAuthority": "Иницииращ компетентен орган"
+      },
+      "individual": {
+        "firstName": "Име",
+        "middleName": "Презиме",
+        "lastName": "Фамилия",
+        "email": "Имейл",
+        "phone": "Телефон"
+      },
+      "legalEntity": {
+        "name": "Наименование",
+        "uin": "ЕИК/БУЛСТАТ",
+        "email": "Имейл",
+        "phone": "Телефон"
+      },
+      "operator": {
+        "operator": "Оператор"
+      },
+      "buttons": {
+        "addAuthority": "Добави компетентен орган"
+      }
+    },
+    "about": {
+      "applicant": "Инициирал случая",
+      "operator": "Оператор",
+      "authority": "Компетентен орган",
+      "individual": "ФЛ",
+      "legalEntity": "ЮЛ",
+      "nonGovernmentalOrganization": "НПО",
+      "threat": "Непосредствена заплаха за щета",
+      "damage": "Причинена екологична щета"
+    },
+    "basic": {
+      "incomingDocNumber": "Рег. номер",
+      "registerNumber": "Регистров номер",
+      "name": "Наименование на случая",
+      "hasWaterDamage": "Върху води",
+      "hasSoilDamage": "Върху почва",
+      "hasSpeciesDamage": "Върху защитени видове и местообитания",
+      "operator": "Отговорен оператор",
+      "territorialRange": "Териториален обхват на причинените екологични щети/ непосредствена заплаха за щета",
+      "occurenceLocation": "Място на причинените екологични щети/ непосредствена заплаха за щета",
+      "occurenceReasons": "Действителни или предполагаеми причини за настъпването на причинените екологични щети",
+      "additionalInformation": "Други обстоятелства и факти, подкрепящи информацията и наблюденията във връзка с причинените екологични щети",
+      "addTerritorialRange": "Добави териториален обхват",
+      "addAffectedCountry": "Добави засегната държава"
+    },
+    "damage": {
+      "occurenceConsequences": "Предполагаемите последствия от причинените екологични щети",
+      "measuresTaken": "Приложените до момента мерки"
+    },
+    "threat": {
+      "preventiveMeasuresTaken": "Предприети до момента от оператора превантивни мерки",
+      "analyticProtocols": "Данни от протоколи от извършени анализи и измервания, доказващи нарушаване на приложимите емисионни норми и ограничения",
+      "financialStatement": "Финансов разчет на разходите за изпълнението им",
+      "measuresAdvice": "Предложения за други превантивни мерки"
+    },
+    "legalEntity": {
+      "address": "Адрес за кореспонденция на иницииралия случая",
+      "applicantViolations": "Нарушено право на заявителя или достатъчен интерес при вземането на решение за отстраняване на причинените екологични щети",
+      "allegedOccurenceConsequences": "Видими и/или предполагаеми последствия от причинените екологични щети",
+      "recoveryAdvice": "Препоръки за предприемането на съответни оздравителни мерки, ако лицето има такива"
+    },
+    "files": {
+      "description": "Име на файла",
+      "file": "Файл"
+    },
+    "table": {
+      "registerNumber": "Регистров номер",
+      "applicationType": "Вид щета",
+      "applicant": "Инициирал случая",
+      "activity": "Дейност",
+      "name": "Наименование",
+      "application": "Случай",
+      "dangerCause": "Дейност",
+      "occurrenceDate": "Дата на възникване",
+      "ascertainmentDate": "Дата на установяване",
+      "state": "Статус",
+      "action": "Детайли",
+      "date": "Дата",
+      "noResults": "Няма намерени резултати по зададените критерии.",
+      "authority": "КО"
+    },
+    "search": {
+      "type": "Случаи на",
+      "all": "Всички",
+      "dateFrom": "От дата на възникване",
+      "dateTo": "До дата на възникване",
+      "applicationOneState": "Статус на случай",
+      "applicant": "Инициирал случая",
+      "authority": "Отговорен компетентен орган",
+      "applicantAuthority": "Компетентен орган",
+      "applicantOperator": "Оператор",
+      "territorialRange": "Териториален обхват на причинените екологични щети/ непосредствена заплаха за щета",
+      "riosv": "РИОСВ, на чиято територия е възникнал случаят",
+      "basin": "БД, на чиято територия е възникнал случаят",
+      "operator": "Отговорен оператор",
+      "applicationOneDamage": "Вид щета"
+    },
+    "filter-nav": {
+      "active": "Активни",
+      "deleted": "Изтрити"
+    },
+    "history": {
+      "tableOfHistory": "История",
+      "date": "Дата",
+      "user": "Потребител",
+      "archivedReason": "Действие",
+      "view": "Преглед"
+    }
+  },
+  "report": {
+    "search": {
+      "filterBy": "Филтриране спрямо",
+      "territorialRange": "Териториален обхват"
+    },
+    "table": {
+      "territorialRange": "Териториален обхват",
+      "applicant": "Заявител",
+      "damage": "Причинена екологична щета",
+      "threat": "Непосредствена заплаха за екологична щета",
+      "reportedDamage": "Случай с искане за предприемане на действия",
+      "noResults": "Няма намерени резултати по зададените критерии.",
+      "damageType": "Вид щета",
+      "count": "Брой",
+      "water": "Води",
+      "soil": "Почви",
+      "species": "Защитени видове и местообитания",
+      "applicationOneTypeTotalCount": "Брой заявления от тип",
+      "applicationsCount": "Общ брой заявления:"
+    },
+    "summary": {
+      "noApplicationsOfThisType": "Няма процедури от този тип спрямо зададените критерии",
+      "finishedApplications": "1. ПРИКЛЮЧЕНИ ПРОЦЕДУРИ ПО ЗОПОЕЩ:",
+      "onGoingApplications": "2. ПРОЦЕДУРИ В ХОД НА ИЗПЪЛНЕНИЕ:",
+      "common": {
+        "necessarySummaryInfo": "Задължителна информация за докладване:",
+        "additionalSummaryInfo": "Допълнителна информация по случая:",
+        "threatType": "Вид на непосредствената заплаха за възникване на екологични щети (по чл. 4 от ЗОПОЕЩ):",
+        "damageType": "Вид на причинените екологични щети (по чл. 4 от ЗОПОЕЩ):",
+        "a": "а",
+        "b": "б",
+        "c": "в",
+        "species": "защитени видове и местообитания;",
+        "water": "води;",
+        "soil": "почва;",
+        "threatDate": "Дата на възникване на непосрествената заплаха за възникване на екологични щети и/или датата, на която това е установено",
+        "damageDate": "Дата на възникване на причинените екологични щети и/или датата, на която това е установено",
+        "activityOffering": "Дейност, съгласно приложение № 1 на ЗОПОЕЩ, в резултат на която са причинени екологичните щети",
+        "unknown": "Неизвестно",
+        "threatDateProcedure": "Дата, на която е започнала процедура по предотвратяване на непосредствената заплаха за възникване на екологични щети",
+        "damageDateProcedure": "Дата, на която е започнала процедура за отстраняване на причинените екологични щети",
+        "applicantThreat": "Заявител на процедурата по предотвратяване на непосредствената заплаха за възникване на екологични щети",
+        "applicantDamage": "Заявител на процедурата по отстраняване на причинени екологични щети",
+        "applicantTypes": {
+          "operator": "Оператор",
+          "authority": "Компетентен орган",
+          "individual": "ФЛ",
+          "legalEntityAndNonGovernmentalOrganization": "ЮЛ/НПО"
+        },
+        "actionsTaken": "Предприети действия по ЗОПОЕЩ",
+        "noActions": "Не са предприети действия"
+      }
+    },
+    "summaryEn": {
+      "noApplicationsOfThisType": "There are no procedures of this type against the set criteria",
+      "finishedApplications": "1. COMPLETED ZOPOESHT PROCEDURES:",
+      "onGoingApplications": "2. PROCEDURES IN THE COURSE OF IMPLEMENTATION:",
+      "common": {
+        "necessarySummaryInfo": "Mandatory reporting information:",
+        "additionalSummaryInfo": "Further information on the case:",
+        "threatType": "Type of imminent threat of environmental damage (according to Article 4 of the ZOPOESHT:",
+        "damageType": "Type of environmental damage caused (according to Article 4 of the ZOPOESHT)",
+        "a": "a",
+        "b": "b",
+        "c": "c",
+        "species": "protected species and habitats;",
+        "water": "water;",
+        "soil": "soil;",
+        "threatDate": "Date of occurrence of the unconfirmed threat of environmental damage and/or the date on which this was established",
+        "damageDate": "Date of occurrence of the environmental damage caused and/or the date on which this was established",
+        "activityOffering": "Activity, as defined in application №1 of ZOPOESHT, resulting in environmental damage",
+        "unknown": "Unknown",
+        "threatDateProcedure": "Date on which the procedure to prevent the imminent threat of environmental damage was initiated",
+        "damageDateProcedure": "Date on which the procedure to remedy the environmental damage was initiated",
+        "applicantThreat": "Applicant for the procedure to prevent the imminent threat of environmental damage",
+        "applicantDamage": "Applicant for the procedure for remedying environmental damage",
+        "applicantTypes": {
+          "operator": "Operator",
+          "authority": "Competent authority",
+          "individual": "Individual",
+          "legalEntityAndNonGovernmentalOrganization": "Legal entity/Non-governmental organization"
+        },
+        "actionsTaken": "Actions taken under the ZOPOESHT",
+        "noActions": "No actions have been taken"
+      }
+    }
+  },
+  "annualAdministrativeExpenses": {
+    "annualAdministrativeExpenses": "Годишни административни разходи",
+    "periods": "Периоди",
+    "periodTitle": "-и период на докладване до ЕК: ",
+    "startDate": "От дата",
+    "endDate": "До дата",
+    "modifyPeriod": "Редактирай период",
+    "addPeriod": "Добави период",
+    "save": "Запази",
+    "cancel": "Откажи",
+    "addAnnualAdministrativeExpense": "Добави годишен административен разход",
+    "authority": "Компетентен орган",
+    "amount": "Сума (в лева)",
+    "date": "Дата",
+    "user": "Потребител",
+    "mosv": "МОСВ",
+    "forAPeriod": "за период"
+  },
+  "toastrError": {
+    "User_InvalidCredentials": "Грешно потребителско име или парола!",
+    "User_InvalidEmail": "Грешен имейл!",
+    "User_NotActive": "Неактивен потребител!",
+    "User_IsInactive": "Потребителят все още не е активиран!",
+    "User_IsDeactivated": "Потребителят е деактивиран!",
+    "User_ExistingEmail": "Потребител с този имейл вече съществува!",
+    "User_ExistingUsername": "Потребител с това потребителско име вече съществува!",
+    "User_DoesNotExist": "Не съществува такъв потребител!",
+    "User_NotEnoughPermission": "Нямате достатъчно права!",
+    "User_MissmatchedPasswords": "Паролите не съвпадат!",
+    "User_InvalidPassword": "Невалидна парола!",
+    "Nomenclature_CannotDelete": "Номенклатурата не може да бъде изтрита!",
+    "Validation_RequiredField": "Едно или повече полета са невалидни!",
+    "Validation_InvalidEmail": "Невалиден имейл!",
+    "Validation_InvalidFormat": "Неправилен формат!",
+    "Validation_InvalidApplicantType": "Невалиден заявител!",
+    "Validation_InvalidApplicationOneType": "Невалиден тип щета!",
+    "Validation_NotSelectedDamage": "Не е избран вид на екологични щети!",
+    "Validation_ApplicationFromDateGreaterThanNow": "'От дата на възникване' не може да бъде бъдеща дата!",
+    "Validation_ApplicationToDateGreaterThanNow": "'До дата на възникване' не може да бъде бъдеща дата!",
+    "Validation_FromDateGreaterThanToDate": "Крайната дата не може да бъде след началната дата!",
+    "Validation_ExcessiveText": "Текстът надвишава позволения брой символи!",
+    "Validation_OperatorRequired": "Необходимо е да се въведе оператор, за да се приключи случаят!",
+    "Operator_DoesNotExist": "Не съществува такъв оператор!",
+    "Operator_TerrainDoesNotExist": "Не съществува такава площадка!",
+    "Operator_TerrainDoesNotBelongToTheOperator": "Този терен не принадлежи на конкретния оператор!",
+    "Operator_SubActivityDoesNotBelongToTheActivity": "Тази конкретна дейност не принадлежи на избраната дейност!",
+    "Operator_ActivityOfferingDoesNotExist": "Не съществува такава дейност!",
+    "Operator_SubActivityDoesNotExist": "Не съществува такава конкретна дейност!",
+    "Application_DoesNotExist": "Не съществува такъв случай!",
+    "Application_CanNotDelete": "Случаят не може да бъде изтрит!",
+    "Application_CanNotRestore": "Случаят не може да бъде възстановен!",
+    "Application_NotEnoughPermissions": "Нямате права над този случай!",
+    "Application_CaseStatusNotCompleted": "Статусът на случая трябва да бъде 'Приключен случай', за да може да се приключи!",
+    "Application_ActivityOfferingsNotCompleted": "За да бъде приключен случаят трябва операторът да има въведени дейности!",
+    "AdministrativeExpenses_PeriodDoesNotExist": "Не съществува такъв период!",
+    "AdministrativeExpenses_PeriodCannotUpdate": "Периодът не може да се редактира!",
+    "AdministrativeExpenses_AnnualAdministrativeExpenseDoesNotExist": "Не съществува такъв годишен административен разход!",
+    "AdministrativeExpenses_NotEnoughPermissions": "Нямате достатъчно права!",
+    "AdministrativeExpenses_AlreadyExistingExpenseWithAuthority": "Вече съществува годишен административен разход с този компетентен орган за този период!"
+  },
+  "regExpRequirementText": {
+    "password": "Паролата трябва да: бъде написана на латиница; съдържа поне 6 символа; съдържа поне 1 цифра; съдържа поне 1 специален символ."
+  }
+}

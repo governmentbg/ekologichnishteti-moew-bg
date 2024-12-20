@@ -1,0 +1,34 @@
+.red-border {
+  border: 1px solid #dc3545;
+}
+
+.textarea-wrapper {
+  position: relative;
+}
+
+.used-chars {
+  position: absolute;
+  bottom: 0px;
+  right: 10px;
+  opacity: 50%;
+  font-size: 14px;
+}
+
+.hover:hover {
+  cursor: pointer;
+}
+
+.btn-blue {
+  background-color: #135496;
+  color: white;
+}
+
+.btn-blue:hover {
+  background-color: #113e6b;
+}
+
+.btn-remove {
+  display: flex;
+  height: fit-content;
+  width: fit-content;
+}

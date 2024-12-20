@@ -1,0 +1,332 @@
+<form #applicationOneAboutForm="ngForm">
+  <div class="row">
+    <div class="form-group col-sm-12 col-md-4">
+      <label>
+        {{ 'application.about.applicant' | translate }}
+      </label>
+      <select class="custom-select custom-select-sm"
+              name="applicantType"
+              #applicantType="ngModel"
+              [ngClass]="{'red-border': model.applicant.applicantType === undefined}"
+              [(ngModel)]="model.applicant.applicantType"
+              (ngModelChange)="onApplicantTypeChange($event)"
+              [disabled]="!isEditMode || isViewMode"
+              required>
+        <option [ngValue]="applicantTypes.operator">
+          {{ 'application.about.operator' | translate }}
+        </option>
+        <option [ngValue]="applicantTypes.authority">
+          {{ 'application.about.authority' | translate }}
+        </option>
+        <option [ngValue]="applicantTypes.individual">
+          {{ 'application.about.individual' | translate }}
+        </option>
+        <option [ngValue]="applicantTypes.legalEntity">
+          {{ 'application.about.legalEntity' | translate }}
+        </option>
+        <option [ngValue]="applicantTypes.nonGovernmentalOrganization">
+          {{ 'application.about.nonGovernmentalOrganization' | translate }}
+        </option>
+      </select>
+    </div>
+
+    <ng-container *ngIf="model?.applicant?.applicantType === applicantTypes.authority">
+      <div class="form-group col-sm-12 col-md-4">
+        <label>
+          {{ 'application.applicantForm.authority.mainAuthority' | translate }}
+        </label>
+        <app-async-select #authority="ngModel"
+                          name="authority"
+                          restUrl="Authority/Select"
+                          [(ngModel)]="model.applicant.authority"
+                          (ngModelChange)="mainAuthorityId = $event.id"
+                          [disabled]="!isEditMode || isViewMode || (!isAdmin && !isMosv)"
+                          [required]="true"
+                          [excludeAlreadyAdded]="true"
+                          [params]="applicationOneAuthorityIds">
+        </app-async-select>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="model?.applicant?.applicantType === applicantTypes.operator">
+      <div class="form-group col-sm-12 col-md-4">
+        <label>
+          {{ 'application.applicantForm.operator.operator' | translate }}
+        </label>
+        <app-async-select #operator="ngModel"
+                          name="operator"
+                          restUrl="OperatorNomenclature/Select"
+                          [(ngModel)]="model.applicant.operator"
+                          (ngModelChange)="onOperatorChange($event.id)"
+                          [disabled]="!isEditMode"
+                          [required]="true">
+        </app-async-select>
+      </div>
+    </ng-container>
+  </div>
+
+  <ng-container *ngFor="let authority of model.applicationOneAuthorities; let i = index">
+    <ng-container *ngIf="i === 0">
+      <div class="row">
+        <div class="form-group col-sm-12 col-md-4 m-0">
+          <label>
+            {{ 'application.applicationTwo.common.applicantTypes.authority' | translate }}
+          </label>
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="row align-items-end mb-2">
+      <div class="form-group col-sm-11 col-md-4 mb-0">
+        <app-async-select #authority="ngModel"
+                          name="authority-{{ i }}"
+                          restUrl="Authority/Select"
+                          [(ngModel)]="model.applicationOneAuthorities[i].authority"
+                          (ngModelChange)="fillAuthority($event, i)"
+                          [disabled]="!isEditMode"
+                          [required]="true"
+                          [excludeAlreadyAdded]="true"
+                          [params]="applicationOneAuthorityIds">
+        </app-async-select>
+      </div>
+      <button *ngIf="isEditMode"
+              class="btn btn-sm btn-danger btn-remove"
+              type="button"
+              (click)="removeAuthority(i)">
+        <app-icon icon="trash"
+                  width="12"
+                  height="12"></app-icon>
+      </button>
+    </div>
+  </ng-container>
+
+  <div class="row">
+    <div class="col-sm-12 float-md-left">
+      <button *ngIf="isEditMode"
+              class="btn btn-sm btn-blue mt-1 mb-3"
+              type="button"
+              [disabled]="!canAddAuthority"
+              (click)="addAuthority()">
+        <app-icon icon="plus-lg"
+                  width="12"
+                  height="12"></app-icon>
+        {{ 'application.applicantForm.buttons.addAuthority' | translate }}
+      </button>
+    </div>
+  </div>
+
+
+  <ng-container *ngIf="model?.applicant?.applicantType === applicantTypes.individual">
+    <div class="row"
+         [ngClass]="{'mt-3': !isEditMode && model.applicationOneAuthorities?.length > 0}">
+      <div class="form-group col-sm-12 col-md-4">
+        <label>
+          {{ 'application.applicantForm.individual.firstName' | translate }}
+        </label>
+        <div class="input-group input-group-sm">
+          <input name="firstName"
+                 class="form-control"
+                 #firstName="ngModel"
+                 required="true"
+                 [disabled]="!isEditMode"
+                 [(ngModel)]="model.applicant.individual.firstName"
+                 pattern="{{latinAndCyrillicNamesRegex}}" />
+        </div>
+      </div>
+
+      <div class="form-group col-sm-12 col-md-4">
+        <label>
+          {{ 'application.applicantForm.individual.middleName' | translate }}
+        </label>
+        <div class="input-group input-group-sm">
+          <input name="middleName"
+                 class="form-control"
+                 #middleName="ngModel"
+                 [disabled]="!isEditMode"
+                 [(ngModel)]="model.applicant.individual.middleName"
+                 pattern="{{latinAndCyrillicNamesRegex}}" />
+        </div>
+      </div>
+
+      <div class="form-group col-sm-12 col-md-4">
+        <label>
+          {{ 'application.applicantForm.individual.lastName' | translate }}
+        </label>
+        <div class="input-group input-group-sm">
+          <input name="lastName"
+                 class="form-control"
+                 #lastName="ngModel"
+                 required="true"
+                 [disabled]="!isEditMode"
+                 [(ngModel)]="model.applicant.individual.lastName"
+                 pattern="{{latinAndCyrillicNamesRegex}}" />
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-sm-12 col-md-4">
+        <label>
+          {{ 'application.applicantForm.individual.email' | translate }}
+        </label>
+        <div class="input-group input-group-sm">
+          <input name="email"
+                 class="form-control"
+                 #email="ngModel"
+                 required="true"
+                 [disabled]="!isEditMode"
+                 [(ngModel)]="model.applicant.individual.email"
+                 pattern="{{emailRegex}}" />
+        </div>
+      </div>
+      <div class="form-group col-sm-12 col-md-4">
+        <label>
+          {{ 'application.applicantForm.individual.phone' | translate }}
+        </label>
+        <div class="input-group input-group-sm">
+          <input name="phone"
+                 class="form-control"
+                 #phone="ngModel"
+                 [disabled]="!isEditMode"
+                 [(ngModel)]="model.applicant.individual.phone"
+                 pattern="{{phoneRegex}}" />
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container
+                *ngIf="model?.applicant?.applicantType === applicantTypes.legalEntity || model?.applicant?.applicantType === applicantTypes.nonGovernmentalOrganization">
+    <div class="row"
+         [ngClass]="{'mt-3': !isEditMode && model.applicationOneAuthorities?.length > 0}">
+      <div class="form-group col-sm-12 col-md-6">
+        <label>
+          {{ 'application.applicantForm.legalEntity.name' | translate }}
+        </label>
+        <div class="input-group input-group-sm">
+          <input name="legalEntityName"
+                 class="form-control"
+                 #legalEntityName="ngModel"
+                 required="true"
+                 [disabled]="!isEditMode"
+                 [(ngModel)]="model.applicant.legalEntity.legalEntityName"
+                 pattern="{{latinAndCyrillicNamesRegex}}" />
+        </div>
+      </div>
+
+      <div class="form-group col-sm-12 col-md-2">
+        <label>
+          {{ 'application.applicantForm.legalEntity.uin' | translate }}
+        </label>
+        <div class="input-group input-group-sm">
+          <input name="uin"
+                 class="form-control"
+                 #uin="ngModel"
+                 required="true"
+                 [disabled]="!isEditMode"
+                 [(ngModel)]="model.applicant.legalEntity.uin"
+                 pattern="{{numberRegex}}" />
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-sm-12 col-md-4">
+        <label>
+          {{ 'application.applicantForm.legalEntity.email' | translate }}
+        </label>
+        <div class="input-group input-group-sm">
+          <input name="email"
+                 class="form-control"
+                 #email="ngModel"
+                 required="true"
+                 [disabled]="!isEditMode"
+                 [(ngModel)]="model.applicant.legalEntity.email"
+                 pattern="{{emailRegex}}" />
+        </div>
+      </div>
+      <div class="form-group col-sm-12 col-md-4">
+        <label>
+          {{ 'application.applicantForm.legalEntity.phone' | translate }}
+        </label>
+        <div class="input-group input-group-sm">
+          <input name="phone"
+                 class="form-control"
+                 #phone="ngModel"
+                 [disabled]="!isEditMode"
+                 [(ngModel)]="model.applicant.legalEntity.phone"
+                 pattern="{{phoneRegex}}" />
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <div *ngIf="model?.applicant?.applicantType === applicantTypes.authority 
+        || model?.applicant?.applicantType === applicantTypes.operator"
+       [ngClass]="{'mt-3': !isEditMode && model.applicationOneAuthorities?.length > 0}">
+    <div class="form-check">
+      <label class="form-check-label"
+             [ngClass]="{'hover': isEditMode && !isViewMode}">
+        <input class="form-check-input hover"
+               type="radio"
+               name="applicationOneTypeThreat"
+               #applicationOneTypeThreat="ngModel"
+               [disabled]="!isEditMode || isViewMode"
+               [(ngModel)]="model.applicationOneType"
+               [value]="applicationOneTypes.threat"
+               required
+               [ngClass]="{'red-border': !isAnyChecked()}">
+        {{ 'application.about.threat' | translate }}
+      </label>
+    </div>
+    <div class="form-check">
+      <label class="form-check-label"
+             [ngClass]="{'hover': isEditMode && !isViewMode}">
+        <input class="form-check-input hover"
+               type="radio"
+               name="applicationOneTypeDamage"
+               #applicationOneTypeDamage="ngModel"
+               [disabled]="!isEditMode || isViewMode"
+               [(ngModel)]="model.applicationOneType"
+               [value]="applicationOneTypes.damage"
+               required
+               [ngClass]="{'red-border': !isAnyChecked()}">
+        {{ 'application.about.damage' | translate }}
+      </label>
+    </div>
+  </div>
+
+  <!-- <div class="form-group col-sm-12">
+      <label class="d-inline-flex align-items-center">
+        {{ 'applicationOne.new.about.actType' | translate }}
+      </label>
+      <app-async-select #actType="ngModel"
+                        name="actType"
+                        restUrl="ActType/Select"
+                        [(ngModel)]="model.actType"
+                        [allowClear]="true"
+                        [required]="true"
+                        [disabled]="!isEditMode"></app-async-select>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-sm-6">
+      <label class="d-inline-flex align-items-center">
+        Заявител
+      </label>
+      <select class="custom-select custom-select-sm">
+        <option hidden
+                selected> </option>
+        <option [ngValue]="applicantTypes.operator">
+          {{ applicantTypesLocalization[applicantTypes.operator] }}
+        </option>
+        <option [ngValue]="applicantTypes.authority">
+          {{ applicantTypesLocalization[applicantTypes.authority] }}
+        </option>
+        <option [ngValue]="applicantTypes.other">
+          {{ applicantTypesLocalization[applicantTypes.other] }}
+        </option>
+      </select>
+    </div> -->
+</form>

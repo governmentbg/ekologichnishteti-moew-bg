@@ -1,0 +1,24 @@
+<operator-common [operator]="operator"
+                 [isEditMode]="isEditMode"
+                 (isValidForm)="changeFormValidStatus($event)"
+                 (canSubmit)="canSubmit = $event">
+  <div header-buttons
+       class="float-md-right">
+    <button *ngIf="isEditMode"
+            class="btn btn-primary btn-sm"
+            [disabled]="!canSubmit"
+            (click)="editOperator()">
+      {{ "operator.view.save" | translate }}
+    </button>
+    <button *ngIf="isEditMode"
+            class="btn btn-outline-primary btn-sm ms-2"
+            (click)="cancelEdit()">
+      {{ "operator.view.cancel" | translate }}
+    </button>
+    <button *ngIf="!isEditMode"
+            class="btn btn-primary btn-sm"
+            (click)="enableEditing()">
+      {{ "operator.view.edit" | translate }}
+    </button>
+  </div>
+  <operator-common>

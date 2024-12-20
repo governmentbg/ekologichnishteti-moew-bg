@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="DeepL.net" Version="1.11.0" />
+    <PackageReference Include="Scrutor.AspNetCore" Version="3.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Zopoesht.Data\Zopoesht.Data.csproj" />
+    <ProjectReference Include="..\Zopoesht.Infrastructure\Zopoesht.Infrastructure.csproj" />
+    <ProjectReference Include="..\Zopoesht.Persistence\Zopoesht.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>

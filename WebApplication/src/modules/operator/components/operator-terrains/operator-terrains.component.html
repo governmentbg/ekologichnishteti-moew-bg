@@ -1,0 +1,224 @@
+<ng-template ngFor
+             let-terrain
+             [ngForOf]="terrains"
+             let-i="index">
+  <div class="row ml-1">
+
+    <collapsable-label heading="{{terrain.name}}"
+                       fontSize="fs-14"
+                       [isCollapsed]="true">
+      <div body>
+        <form #operatorModifyTerrainForm="ngForm"
+              id="operatorModifyTerrainForm">
+          <div class="row">
+            <div class="form-group col-sm-12 col-md-4">
+              <label>
+                {{ "operator.common.terrains.name" | translate }}
+              </label>
+              <div class="input-group input-group-sm">
+                <input name="name"
+                       class="form-control"
+                       #name="ngModel"
+                       [(ngModel)]="terrain.name"
+                       required
+                       [disabled]="!terrain.isInEditMode">
+              </div>
+            </div>
+            <div class="form-group col-sm-12 col-md-8">
+              <label>
+                {{ "operator.common.terrains.address" | translate }}
+              </label>
+              <div class="input-group input-group-sm">
+                <input name="address"
+                       class="form-control"
+                       #address="ngModel"
+                       [(ngModel)]="terrain.address"
+                       required
+                       [disabled]="!terrain.isInEditMode">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-sm-12 col-md-4">
+              <label>
+                {{ "operator.common.terrains.settlement" | translate }}
+              </label>
+              <app-async-select name="settlement"
+                                #settlement="ngModel"
+                                restUrl="Settlement/Select"
+                                [(ngModel)]="terrain.settlement"
+                                (ngModelChange)="settlementChangeService.settlementChange(terrain, terrain.settlement, 'settlement', 'district', 'municipality')"
+                                [allowClear]="true"
+                                [required]="true"
+                                [disabled]="!terrain.isInEditMode">
+              </app-async-select>
+            </div>
+            <div class="form-group col-sm-12 col-md-4">
+              <label>
+                {{ "operator.common.terrains.district" | translate }}
+              </label>
+              <app-async-select name="district"
+                                #district="ngModel"
+                                restUrl="District/Select"
+                                [(ngModel)]="terrain.district"
+                                (ngModelChange)="settlementChangeService.districtChange(terrain, terrain.district, 'district', 'municipality', 'settlement')"
+                                [allowClear]="true"
+                                [required]="true"
+                                [disabled]="!terrain.isInEditMode">
+              </app-async-select>
+            </div>
+            <div class="form-group col-sm-12 col-md-4">
+              <label>
+                {{ "operator.common.terrains.municipality" | translate }}
+              </label>
+              <app-async-select name="municipality"
+                                #municipality="ngModel"
+                                restUrl="Municipality/Select"
+                                [(ngModel)]="terrain.municipality"
+                                (ngModelChange)="settlementChangeService.municipalityChange(terrain, terrain.municipality, 'municipality', 'district', 'settlement')"
+                                [allowClear]="true"
+                                [required]="true"
+                                [disabled]="!terrain.isInEditMode">
+              </app-async-select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12 float-md-left">
+              <button *ngIf="!terrain.isInEditMode"
+                      class="btn btn-sm btn-warning mt-1 mb-3"
+                      type="button"
+                      (click)="enableTerrainModification(terrain)">
+                <app-icon icon="pencil"
+                          width="12"
+                          height="12"></app-icon>
+                {{ "operator.common.modifyTerrain" | translate }}
+              </button>
+
+              <button *ngIf="terrain.isInEditMode"
+                      class="btn btn-sm btn-success mt-1 mb-3 mr-1"
+                      type="button"
+                      (click)="modifyTerrain(terrain)"
+                      [disabled]="operatorModifyTerrainForm.invalid">
+                {{ "operator.common.save" | translate }}
+              </button>
+
+              <button *ngIf="terrain.isInEditMode"
+                      class="btn btn-sm btn-danger mt-1 mb-3"
+                      type="button"
+                      (click)="cancelTerrainModification(terrain)">
+                {{ "operator.common.cancel" | translate }}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </collapsable-label>
+  </div>
+</ng-template>
+
+<form #operatorAddTerrainForm="ngForm"
+      id="operatorAddTerrainForm">
+  <div class="ml-3">
+    <ng-container *ngIf="isTerrainFormDisplayed">
+      <div class="row">
+        <div class="form-group col-sm-12 col-md-4">
+          <label>
+            {{ "operator.common.terrains.name" | translate }}
+          </label>
+          <div class="input-group input-group-sm">
+            <input name="name"
+                   class="form-control"
+                   #name="ngModel"
+                   [(ngModel)]="newTerrain.name"
+                   required>
+          </div>
+        </div>
+        <div class="form-group col-sm-12 col-md-8">
+          <label>
+            {{ "operator.common.terrains.address" | translate }}
+          </label>
+          <div class="input-group input-group-sm">
+            <input name="address"
+                   class="form-control"
+                   #address="ngModel"
+                   [(ngModel)]="newTerrain.address"
+                   required>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-12 col-md-4">
+          <label>
+            {{ "operator.common.terrains.settlement" | translate }}
+          </label>
+          <app-async-select name="settlement"
+                            #settlement="ngModel"
+                            restUrl="Settlement/Select"
+                            [(ngModel)]="newTerrain.settlement"
+                            (ngModelChange)="settlementChangeService.settlementChange(newTerrain, $event, 'settlement', 'district', 'municipality')"
+                            [allowClear]="true"
+                            [required]="true">
+          </app-async-select>
+        </div>
+        <div class="form-group col-sm-12 col-md-4">
+          <label>
+            {{ "operator.common.terrains.district" | translate }}
+          </label>
+          <app-async-select name="district"
+                            #district="ngModel"
+                            restUrl="District/Select"
+                            [(ngModel)]="newTerrain.district"
+                            (ngModelChange)="settlementChangeService.districtChange(newTerrain, $event, 'district', 'municipality', 'settlement')"
+                            [allowClear]="true"
+                            [required]="true">
+          </app-async-select>
+        </div>
+        <div class="form-group col-sm-12 col-md-4">
+          <label>
+            {{ "operator.common.terrains.municipality" | translate }}
+          </label>
+          <app-async-select name="municipality"
+                            #municipality="ngModel"
+                            restUrl="Municipality/Select"
+                            [(ngModel)]="newTerrain.municipality"
+                            (ngModelChange)="settlementChangeService.municipalityChange(newTerrain, $event, 'municipality', 'district', 'settlement')"
+                            [allowClear]="true"
+                            [required]="true">
+          </app-async-select>
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="row">
+      <div class="col-sm-12 float-md-left">
+        <button *ngIf="!isTerrainFormDisplayed"
+                class="btn btn-sm btn-blue mt-1 mb-3"
+                type="button"
+                (click)="displayTerrainForm()">
+          <app-icon icon="plus-lg"
+                    width="12"
+                    height="12"></app-icon>
+          {{ "operator.common.addTerrain" | translate }}
+        </button>
+
+        <button *ngIf="isTerrainFormDisplayed"
+                class="btn btn-sm btn-success mt-1 mb-3 mr-1"
+                type="button"
+                (click)="addTerrain()"
+                [disabled]="operatorAddTerrainForm.invalid">
+          {{ "operator.common.save" | translate }}
+        </button>
+
+        <button *ngIf="isTerrainFormDisplayed"
+                class="btn btn-sm btn-danger mt-1 mb-3"
+                type="button"
+                (click)="cancelAddingTerrain()">
+          {{ "operator.common.cancel" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

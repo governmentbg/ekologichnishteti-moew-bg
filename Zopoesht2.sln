@@ -1,0 +1,65 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zopoesht.Hosting", "Zopoesht.Hosting\Zopoesht.Hosting.csproj", "{C102A61F-1FFD-4C96-ADAB-04B62CD759AF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{05F138E7-BC17-4A06-B727-17C0193E5CBB} = {05F138E7-BC17-4A06-B727-17C0193E5CBB}
+		{0D3BC0E6-E6EC-41E5-9753-24EE541572F8} = {0D3BC0E6-E6EC-41E5-9753-24EE541572F8}
+		{697DBEF0-C858-4AD3-B821-5B54A2689301} = {697DBEF0-C858-4AD3-B821-5B54A2689301}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zopoesht.Application", "Zopoesht.Application\Zopoesht.Application.csproj", "{05F138E7-BC17-4A06-B727-17C0193E5CBB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{32A720B3-45AB-4792-9D43-EF346DBF92BD} = {32A720B3-45AB-4792-9D43-EF346DBF92BD}
+		{697DBEF0-C858-4AD3-B821-5B54A2689301} = {697DBEF0-C858-4AD3-B821-5B54A2689301}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zopoesht.Data", "Zopoesht.Data\Zopoesht.Data.csproj", "{32A720B3-45AB-4792-9D43-EF346DBF92BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zopoesht.Persistence", "Zopoesht.Persistence\Zopoesht.Persistence.csproj", "{0D3BC0E6-E6EC-41E5-9753-24EE541572F8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{32A720B3-45AB-4792-9D43-EF346DBF92BD} = {32A720B3-45AB-4792-9D43-EF346DBF92BD}
+		{697DBEF0-C858-4AD3-B821-5B54A2689301} = {697DBEF0-C858-4AD3-B821-5B54A2689301}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zopoesht.Infrastructure", "Zopoesht.Infrastructure\Zopoesht.Infrastructure.csproj", "{697DBEF0-C858-4AD3-B821-5B54A2689301}"
+	ProjectSection(ProjectDependencies) = postProject
+		{32A720B3-45AB-4792-9D43-EF346DBF92BD} = {32A720B3-45AB-4792-9D43-EF346DBF92BD}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C102A61F-1FFD-4C96-ADAB-04B62CD759AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C102A61F-1FFD-4C96-ADAB-04B62CD759AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C102A61F-1FFD-4C96-ADAB-04B62CD759AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C102A61F-1FFD-4C96-ADAB-04B62CD759AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05F138E7-BC17-4A06-B727-17C0193E5CBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05F138E7-BC17-4A06-B727-17C0193E5CBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05F138E7-BC17-4A06-B727-17C0193E5CBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05F138E7-BC17-4A06-B727-17C0193E5CBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32A720B3-45AB-4792-9D43-EF346DBF92BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32A720B3-45AB-4792-9D43-EF346DBF92BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32A720B3-45AB-4792-9D43-EF346DBF92BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32A720B3-45AB-4792-9D43-EF346DBF92BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D3BC0E6-E6EC-41E5-9753-24EE541572F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D3BC0E6-E6EC-41E5-9753-24EE541572F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D3BC0E6-E6EC-41E5-9753-24EE541572F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D3BC0E6-E6EC-41E5-9753-24EE541572F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{697DBEF0-C858-4AD3-B821-5B54A2689301}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{697DBEF0-C858-4AD3-B821-5B54A2689301}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{697DBEF0-C858-4AD3-B821-5B54A2689301}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{697DBEF0-C858-4AD3-B821-5B54A2689301}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {22D391F7-A1AF-4416-904E-2768347672F1}
+	EndGlobalSection
+EndGlobal

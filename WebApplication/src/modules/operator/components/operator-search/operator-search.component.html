@@ -1,0 +1,254 @@
+<div class="search-panel shadow bg-white rounded">
+  <div class="row">
+    <div class="form-group col-sm-12 col-md-3">
+      <label>
+        {{ "operator.search.operatorType" | translate }}
+      </label>
+      <select class="custom-select custom-select-sm"
+              [(ngModel)]="filter.type"
+              (ngModelChange)="onOperatorTypeChange($event)">
+        <option selected
+                [ngValue]="null">
+          {{ "user.search.all" | translate }}
+        </option>
+        <option [ngValue]="operatorTypes.person">
+          {{ operatorTypeLocalization[operatorTypes.person] }}
+        </option>
+        <option [ngValue]="operatorTypes.legalEntity">
+          {{ operatorTypeLocalization[operatorTypes.legalEntity] }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group col-sm-12 col-md-3">
+      <label>
+        {{ "operator.search.firstName" | translate }}
+      </label>
+      <div class="input-group input-group-sm">
+        <input name="firstName"
+               class="form-control"
+               #firstName="ngModel"
+               [disabled]="filter.type === operatorTypes.legalEntity"
+               [(ngModel)]="filter.firstName">
+      </div>
+    </div>
+
+    <div class="form-group col-sm-12 col-md-3">
+      <label>
+        {{ "operator.search.middleName" | translate }}
+      </label>
+      <div class="input-group input-group-sm">
+        <input name="middleName"
+               class="form-control"
+               #middleName="ngModel"
+               [disabled]="filter.type === operatorTypes.legalEntity"
+               [(ngModel)]="filter.middleName">
+      </div>
+    </div>
+
+    <div class="form-group col-sm-12 col-md-3">
+      <label>
+        {{ "operator.search.lastName" | translate }}
+      </label>
+      <div class="input-group input-group-sm">
+        <input name="lastName"
+               class="form-control"
+               #lastName="ngModel"
+               [disabled]="filter.type === operatorTypes.legalEntity"
+               [(ngModel)]="filter.lastName">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-sm-12 col-md-4">
+      <label>
+        {{ "operator.search.legalEntityName" | translate }}
+      </label>
+      <div class="input-group input-group-sm">
+        <input name="legalEntityName"
+               class="form-control"
+               #legalEntityName="ngModel"
+               [disabled]="filter.type === operatorTypes.person"
+               [(ngModel)]="filter.legalEntityName">
+      </div>
+    </div>
+
+    <div class="form-group col-sm-12 col-md-2">
+      <label>
+        {{ "operator.search.legalEntityUic" | translate }}
+      </label>
+      <div class="input-group input-group-sm">
+        <input name="legalEntityUic"
+               class="form-control"
+               #legalEntityUic="ngModel"
+               [disabled]="filter.type === operatorTypes.person"
+               [(ngModel)]="filter.legalEntityUic">
+      </div>
+    </div>
+
+    <div class="form-group col-sm-12 col-md-3">
+      <label>
+        {{ "operator.search.authorityRiosv" | translate }}
+      </label>
+      <app-async-select name="authorityRiosv"
+                        #authorityRiosv="ngModel"
+                        restUrl="Authority/Select"
+                        [allowClear]="true"
+                        [filter]="{type: authorityType.riosv}"
+                        [(ngModel)]="filter.authorityRiosv"
+                        (ngModelChange)="filter.authorityRiosvId = $event?.id">
+      </app-async-select>
+    </div>
+
+    <div class="form-group col-sm-12 col-md-3">
+      <label>
+        {{ "operator.search.authorityBasin" | translate }}
+      </label>
+      <app-async-select name="authorityBasin"
+                        #authorityBasin="ngModel"
+                        restUrl="Authority/Select"
+                        [allowClear]="true"
+                        [filter]="{type: authorityType.bduv}"
+                        [(ngModel)]="filter.authorityBasin"
+                        (ngModelChange)="filter.authorityBasinId= $event?.id">
+      </app-async-select>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-sm-12 col-md-4">
+      <label>
+        {{ "operator.search.settlement" | translate }}
+      </label>
+      <app-async-select name="settlement"
+                        #settlement="ngModel"
+                        restUrl="Settlement/Select"
+                        [allowClear]="true"
+                        [(ngModel)]="filter.settlement"
+                        (ngModelChange)="filter.settlementId= $event?.id">
+      </app-async-select>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-sm-12">
+
+      <div class="float-md-left">
+        <button type="button"
+                class="btn btn-sm btn-secondary"
+                (click)="clearFilter()">
+          <app-icon icon="trash"
+                    width="16"
+                    height="16"></app-icon>
+          {{ "buttons.clear" | translate }}
+        </button>
+      </div>
+
+      <div class="float-md-right">
+        <button type="button"
+                class="btn btn-sm btn-primary"
+                (click)="search()">
+          <app-icon icon="search"
+                    class="thicker-icon"
+                    width="12"
+                    height="12"></app-icon>
+          {{ "buttons.search" | translate }}
+        </button>
+        <button type="button"
+                class="btn btn-sm btn-primary ms-3"
+                (click)="routeToNew()">
+          <app-icon icon="person-fill"
+                    width="16"
+                    height="16"></app-icon>
+          {{ "buttons.newOperator" | translate }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<table class="table search-table table-bordered mt-5">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col"
+          class="col-md-3">
+        {{ "operator.table.operatorType" | translate }}
+      </th>
+      <th scope="col"
+          class="col-md-4">
+        {{ "operator.table.fullname" | translate }}
+      </th>
+      <th scope="col"
+          class="col-md-4">
+        {{ "operator.table.settlement" | translate }}
+      </th>
+      <th scope="col"
+          class="col-md-1">
+        {{ "operator.table.details" | translate }}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngIf="model && model.length > 0;
+        else
+        noResult">
+      <tr *ngFor="let operator of model">
+        <td>
+          {{ operatorTypeLocalization[operator.type] }}
+        </td>
+        <td>
+          {{ operator.fullname }}
+          <p *ngIf="operator.type === operatorTypes.legalEntity 
+                  && operator.legalEntityUic">
+            {{ "operator.table.legalEntityUic" | translate }}: {{ operator.legalEntityUic }}
+          </p>
+        </td>
+        <td>
+          {{ operator.settlement?.name }}
+          <br>
+        </td>
+        <td class="text-center">
+          <button type="button"
+                  class="btn btn-sm btn-outline-primary"
+                  (click)="routeToView(operator.id)">
+            <app-icon icon="search"
+                      width="16"
+                      height="16"></app-icon>
+          </button>
+        </td>
+      </tr>
+    </ng-container>
+    <ng-template #noResult>
+      <tr>
+        <td colspan="7"
+            class="text-center">
+          {{ 'user.table.noResults' | translate }}
+        </td>
+      </tr>
+    </ng-template>
+  </tbody>
+</table>
+
+<div class="row mt-4 mb-4">
+  <div class="col-sm-12">
+    <div *ngIf="canLoadMore"
+         class="float-md-left">
+      <button type="button"
+              class="btn btn-sm btn-secondary"
+              (click)="loadMore()">
+        {{ "buttons.loadMore" | translate }}
+      </button>
+    </div>
+
+    <div *ngIf="model && modelCounts > 0"
+         class="float-md-right">
+      <p>
+        {{ modelCounts }}
+        {{ "filter.outOf" | translate }}
+        {{ totalCounts }}
+        {{ "filter.records" | translate }}
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,213 @@
+<ng-template ngFor
+             let-period
+             [ngForOf]="periods"
+             let-i="index">
+  <div class="row ml-1">
+
+    <collapsable-label [heading]="(i+1) + ('annualAdministrativeExpenses.periodTitle' | translate) + ' ' + period.name"
+                       fontSize="fs-14"
+                       [isCollapsed]="true">
+      <div body>
+        <form #modifyPeriodForm="ngForm"
+              id="modifyPeriodForm">
+          <div class="row">
+            <div class="form-group col-md-3 col-sm-12">
+              <label>
+                {{ "annualAdministrativeExpenses.startDate" | translate }}
+              </label>
+              <div class="input-group input-group-sm">
+                <input name="startDate"
+                       class="form-control"
+                       ngbDatepicker
+                       placeholder="дд/мм/гггг"
+                       [ngStyle]="{'border': startDate.status === 'INVALID' ? '1px solid #dc3545' : null}"
+                       #startDate="ngModel"
+                       #startDateDatepicker="ngbDatepicker"
+                       [(ngModel)]="period.startDate"
+                       (ngModelChange)="onPeriodDateChange(i)"
+                       validDate
+                       [disabled]="!period.isInEditMode"
+                       required
+                       maxlength="20">
+                <div class="input-group-append">
+                  <button class="btn btn-sm btn-outline-primary"
+                          type="button"
+                          [disabled]="!period.isInEditMode"
+                          (click)="startDateDatepicker.toggle()">
+                    <app-icon icon="calendar2-event"
+                              width="12"
+                              height="12"></app-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group col-md-3 col-sm-12">
+              <label>
+                {{ "annualAdministrativeExpenses.endDate" | translate }}
+              </label>
+              <div class="input-group input-group-sm">
+                <input name="endDate"
+                       class="form-control"
+                       ngbDatepicker
+                       placeholder="дд/мм/гггг"
+                       [ngStyle]="{'border': endDate.status === 'INVALID' ? '1px solid #dc3545' : null}"
+                       #endDate="ngModel"
+                       #endDateDatepicker="ngbDatepicker"
+                       [(ngModel)]="period.endDate"
+                       (ngModelChange)="onPeriodDateChange(i)"
+                       validDate
+                       [disabled]="!period.isInEditMode"
+                       required
+                       maxlength="20"
+                       [minDate]="period.minDate">
+                <div class="input-group-append">
+                  <button class="btn btn-sm btn-outline-primary"
+                          type="button"
+                          [disabled]="!period.isInEditMode"
+                          (click)="endDateDatepicker.toggle()">
+                    <app-icon icon="calendar2-event"
+                              width="12"
+                              height="12"></app-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="!period.hasAnnualAdministrativeExpenses && isAdmin"
+               class="row">
+            <div class="col-sm-12 float-md-left">
+              <button *ngIf="!period.isInEditMode"
+                      class="btn btn-sm btn-warning mt-1 mb-3"
+                      type="button"
+                      (click)="enablePeriodModification(period)">
+                <app-icon icon="pencil"
+                          width="12"
+                          height="12"></app-icon>
+                {{ "annualAdministrativeExpenses.modifyPeriod" | translate }}
+              </button>
+
+              <button *ngIf="period.isInEditMode"
+                      class="btn btn-sm btn-success mt-1 mb-3 mr-1"
+                      type="button"
+                      (click)="modifyPeriod(period)"
+                      [disabled]="modifyPeriodForm.invalid">
+                {{ "annualAdministrativeExpenses.save" | translate }}
+              </button>
+
+              <button *ngIf="period.isInEditMode"
+                      class="btn btn-sm btn-danger mt-1 mb-3"
+                      type="button"
+                      (click)="cancelPeriodModification(period)">
+                {{ "annualAdministrativeExpenses.cancel" | translate }}
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <annual-administrative-expenses-component [(annualAdministrativeExpenses)]="period.annualAdministrativeExpenses"
+                                                  [(periodId)]="period.id"
+                                                  (periodHasAnnualAdministrativeExpenses)="period.hasAnnualAdministrativeExpenses = $event"></annual-administrative-expenses-component>
+      </div>
+    </collapsable-label>
+  </div>
+</ng-template>
+
+<form #addPeriodForm="ngForm"
+      id="addPeriodForm">
+  <div class="ml-3">
+    <ng-container *ngIf="isPeriodFormDisplayed">
+      <div class="row">
+        <div class="form-group col-md-3 col-sm-12">
+          <label>
+            {{ "annualAdministrativeExpenses.startDate" | translate }}
+          </label>
+          <div class="input-group input-group-sm">
+            <input name="newPeriodStartDate"
+                   class="form-control"
+                   ngbDatepicker
+                   placeholder="дд/мм/гггг"
+                   [ngStyle]="{'border': newPeriodStartDate.status === 'INVALID' ? '1px solid #dc3545' : null}"
+                   #newPeriodStartDate="ngModel"
+                   #newPeriodStartDateDatepicker="ngbDatepicker"
+                   [(ngModel)]="newPeriod.startDate"
+                   (ngModelChange)="onNewPeriodDateChange()"
+                   validDate
+                   required
+                   maxlength="20">
+            <div class="input-group-append">
+              <button class="btn btn-sm btn-outline-primary"
+                      type="button"
+                      (click)="newPeriodStartDateDatepicker.toggle()">
+                <app-icon icon="calendar2-event"
+                          width="12"
+                          height="12"></app-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group col-md-3 col-sm-12">
+          <label>
+            {{ "annualAdministrativeExpenses.endDate" | translate }}
+          </label>
+          <div class="input-group input-group-sm">
+            <input name="newPeriodEndDate"
+                   class="form-control"
+                   ngbDatepicker
+                   placeholder="дд/мм/гггг"
+                   [ngStyle]="{'border': newPeriodEndDate.status === 'INVALID' ? '1px solid #dc3545' : null}"
+                   #newPeriodEndDate="ngModel"
+                   #newPeriodEndDateDatepicker="ngbDatepicker"
+                   [(ngModel)]="newPeriod.endDate"
+                   (ngModelChange)="onNewPeriodDateChange()"
+                   validDate
+                   required
+                   maxlength="20"
+                   [minDate]="newPeriodMinDate">
+            <div class="input-group-append">
+              <button class="btn btn-sm btn-outline-primary"
+                      type="button"
+                      (click)="newPeriodEndDateDatepicker.toggle()">
+                <app-icon icon="calendar2-event"
+                          width="12"
+                          height="12"></app-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="isAdmin">
+      <div class="row">
+        <div class="col-sm-12 float-md-left">
+          <button *ngIf="!isPeriodFormDisplayed"
+                  class="btn btn-sm btn-blue mt-1 mb-3"
+                  type="button"
+                  (click)="displayPeriodForm()">
+            <app-icon icon="plus-lg"
+                      width="12"
+                      height="12"></app-icon>
+            {{ "annualAdministrativeExpenses.addPeriod" | translate }}
+          </button>
+
+          <button *ngIf="isPeriodFormDisplayed"
+                  class="btn btn-sm btn-success mt-1 mb-3 mr-1"
+                  type="button"
+                  (click)="addPeriod()"
+                  [disabled]="addPeriodForm.invalid">
+            {{ "annualAdministrativeExpenses.save" | translate }}
+          </button>
+
+          <button *ngIf="isPeriodFormDisplayed"
+                  class="btn btn-sm btn-danger mt-1 mb-3"
+                  type="button"
+                  (click)="cancelAddingPeriod()">
+            {{ "annualAdministrativeExpenses.cancel" | translate }}
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</form>

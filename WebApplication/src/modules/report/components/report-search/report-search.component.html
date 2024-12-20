@@ -1,0 +1,160 @@
+<div class="search-panel shadow bg-white rounded">
+  <div class="row">
+    <div class="form-group col-sm-12 col-md-6">
+      <label>
+        {{ "report.search.filterBy" | translate }}
+      </label>
+      <select class="custom-select custom-select-sm"
+              [ngClass]="{'red-border': filter.reportType === undefined || filter.reportType === null}"
+              name="reportType"
+              [(ngModel)]="filter.reportType"
+              (ngModelChange)="onReportTypeChange()"
+              required>
+        <option [ngValue]="reportType.territorialRange">
+          {{ reportTypeLocalization[reportType.territorialRange] | translate }}
+        </option>
+        <option [ngValue]="reportType.applicantType">
+          {{ reportTypeLocalization[reportType.applicantType] | translate }}
+        </option>
+      </select>
+    </div>
+    <ng-container *ngIf="filter.reportType === reportType.territorialRange">
+      <div class="form-group col-sm-12 col-md-6">
+        <label>
+          {{ "report.search.territorialRange" | translate }}
+        </label>
+        <app-async-select #territorialRange="ngModel"
+                          name="territorialRange"
+                          restUrl="Authority/Select"
+                          [(ngModel)]="filter.territorialRange"
+                          [allowClear]="true">
+        </app-async-select>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-sm-12">
+      <div class="float-md-left">
+        <button type="button"
+                class="btn btn-sm btn-secondary"
+                [disabled]="filter.reportType === undefined || filter.reportType === null"
+                (click)="clearFilter()">
+          <app-icon icon="trash"></app-icon>
+          {{ "buttons.clear" | translate }}
+        </button>
+      </div>
+
+      <div class="float-md-right">
+        <button type="button"
+                class="btn btn-sm btn-outline-primary"
+                [disabled]="filter.reportType === undefined || filter.reportType === null"
+                (click)="export()">
+          <app-icon icon="file-earmark-excel"
+                    width="16"
+                    height="16"></app-icon>
+          {{ "buttons.export" | translate }}
+        </button>
+        <button type="button"
+                class="btn btn-sm btn-primary ms-3"
+                [disabled]="filter.reportType === undefined || filter.reportType === null"
+                (click)="search()">
+          <app-icon icon="search"
+                    class="thicker-icon"
+                    width="12"
+                    height="12"></app-icon>
+          {{ "buttons.search" | translate }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="filter.reportType">
+  <table class="table search-table table-bordered mt-5">
+    <thead class="thead-light">
+      <tr>
+        <ng-container [ngSwitch]="filter.reportType">
+          <th *ngSwitchCase="reportType.territorialRange"
+              rowspan="2"
+              scope="col"
+              class="col-md-3 align-middle">{{ "report.table.territorialRange" | translate }}</th>
+          <th *ngSwitchCase="reportType.applicantType"
+              rowspan="2"
+              scope="col"
+              class="col-md-3 align-middle">{{ "report.table.applicant" | translate }}</th>
+        </ng-container>
+        <th colspan="2"
+            scope="col"
+            class="col-md-3">{{ "report.table.threat" | translate }}</th>
+        <th colspan="2"
+            scope="col"
+            class="col-md-3 align-middle">{{ "report.table.damage" | translate }}</th>
+        <th colspan="2"
+            scope="col"
+            class="col-md-3">{{ "report.table.reportedDamage" | translate }}</th>
+      </tr>
+      <tr>
+        <th>{{ "report.table.damageType" | translate }}</th>
+        <th>{{ "report.table.count" | translate }}</th>
+        <th>{{ "report.table.damageType" | translate }}</th>
+        <th>{{ "report.table.count" | translate }}</th>
+        <th>{{ "report.table.damageType" | translate }}</th>
+        <th>{{ "report.table.count" | translate }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="model && model.length > 0; else noResult">
+        <ng-container *ngFor="let item of model">
+          <tr>
+            <td rowspan="5">{{ item.itemName }}</td>
+            <td>{{ "report.table.water" | translate }}</td>
+            <td>{{ item.threat.waterDamageCount }}</td>
+            <td>{{ "report.table.water" | translate }}</td>
+            <td>{{ item.damage.waterDamageCount }}</td>
+            <td>{{ "report.table.water" | translate }}</td>
+            <td>{{ item.reportedDamage.waterDamageCount }}</td>
+          </tr>
+          <tr>
+            <td>{{ "report.table.soil" | translate }}</td>
+            <td>{{ item.threat.soilDamageCount }}</td>
+            <td>{{ "report.table.soil" | translate }}</td>
+            <td>{{ item.damage.soilDamageCount }}</td>
+            <td>{{ "report.table.soil" | translate }}</td>
+            <td>{{ item.reportedDamage.soilDamageCount }}</td>
+          </tr>
+          <tr class="tr-border">
+            <td>{{ "report.table.species" | translate }}</td>
+            <td>{{ item.threat.speciesDamageCount }}</td>
+            <td>{{ "report.table.species" | translate }}</td>
+            <td>{{ item.damage.speciesDamageCount }}</td>
+            <td>{{ "report.table.species" | translate }}</td>
+            <td>{{ item.reportedDamage.speciesDamageCount }}</td>
+          </tr>
+          <tr>
+            <td>{{ "report.table.applicationOneTypeTotalCount" | translate }}</td>
+            <td>{{ item.threat.totalCount }}</td>
+            <td>{{ "report.table.applicationOneTypeTotalCount" | translate }}</td>
+            <td>{{ item.damage.totalCount }}</td>
+            <td>{{ "report.table.applicationOneTypeTotalCount" | translate }}</td>
+            <td>{{ item.reportedDamage.totalCount }}</td>
+          </tr>
+          <tr class="tr-border">
+            <td colspan="6"
+                class="text-center">{{ "report.table.applicationsCount" | translate }} {{ item.itemCount }}</td>
+          </tr>
+        </ng-container>
+      </ng-container>
+
+      <ng-template #noResult>
+        <tr>
+          <td colspan="7"
+              class="text-center">
+            {{ 'report.table.noResults' | translate }}
+          </td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+</ng-container>

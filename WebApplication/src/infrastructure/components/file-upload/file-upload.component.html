@@ -1,0 +1,35 @@
+<div class="d-flex align-items-center {{inputGroupClass}}">
+	<div *ngIf="model?.name"
+			 class="d-flex justify-content-between align-items-center {{formControlClass}}"
+			 [class.control-disabled]="disabled">
+		<a (click)="getFile()"
+			 target="_blank"
+			 style="cursor: pointer; text-decoration: none;"
+			 class="text-overflow">{{ model?.name }}</a>
+	</div>
+	<span *ngIf="!model?.key"
+				class="{{formControlClass}}"
+				[class.form-control-invalid-static]="!disabled && required && !model?.key"
+				[class.control-disabled]="disabled"
+				[class.noevents]="disabled"
+				[ngClass]="{'cursor-pointer': !disabled }"
+				(click)="uploadFileFromInput($event)">
+		{{ (!hideNoFileUpload ? 'Няма прикачен файл' : '') | translate }}
+	</span>
+
+	<div *ngIf="!disabled">
+		<label class="btn {{btnClass}} cursor-pointer"
+					 style="margin:0"
+					 [class.noevents]="disabled">
+			<app-icon icon="file-earmark-arrow-up-fill"
+								width="14"
+								height="14"></app-icon>
+			<input #fileUploadInput
+						 type="file"
+						 onclick="this.value = null"
+						 [accept]="documentFormats"
+						 (change)="uploadFile($event)"
+						 style="display: none;">
+		</label>
+	</div>
+</div>

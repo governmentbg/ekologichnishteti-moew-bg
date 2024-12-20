@@ -1,0 +1,349 @@
+<div class="search-panel shadow bg-white rounded">
+  <div class="row">
+    <div class="col-sm-12">
+      <div *ngIf="!isAuthorizedPassive"
+           class="float-md-right">
+        <button type="button"
+                class="btn btn-sm btn-primary mb-4"
+                (click)="routeToNew()">
+          <app-icon icon="plus-circle"
+                    width="16"
+                    height="16"></app-icon>
+          {{ "buttons.newApplication" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-sm-12 col-md-6">
+      <label>
+        {{ "application.search.type" | translate }}
+      </label>
+      <select class="custom-select custom-select-sm"
+              name="applicationOneType"
+              [(ngModel)]="filter.type">
+        <option selected
+                [ngValue]="null">
+          {{ "application.search.all" | translate }}
+        </option>
+        <option [ngValue]="applicationTypes.damage">
+          {{ applicationTypeLocalization[applicationTypes.damage] }}
+        </option>
+        <option [ngValue]="applicationTypes.threat">
+          {{ applicationTypeLocalization[applicationTypes.threat] }}
+        </option>
+        <option [ngValue]="applicationTypes.reportedDamage">
+          {{ applicationTypeLocalization[applicationTypes.reportedDamage] }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group col-sm-12 col-md-3">
+      <label>
+        {{ "application.search.dateFrom" | translate }}
+      </label>
+      <div class="input-group input-group-sm">
+        <input name="dateFrom"
+               class="form-control"
+               ngbDatepicker
+               placeholder="дд/мм/гггг"
+               [ngStyle]="{'border': dateFrom.status === 'INVALID' ? '1px solid #dc3545' : null}"
+               #dateFrom="ngModel"
+               #dateFromDatepicker="ngbDatepicker"
+               [(ngModel)]="filter.dateFrom"
+               validDate
+               [maxDate]="maxDate"
+               maxlength="10">
+        <div class="input-group-append">
+          <button class="btn btn-sm btn-outline-primary"
+                  type="button"
+                  (click)="dateFromDatepicker.toggle()">
+            <app-icon icon="calendar2-event"
+                      width="12"
+                      height="12"></app-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group col-sm-12 col-md-3">
+      <label>
+        {{ "application.search.dateTo" | translate }}
+      </label>
+      <div class="input-group input-group-sm">
+        <input name="dateTo"
+               class="form-control"
+               ngbDatepicker
+               placeholder="дд/мм/гггг"
+               [ngStyle]="{'border': dateTo.status === 'INVALID' ? '1px solid #dc3545' : null}"
+               #dateTo="ngModel"
+               #dateToDatepicker="ngbDatepicker"
+               [(ngModel)]="filter.dateTo"
+               validDate
+               [maxDate]="maxDate"
+               maxlength="10">
+        <div class="input-group-append">
+          <button class="btn btn-sm btn-outline-primary"
+                  type="button"
+                  (click)="dateToDatepicker.toggle()">
+            <app-icon icon="calendar2-event"
+                      width="12"
+                      height="12"></app-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-sm-12 col-md-4">
+      <label>
+        {{ "application.search.applicationOneState" | translate }}
+      </label>
+      <select class="custom-select custom-select-sm"
+              name="applicationOneState"
+              [(ngModel)]="filter.applicationOneState">
+        <option selected
+                [ngValue]="null">
+          {{ "application.search.all" | translate }}
+        </option>
+        <option [ngValue]="commitStates.pending">
+          {{ commitStateLocalization[commitStates.pending] }}
+        </option>
+        <option [ngValue]="commitStates.entered">
+          {{ commitStateLocalization[commitStates.entered] }}
+        </option>
+        <option [ngValue]="commitStates.modification">
+          {{ commitStateLocalization[commitStates.modification] }}
+        </option>
+        <option [ngValue]="commitStates.completed">
+          {{ commitStateLocalization[commitStates.completed] }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group col-sm-12 col-md-4">
+      <label>
+        {{ 'application.search.applicant' | translate }}
+      </label>
+      <select class="custom-select custom-select-sm"
+              name="applicantType"
+              [(ngModel)]="filter.applicantType"
+              (ngModelChange)="clearSelects()">
+        <option selected
+                [ngValue]="null">
+          {{ "application.search.all" | translate }}
+        </option>
+        <option [ngValue]="applicantTypes.operator">
+          {{ 'application.about.operator' | translate }}
+        </option>
+        <option [ngValue]="applicantTypes.authority">
+          {{ 'application.about.authority' | translate }}
+        </option>
+        <option [ngValue]="applicantTypes.individual">
+          {{ 'application.about.individual' | translate }}
+        </option>
+        <option [ngValue]="applicantTypes.legalEntity">
+          {{ 'application.about.legalEntity' | translate }}
+        </option>
+        <option [ngValue]="applicantTypes.nonGovernmentalOrganization">
+          {{ 'application.about.nonGovernmentalOrganization' | translate }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group col-sm-12 col-md-4"
+         *ngIf="filter.applicantType === applicantTypes.authority">
+      <label>
+        {{ 'application.search.applicantAuthority' | translate }}
+      </label>
+      <app-async-select #applicantAuthority="ngModel"
+                        name="applicantAuthority"
+                        [allowClear]="true"
+                        restUrl="Authority/Select"
+                        [(ngModel)]="filter.applicantAuthority">
+      </app-async-select>
+    </div>
+
+    <div class="form-group col-sm-12 col-md-4"
+         *ngIf="filter.applicantType === applicantTypes.operator">
+      <label>
+        {{ 'application.search.applicantOperator' | translate }}
+      </label>
+      <app-async-select #operator="ngModel"
+                        name="operator"
+                        restUrl="OperatorNomenclature/Select"
+                        [allowClear]="true"
+                        [(ngModel)]="filter.operator"
+                        (ngModelChange)="filter.operatorId = $event?.id">
+      </app-async-select>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-sm-12 col-md-4">
+      <label>
+        {{ "application.search.riosv" | translate }}
+      </label>
+      <app-async-select #riosv="ngModel"
+                        name="riosv"
+                        restUrl="Authority/Select"
+                        [(ngModel)]="filter.riosv"
+                        [allowClear]="true"
+                        [filter]="{type: authorityType.riosv}"
+                        (ngModelChange)="filter.riosvId = $event?.id">
+      </app-async-select>
+    </div>
+
+    <div class="form-group col-sm-12 col-md-4">
+      <label>
+        {{ "application.search.basin" | translate }}
+      </label>
+      <app-async-select #basin="ngModel"
+                        name="basin"
+                        restUrl="Authority/Select"
+                        [(ngModel)]="filter.basin"
+                        [allowClear]="true"
+                        [filter]="{type: authorityType.bduv}"
+                        (ngModelChange)="filter.basinId = $event?.id">
+      </app-async-select>
+    </div>
+
+    <div class="form-group col-sm-12 col-md-4">
+      <label>
+        {{ 'application.search.authority' | translate }}
+      </label>
+      <app-async-select #authority="ngModel"
+                        name="authority"
+                        [allowClear]="true"
+                        restUrl="Authority/Select"
+                        [(ngModel)]="filter.authority">
+      </app-async-select>
+    </div>
+  </div>
+
+  <!-- <div class="row">
+    <div class="form-group col-sm-12 col-md-6">
+      <label>
+        {{ 'application.search.operator' | translate }}
+      </label>
+      <app-async-select #operator="ngModel"
+                        name="operator"
+                        restUrl="OperatorNomenclature/Select"
+                        [allowClear]="true"
+                        [(ngModel)]="filter.operator"
+                        (ngModelChange)="filter.operatorId = $event?.id">
+      </app-async-select>
+    </div>
+
+    <div class="form-group col-sm-12 col-md-6">
+      <label>
+        {{ "application.search.applicationOneDamage" | translate }}
+      </label>
+      <select class="custom-select custom-select-sm"
+              [(ngModel)]="filter.applicationOneDamage">
+        <option [ngValue]="applicationOneDamages.waterDamage">
+          {{ applicationOneDamageLocalization[applicationOneDamages.waterDamage] }}
+        </option>
+        <option [ngValue]="applicationOneDamages.soilDamage">
+          {{ applicationOneDamageLocalization[applicationOneDamages.soilDamage] }}
+        </option>
+        <option [ngValue]="applicationOneDamages.speciesDamage">
+          {{ applicationOneDamageLocalization[applicationOneDamages.speciesDamage] }}
+        </option>
+      </select>
+    </div>
+  </div> -->
+
+  <div class="row mt-4">
+    <div class="col-sm-12">
+      <div class="float-md-left">
+        <button type="button"
+                class="btn btn-sm btn-secondary"
+                (click)="clearFilter()">
+          <app-icon icon="trash"></app-icon>
+          {{ "buttons.clear" | translate }}
+        </button>
+      </div>
+
+      <div class="float-md-right">
+        <!-- <button type="button"
+                class="btn btn-sm btn-outline-primary"
+                (click)="routeToReports()">
+          <app-icon icon="file-earmark-excel"
+                    width="16"
+                    height="16"></app-icon>
+          {{ "buttons.generateReport" | translate }}
+        </button> -->
+        <button type="button"
+                class="btn btn-sm btn-primary ms-3"
+                (click)="search()">
+          <app-icon icon="search"
+                    class="thicker-icon"
+                    width="12"
+                    height="12"></app-icon>
+          {{ "buttons.search" | translate }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<ul class="nav nav-tabs mt-5">
+  <li class="nav-item active">
+    <a class="nav-link active"
+       style="color: inherit"
+       href="#activeApps"
+       data-toggle="tab">
+      {{ "application.filter-nav.active" | translate }}
+    </a>
+  </li>
+
+  <li class="nav-item active"
+      *ngIf="isAdmin || isMosv">
+    <a class="nav-link d-flex"
+       style="color: inherit"
+       href="#deletedApps"
+       data-toggle="tab">{{ 'application.filter-nav.deleted' | translate }}
+    </a>
+  </li>
+</ul>
+
+<div class="tab-content">
+  <div id="activeApps"
+       #activeApps
+       class="tab-pane active">
+    <application-search-table [model]="model"></application-search-table>
+
+    <div class="row mt-4 mb-4">
+      <div class="col-sm-12">
+        <div *ngIf="canLoadMore"
+             class="float-md-left">
+          <button type="button"
+                  class="btn btn-sm btn-secondary"
+                  (click)="loadMore()">
+            {{ "buttons.loadMore" | translate }}
+          </button>
+        </div>
+
+        <div *ngIf="model && modelCounts > 0"
+             class="float-md-right">
+          <p>
+            {{ modelCounts }}
+            {{ "filter.outOf" | translate }}
+            {{ totalCounts }}
+            {{ "filter.records" | translate }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="deletedApps"
+       #deletedApps
+       class="tab-pane fade"
+       *ngIf="isAdmin || isMosv">
+    <application-search-table [model]="deletedApplications"></application-search-table>
+  </div>
+</div>

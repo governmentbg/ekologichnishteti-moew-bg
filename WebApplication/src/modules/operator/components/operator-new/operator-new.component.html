@@ -1,0 +1,9 @@
+<operator-common [(operator)]="operator"
+                 [isEditMode]="isEditMode"
+                 (canSubmit)="canSubmit = $event">
+  <div header-buttons>
+    <button class="btn btn-primary btn-sm"
+            [disabled]="!canSubmit"
+            (click)="addOperator()">{{ "operator.new.add" | translate }}</button>
+  </div>
+</operator-common>

@@ -1,0 +1,161 @@
+:root {
+  --zopoesht-primary-color: #183320;
+}
+
+body {
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+textarea:focus,
+textarea.form-control:focus,
+input.form-control:focus,
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
+input[type=number]:focus,
+[type=text].form-control:focus,
+[type=password].form-control:focus,
+[type=email].form-control:focus,
+[type=tel].form-control:focus,
+[contenteditable].form-control:focus {
+  box-shadow: none;
+}
+
+.form-control:invalid {
+  border: 1px solid #dc3545;
+  box-shadow: none;
+}
+
+.form-group>label {
+  font-size: 13px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.btn {
+  font-weight: 600;
+}
+
+.btn-primary,
+.btn-outline-primary:hover,
+.btn-outline-primary:active,
+.show>.btn-outline-primary.dropdown-toggle {
+  background-color: var(--zopoesht-primary-color) !important;
+  border-color: var(--zopoesht-primary-color) !important;
+  color: #ffffff !important;
+}
+
+.btn-outline-primary {
+  color: var(--zopoesht-primary-color) !important;
+  border-color: var(--zopoesht-primary-color) !important;
+}
+
+.dropdown-item {
+  font-weight: bold;
+}
+
+.dropdown-item:hover {
+  background-color: #e9ecef;
+}
+
+.container {
+  width: 1150px
+}
+
+.required-field label:after {
+  content: "*";
+  color: red;
+}
+
+.text-green {
+  color: green;
+}
+
+.text-red {
+  color: red;
+}
+
+.text-black {
+  color: black;
+}
+
+.text-yellow {
+  color: rgb(243, 150, 10);
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.centered {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  margin-top: 15em !important;
+}
+
+.search-panel {
+  padding: 2em 2em 1em 2em;
+  box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
+}
+
+.utility-btns {
+  margin-top: 2em;
+}
+
+.header-item {
+  border-radius: 10px;
+}
+
+.search-table {
+  font-size: 14px;
+}
+
+.search-table thead th {
+  background-color: #f5f5f5 !important;
+}
+
+.search-table td.preview {
+  vertical-align: middle;
+  padding: 0 .75em;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.tooltip {
+  padding: 0;
+}
+
+.fs-16 {
+  font-size: 16px;
+}
+
+.fs-15 {
+  font-size: 15px;
+}
+
+.fs-14 {
+  font-size: 14px;
+}

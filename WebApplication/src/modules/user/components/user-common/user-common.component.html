@@ -1,0 +1,199 @@
+<form #userCommonForm="ngForm"
+      id="userCommonForm">
+  <div class="card">
+    <div class="card-header">
+      {{ "user.common.userData" | translate }}
+      <ng-content select="[header-buttons]"></ng-content>
+    </div>
+    <div class="card-body">
+
+      <div class="row">
+        <div class="form-group col-sm-12 col-md-4">
+          <label>
+            {{ "user.common.firstName" | translate }}
+          </label>
+          <div class="input-group input-group-sm">
+            <input name="firstName"
+                   class="form-control"
+                   #firstName="ngModel"
+                   [(ngModel)]="model.firstName"
+                   required
+                   [disabled]="!isEditMode">
+          </div>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-4">
+          <label>
+            {{ "user.common.middleName" | translate }}
+          </label>
+          <div class="input-group input-group-sm">
+            <input name="middleName"
+                   class="form-control"
+                   #middleName="ngModel"
+                   [(ngModel)]="model.middleName"
+                   [disabled]="!isEditMode">
+          </div>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-4">
+          <label>
+            {{ "user.common.lastName" | translate }}
+          </label>
+          <div class="input-group input-group-sm">
+            <input name="lastName"
+                   class="form-control"
+                   #lastName="ngModel"
+                   [(ngModel)]="model.lastName"
+                   required
+                   [disabled]="!isEditMode">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- <div class="form-group col-sm-12 col-md-4">
+          <label>
+            {{ "user.common.username" | translate }}
+          </label>
+          <div class="input-group input-group-sm">
+            <input name="username"
+                   class="form-control"
+                   #username="ngModel"
+                   [(ngModel)]="model.username"
+                   required
+                   [disabled]="!isEditMode">
+          </div>
+        </div> -->
+
+        <div class="form-group col-sm-12 col-md-4">
+          <label>
+            {{ "user.common.email" | translate }}
+          </label>
+          <div class="input-group input-group-sm">
+            <input name="email"
+                   class="form-control"
+                   #email="ngModel"
+                   [(ngModel)]="model.email"
+                   required
+                   pattern="{{emailRegex}}"
+                   [disabled]="!isEditMode">
+          </div>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-4">
+          <label>
+            {{ "user.common.phone" | translate }}
+          </label>
+          <div class="input-group input-group-sm">
+            <input name="phone"
+                   class="form-control"
+                   #phone="ngModel"
+                   [(ngModel)]="model.phone"
+                   required
+                   [disabled]="!isEditMode">
+          </div>
+        </div>
+        <div class="form-group col-md-4 col-sm-12">
+          <div class="form-group d-flex m-0 align-items-center">
+            <label>
+              {{ "user.common.password" | translate }}
+            </label>
+            <span class="d-inline-flex">
+              <app-help-tooltip class="ml-1"
+                                tooltipText="{{ 'regExpRequirementText.password' | translate }}">
+              </app-help-tooltip>
+            </span>
+          </div>
+          <div class="input-group input-group-sm">
+            <input name="password"
+                   class="form-control"
+                   type="password"
+                   #password="ngModel"
+                   [(ngModel)]="model.password"
+                   [required]="isPasswordRequired"
+                   pattern="{{passwordRegex}}"
+                   [disabled]="!isEditMode">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+
+        <div class="form-group col-sm-12 col-md-4">
+          <label>
+            {{ "user.common.status" | translate }}
+          </label>
+          <select class="custom-select custom-select-sm"
+                  name="status"
+                  [ngClass]="{'red-border': model.status === undefined}"
+                  [(ngModel)]="model.status"
+                  [disabled]="!isEditMode"
+                  required>
+            <option [ngValue]="userStatuses.active">
+              {{ userStatusLocalization[userStatuses.active] }}
+            </option>
+            <option [ngValue]="userStatuses.deactivated">
+              {{ userStatusLocalization[userStatuses.deactivated] }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-4">
+          <label>
+            {{ "user.common.position" | translate }}
+          </label>
+          <div class="input-group input-group-sm">
+            <input name="position"
+                   class="form-control"
+                   #position="ngModel"
+                   [(ngModel)]="model.position"
+                   [disabled]="!isEditMode">
+          </div>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-4">
+          <label>
+            {{ "user.common.role" | translate }}
+          </label>
+          <app-async-select #role="ngModel"
+                            name="role"
+                            restUrl="Role/Select"
+                            [(ngModel)]="model.role"
+                            (ngModelChange)="model.role.id = $event.id; selectRole($event)"
+                            required="true"
+                            [disabled]="!isEditMode">
+
+          </app-async-select>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="form-group col-sm-12 col-md-4"
+             *ngIf="model.role && model.role.alias === userRoleAliases.AUTHORIZED_ENTITY_ACTIVE">
+          <label class="d-inline-flex">{{ 'user.common.authorityName' | translate }}</label>
+          <app-async-select *ngIf="model.role.alias === userRoleAliases.AUTHORIZED_ENTITY_ACTIVE"
+                            #authority="ngModel"
+                            name="authority"
+                            restUrl="Authority/Select"
+                            [(ngModel)]="model.authority"
+                            (ngModelChange)="model.authorityId = $event.id"
+                            [disabled]="!isEditMode"
+                            [required]="true">
+
+          </app-async-select>
+
+          <!-- <input *ngIf="model.role.alias === userRoleAliases.ADMINISTRATOR"
+                 #authorityName="ngModel"
+                 type="text"
+                 name="authorityName"
+                 class="form-control form-control-sm"
+                 [ngModel]="mosvName"
+                 [disabled]="true"
+                 required
+                 minlength="9"
+                 maxlength="14"> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,74 @@
+<form #applicationOneLegalEntityForm="ngForm">
+  <div class="row">
+    <div class="form-group col-sm-12 col-md-5">
+      <label>
+        {{ 'application.legalEntity.address' | translate }}
+      </label>
+      <input type="text"
+             name="address"
+             #address="ngModel"
+             class="form-control form-control-sm"
+             [disabled]="!isEditMode"
+             [(ngModel)]="model.applicationOneLegalEntity.address"
+             required>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-sm-12 col-md-12">
+      <label>
+        {{ 'application.legalEntity.applicantViolations' | translate }}
+      </label>
+      <input type="text"
+             name="applicantViolations"
+             #applicantViolations="ngModel"
+             class="form-control form-control-sm"
+             [disabled]="!isEditMode"
+             [(ngModel)]="model.applicationOneLegalEntity.applicantViolations"
+             [required]="model.applicant.applicantType != applicantTypes.nonGovernmentalOrganization">
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-sm-12">
+      <label>
+        {{ 'application.legalEntity.allegedOccurenceConsequences' | translate }}
+      </label>
+      <div class="textarea-wrapper">
+        <textarea name="allegedOccurenceConsequences"
+                  #allegedOccurenceConsequences="ngModel"
+                  class="form-control form-control-sm"
+                  [maxlength]="maxTextLength1024"
+                  [disabled]="!isEditMode"
+                  [(ngModel)]="model.applicationOneLegalEntity.allegedOccurenceConsequences"
+                  required
+                  rows="3"></textarea>
+        <span class="used-chars">
+          {{ model.applicationOneLegalEntity.allegedOccurenceConsequences === undefined ||
+          model.applicationOneLegalEntity.allegedOccurenceConsequences === null ?
+          0 :
+          model.applicationOneLegalEntity.allegedOccurenceConsequences?.length }}/{{ maxTextLength1024 }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-sm-12">
+      <label>
+        {{ 'application.legalEntity.recoveryAdvice' | translate }}
+      </label>
+      <div class="textarea-wrapper">
+        <textarea name="recoveryAdvice"
+                  #recoveryAdvice="ngModel"
+                  class="form-control form-control-sm"
+                  [maxlength]="maxTextLength1024"
+                  [disabled]="!isEditMode"
+                  [(ngModel)]="model.applicationOneLegalEntity.recoveryAdvice"
+                  required
+                  rows="3"></textarea>
+        <span class="used-chars">
+          {{ model.applicationOneLegalEntity.recoveryAdvice === undefined ||
+          model.applicationOneLegalEntity.recoveryAdvice === null ?
+          0 :
+          model.applicationOneLegalEntity.recoveryAdvice?.length }}/{{ maxTextLength1024 }}</span>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,71 @@
+<form #applicationTwoForm="ngForm"
+      id="applicationTwoForm"
+      class="form">
+
+  <div class="form-subheader mb-2">
+
+    <ng-container *ngIf="model.commitState === commitState.archived">
+      <p style="font-weight: bold;">{{ 'application.view.currentState' | translate }}:&nbsp;</p>
+      <h6 style="color: red; font-weight: bold;">
+        {{ commitStateLocalization[model.commitState] }}
+      </h6>
+    </ng-container>
+
+    <div style="display: contents;">
+      <div class="control-btns">
+        <button *ngIf="model.hasHistory === true && !isEditMode && (isAdmin || isMosv)"
+                class="btn btn-sm btn-primary ml-2"
+                [routerLink]="['/application/two', model.id, 'history', model.rootId]">
+          {{ 'application.view.buttons.history' | translate }}
+        </button>
+
+        <ng-container *ngIf="model.commitState === commitState.pending && model.hasPermissionToControl">
+          <button class="btn btn-sm btn-primary ml-2"
+                  (click)="beginModification()">
+            {{ 'application.view.buttons.modification' | translate }}
+          </button>
+          <button class="btn btn-sm btn-warning ml-2"
+                  (click)="complete()">
+            {{ 'application.view.buttons.complete' | translate }}
+          </button>
+        </ng-container>
+
+        <ng-container
+                      *ngIf="model.commitState === commitState.modification && model.hasPermissionToEdit && model.hasPermissionToControl">
+          <button class="btn btn-sm btn-danger ml-2"
+                  (click)="cancelModification(model)">
+            {{ 'application.view.buttons.cancelModification' | translate }}
+          </button>
+
+          <button class="btn btn-sm btn-success ml-2"
+                  [disabled]="applicationTwoForm.invalid || !canSubmit || !areCodesValid || !areActivityOfferingsValid"
+                  (click)="saveModification()">
+            {{ 'application.view.buttons.submit' | translate }}
+          </button>
+
+          <button class="btn btn-sm btn-warning ml-2"
+                  (click)="finishModification()"
+                  [disabled]="applicationTwoForm.invalid || !canSubmit || !areCodesValid || !areActivityOfferingsValid">
+            {{ 'application.view.buttons.finishModification' | translate }}
+          </button>
+
+          <!-- <button *ngIf="isEditMode"
+                  class="btn btn-sm btn-danger ml-2"
+                  (click)="cancelModification()">
+            {{ 'application.view.buttons.cancel' | translate }}
+          </button> -->
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <app-application-two-common [(model)]="model"
+                              (isValidForm)="changeFormValidStatus($event)"
+                              (canSubmit)="canSubmit = $event"
+                              (areCodesValid)="areCodesValid = $event"
+                              (areActivityOfferingsValid)="areActivityOfferingsValid = $event"
+                              [isEditMode]="isEditMode"
+                              [isViewMode]="isViewMode"
+                              [isFileFormDisplayed]="model?.applicationTwoFiles?.length > 0">
+  </app-application-two-common>
+</form>

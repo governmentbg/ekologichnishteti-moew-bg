@@ -1,0 +1,205 @@
+<div class="search-panel shadow bg-white rounded">
+  <div class="row">
+    <div class="form-group col-sm-12 col-md-4">
+      <label>
+        {{ "user.search.firstName" | translate }}
+      </label>
+      <div class="input-group input-group-sm">
+        <input name="firstName"
+               class="form-control"
+               #firstName="ngModel"
+               [(ngModel)]="filter.firstName">
+      </div>
+    </div>
+
+    <div class="form-group col-sm-12 col-md-4">
+      <label>
+        {{ "user.search.middleName" | translate }}
+      </label>
+      <div class="input-group input-group-sm">
+        <input name="middleName"
+               class="form-control"
+               #middleName="ngModel"
+               [(ngModel)]="filter.middleName">
+      </div>
+    </div>
+
+    <div class="form-group col-sm-12 col-md-4">
+      <label>
+        {{ "user.search.lastName" | translate }}
+      </label>
+      <div class="input-group input-group-sm">
+        <input name="lastName"
+               class="form-control"
+               #lastName="ngModel"
+               [(ngModel)]="filter.lastName">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-sm-12 col-md-4">
+      <label>
+        {{ "user.search.email" | translate }}
+      </label>
+      <div class="input-group input-group-sm">
+        <input name="email"
+               class="form-control"
+               #email="ngModel"
+               [(ngModel)]="filter.email">
+      </div>
+    </div>
+
+    <div class="form-group col-sm-12 col-md-4">
+      <label>
+        {{ "user.search.status" | translate }}
+      </label>
+      <select class="custom-select custom-select-sm"
+              [(ngModel)]="filter.status">
+        <option selected
+                [ngValue]="null">
+          {{ "user.search.all" | translate }}
+        </option>
+        <option [ngValue]="userStatuses.active">
+          {{ userStatusLocalization[userStatuses.active] }}
+        </option>
+        <option [ngValue]="userStatuses.inactive">
+          {{ userStatusLocalization[userStatuses.inactive] }}
+        </option>
+        <option [ngValue]="userStatuses.deactivated">
+          {{ userStatusLocalization[userStatuses.deactivated] }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-sm-12">
+
+      <div class="float-md-left">
+        <button type="button"
+                class="btn btn-sm btn-secondary"
+                (click)="clearFilter()">
+          <app-icon icon="trash"
+                    width="16"
+                    height="16"></app-icon>
+          {{ "buttons.clear" | translate }}
+        </button>
+      </div>
+
+      <div class="float-md-right">
+        <button type="button"
+                class="btn btn-sm btn-primary"
+                (click)="search()">
+          <app-icon icon="search"
+                    class="thicker-icon"
+                    width="12"
+                    height="12"></app-icon>
+          {{ "buttons.search" | translate }}
+        </button>
+        <button type="button"
+                class="btn btn-sm btn-primary ms-3"
+                (click)="routeToNew()">
+          <app-icon icon="person-fill"
+                    width="16"
+                    height="16"></app-icon>
+          {{ "buttons.newUser" | translate }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<table class="table search-table table-bordered mt-5">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col"
+          class="col-md-4">
+        {{ "user.table.fullname" | translate }}
+      </th>
+      <th scope="col"
+          class="col-md-3">
+        {{ "user.table.phoneAndEmail" | translate }}
+      </th>
+      <th scope="col"
+          class="col-md-3">
+        {{ "user.table.roleAndAuthority" | translate }}
+      </th>
+      <th scope="col"
+          class="col-md-2">
+        {{ "user.table.status" | translate }}
+      </th>
+      <th scope="col"
+          class="col-md-1">
+        {{ "user.table.details" | translate }}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <ng-container *ngIf="model && model.length > 0;
+      else
+      noResult">
+      <tr *ngFor="let user of model">
+        <td>
+          {{ user.fullname ? user.fullname : '-' }}
+        </td>
+        <td>
+          {{ user.phone ? user.phone : '-' }}
+          <br>
+          {{ user.email ? user.email : '-'}}
+        </td>
+        <td>
+          {{ user.role.name }}
+          <br>
+          <ng-container *ngIf="user.authority">
+            {{ user.role.alias === mosv || user.role.alias === administrator ? '' : user.authority.name }}
+          </ng-container>
+        </td>
+        <td>
+          {{ userStatusLocalization[user.status] }}
+        </td>
+        <td class="text-center">
+          <button type="button"
+                  class="btn btn-sm btn-outline-primary"
+                  (click)="routeToView(user.id)">
+            <app-icon icon="search"
+                      width="16"
+                      height="16"></app-icon>
+          </button>
+        </td>
+      </tr>
+    </ng-container>
+    <ng-template #noResult>
+      <tr>
+        <td colspan="7"
+            class="text-center">
+          {{ 'user.table.noResults' | translate }}
+        </td>
+      </tr>
+    </ng-template>
+  </tbody>
+</table>
+
+<div class="row mt-4 mb-4">
+  <div class="col-sm-12">
+    <div *ngIf="canLoadMore"
+         class="float-md-left">
+      <button type="button"
+              class="btn btn-sm btn-secondary"
+              (click)="loadMore()">
+        {{ "buttons.loadMore" | translate }}
+      </button>
+    </div>
+
+    <div *ngIf="model && model?.length > 0"
+         class="float-md-right">
+      <p>
+        {{ modelCounts }}
+        {{ "filter.outOf" | translate }}
+        {{ totalCounts }}
+        {{ "filter.records" | translate }}
+      </p>
+    </div>
+  </div>
+</div>

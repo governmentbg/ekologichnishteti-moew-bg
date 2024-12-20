@@ -1,0 +1,1939 @@
+<form #applicationTwoCommonForm="ngForm"
+      id="applicationTwoCommonForm">
+
+  <app-part-panel header="{{ 'application.applicationTwo.title' | translate }}">
+
+    <div class="row">
+      <div class="form-group col-md-6 col-sm-12">
+        <label *ngIf="model.applicationOneType === applicationOneTypes.threat">
+          {{ 'application.applicationTwo.common.threatType' | translate }}
+        </label>
+        <label
+               *ngIf="model.applicationOneType === applicationOneTypes.damage || model.applicationOneType === applicationOneTypes.reportedDamage">
+          {{ 'application.applicationTwo.common.damageType' | translate }}
+        </label>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="checkbox"
+                   class="form-check-input"
+                   #hasSpeciesDamage="ngModel"
+                   name="hasSpeciesDamage"
+                   [disabled]="!isEditMode"
+                   [required]="!model.hasWaterDamage && !model.hasSoilDamage"
+                   [(ngModel)]="model.hasSpeciesDamage"
+                   [ngClass]="{'red-border': !isAnyChecked()}">
+            {{ 'application.basic.hasSpeciesDamage' | translate }}
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="checkbox"
+                   class="form-check-input"
+                   #hasWaterDamage="ngModel"
+                   name="hasWaterDamage"
+                   [disabled]="!isEditMode"
+                   [required]="!model.hasSpeciesDamage && !model.hasSoilDamage"
+                   [(ngModel)]="model.hasWaterDamage"
+                   [ngClass]="{'red-border': !isAnyChecked()}">
+            {{ 'application.basic.hasWaterDamage' | translate }}
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="checkbox"
+                   class="form-check-input"
+                   #hasSoilDamage="ngModel"
+                   name="hasSoilDamage"
+                   [disabled]="!isEditMode"
+                   [required]="!model.hasSpeciesDamage && !model.hasWaterDamage"
+                   [(ngModel)]="model.hasSoilDamage"
+                   [ngClass]="{'red-border': !isAnyChecked()}">
+            {{ 'application.basic.hasSoilDamage' | translate }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-md-3 col-sm-12">
+        <div class="form-group d-flex m-0 align-items-center">
+          <label class="w-75 overflow-hidden text-truncate"
+                 *ngIf="model.applicationOneType === applicationOneTypes.threat">
+            {{ 'application.applicationTwo.common.threatOccurrenceDate' | translate }}
+          </label>
+          <label class="w-75 overflow-hidden text-truncate"
+                 *ngIf="model.applicationOneType === applicationOneTypes.damage || model.applicationOneType === applicationOneTypes.reportedDamage">
+            {{ 'application.applicationTwo.common.damageOccurrenceDate' | translate }}
+          </label>
+          <span class="d-inline-flex">
+            <app-help-tooltip class="ml-1"
+                              tooltipText="{{ 'application.applicationTwo.common.threatOccurrenceDate' | translate }}"
+                              *ngIf="model.applicationOneType === applicationOneTypes.threat">
+            </app-help-tooltip>
+            <app-help-tooltip class="ml-1"
+                              tooltipText="{{ 'application.applicationTwo.common.damageOccurrenceDate' | translate }}"
+                              *ngIf="model.applicationOneType === applicationOneTypes.damage || model.applicationOneType === applicationOneTypes.reportedDamage">
+            </app-help-tooltip>
+          </span>
+        </div>
+        <div class="input-group input-group-sm">
+          <input name="occurrenceDate"
+                 class="form-control"
+                 ngbDatepicker
+                 placeholder="дд/мм/гггг"
+                 [ngStyle]="{'border': occurrenceDate.status === 'INVALID' ? '1px solid #dc3545' : null}"
+                 #occurrenceDate="ngModel"
+                 #occurrenceDateDatepicker="ngbDatepicker"
+                 [(ngModel)]="model.occurrenceDate"
+                 validDate
+                 [maxDate]="maxDate"
+                 [disabled]="!isEditMode"
+                 required
+                 maxlength="20">
+          <div class="input-group-append">
+            <button class="btn btn-sm btn-outline-primary"
+                    type="button"
+                    [disabled]="!isEditMode"
+                    (click)="occurrenceDateDatepicker.toggle()">
+              <app-icon icon="calendar2-event"
+                        width="12"
+                        height="12"></app-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group col-md-3 col-sm-12">
+        <label *ngIf="model.applicationOneType === applicationOneTypes.threat">
+          {{ 'application.applicationTwo.common.threatConfirmedDate' | translate }}
+        </label>
+        <label
+               *ngIf="model.applicationOneType === applicationOneTypes.damage || model.applicationOneType === applicationOneTypes.reportedDamage">
+          {{ 'application.applicationTwo.common.damageConfirmedDate' | translate }}
+        </label>
+        <div class="input-group input-group-sm">
+          <input name="confirmedDate"
+                 class="form-control"
+                 ngbDatepicker
+                 placeholder="дд/мм/гггг"
+                 [ngStyle]="{'border': confirmedDate.status === 'INVALID' ? '1px solid #dc3545' : null}"
+                 #confirmedDate="ngModel"
+                 #confirmedDateDatepicker="ngbDatepicker"
+                 [(ngModel)]="model.confirmedDate"
+                 validDate
+                 [maxDate]="maxDate"
+                 [disabled]="!isEditMode"
+                 required
+                 maxlength="20">
+          <div class="input-group-append">
+            <button class="btn btn-sm btn-outline-primary"
+                    type="button"
+                    [disabled]="!isEditMode"
+                    (click)="confirmedDateDatepicker.toggle()">
+              <app-icon icon="calendar2-event"
+                        width="12"
+                        height="12"></app-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-sm-12">
+        <label>
+          {{ 'application.applicationTwo.common.occurrenceDateDescription' | translate }}
+        </label>
+        <div class="textarea-wrapper">
+          <textarea name="occurrenceDateDescription"
+                    #occurrenceDateDescription="ngModel"
+                    class="form-control form-control-sm"
+                    [maxlength]="maxTextLength1024"
+                    [disabled]="!isEditMode"
+                    [(ngModel)]="model.occurrenceDateDescription"
+                    rows="3"></textarea>
+          <span class="used-chars">
+            {{ model.occurrenceDateDescription === undefined ||
+            model.occurrenceDateDescription === null ?
+            0 :
+            model.occurrenceDateDescription?.length }}/{{ maxTextLength1024 }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-md-3 col-sm-12">
+        <div class="form-group d-flex m-0 align-items-center">
+          <label class="w-75 overflow-hidden text-truncate">
+            {{ 'application.applicationTwo.common.procedureInitiatedDate' | translate }}
+          </label>
+          <span class="d-inline-flex">
+            <app-help-tooltip class="ml-1"
+                              tooltipText="{{ 'application.applicationTwo.common.procedureInitiatedDate' | translate }}">
+            </app-help-tooltip>
+          </span>
+        </div>
+        <div class="input-group input-group-sm">
+          <input name="procedureInitiatedDate"
+                 class="form-control"
+                 ngbDatepicker
+                 placeholder="дд/мм/гггг"
+                 [ngStyle]="{'border': procedureInitiatedDate.status === 'INVALID' ? '1px solid #dc3545' : null}"
+                 #procedureInitiatedDate="ngModel"
+                 #procedureInitiatedDateDatepicker="ngbDatepicker"
+                 [(ngModel)]="model.procedureInitiatedDate"
+                 validDate
+                 [maxDate]="maxDate"
+                 [disabled]="!isEditMode"
+                 required
+                 maxlength="20">
+          <div class="input-group-append">
+            <button class="btn btn-sm btn-outline-primary"
+                    type="button"
+                    [disabled]="!isEditMode"
+                    (click)="procedureInitiatedDateDatepicker.toggle()">
+              <app-icon icon="calendar2-event"
+                        width="12"
+                        height="12"></app-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-sm-12">
+        <label>
+          {{ 'application.applicationTwo.common.procedureInitiatedDateDescription' | translate }}
+        </label>
+        <div class="textarea-wrapper">
+          <textarea name="procedureInitiatedDateDescription"
+                    #procedureInitiatedDateDescription="ngModel"
+                    class="form-control form-control-sm"
+                    [maxlength]="maxTextLength1024"
+                    [disabled]="!isEditMode"
+                    [(ngModel)]="model.procedureInitiatedDateDescription"
+                    rows="3"></textarea>
+          <span class="used-chars">
+            {{ model.procedureInitiatedDateDescription === undefined ||
+            model.procedureInitiatedDateDescription === null ?
+            0 :
+            model.procedureInitiatedDateDescription?.length }}/{{ maxTextLength1024 }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-sm-12 col-md-6">
+        <div class="form-group d-flex m-0 align-items-center">
+          <label class="w-75 overflow-hidden text-truncate">
+            {{ 'application.applicationTwo.common.applicant' | translate }}
+          </label>
+          <span class="d-inline-flex">
+            <app-help-tooltip class="ml-1"
+                              tooltipText=" {{ 'application.applicationTwo.common.applicant' | translate }}">
+            </app-help-tooltip>
+          </span>
+        </div>
+        <select class="custom-select custom-select-sm"
+                name="applicantType"
+                #applicantType="ngModel"
+                [(ngModel)]="model.applicant.applicantType"
+                (ngModelChange)="onApplicantTypeChange($event)"
+                [disabled]="isDisabled"
+                required>
+          <option [ngValue]="applicantTypes.operator">
+            {{ 'application.applicationTwo.common.applicantTypes.operator' | translate }}
+          </option>
+          <option [ngValue]="applicantTypes.authority">
+            {{ 'application.applicationTwo.common.applicantTypes.authority' | translate }}
+          </option>
+          <option [ngValue]="applicantTypes.individual">
+            {{ 'application.applicationTwo.common.applicantTypes.individual' | translate }}
+          </option>
+          <option [ngValue]="applicantTypes.legalEntity">
+            {{ 'application.applicationTwo.common.applicantTypes.legalEntity' | translate }}
+          </option>
+          <option [ngValue]="applicantTypes.nonGovernmentalOrganization">
+            {{ 'application.applicationTwo.common.applicantTypes.nonGovernmentalOrganization' | translate }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group col-sm-12 col-md-4"
+           *ngIf="model.applicant.applicantType === applicantTypes.authority">
+        <label>
+          {{ 'application.applicantForm.authority.mainAuthority' | translate }}
+        </label>
+        <app-async-select #authority="ngModel"
+                          name="authority"
+                          restUrl="Authority/Select"
+                          [(ngModel)]="model.applicant.authority"
+                          [disabled]="isDisabled"
+                          [required]="true">
+        </app-async-select>
+      </div>
+    </div>
+
+    <ng-container *ngIf="model.applicant.applicantType === applicantTypes.individual">
+      <div class="row">
+        <div class="form-group col-sm-12 col-md-4">
+          <label>
+            {{ 'application.applicationTwo.common.individual.firstName' | translate }}
+          </label>
+          <div class="input-group input-group-sm">
+            <input name="firstName"
+                   class="form-control"
+                   #firstName="ngModel"
+                   required
+                   [disabled]="isDisabled"
+                   [(ngModel)]="model.applicant.individual.firstName" />
+          </div>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-4">
+          <label>
+            {{ 'application.applicationTwo.common.individual.middleName' | translate }}
+          </label>
+          <div class="input-group input-group-sm">
+            <input name="middleName"
+                   class="form-control"
+                   #middleName="ngModel"
+                   [disabled]="isDisabled"
+                   [(ngModel)]="model.applicant.individual.middleName" />
+          </div>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-4">
+          <label>
+            {{ 'application.applicationTwo.common.individual.lastName' | translate }}
+          </label>
+          <div class="input-group input-group-sm">
+            <input name="lastName"
+                   class="form-control"
+                   #lastName="ngModel"
+                   required
+                   [disabled]="isDisabled"
+                   [(ngModel)]="model.applicant.individual.lastName" />
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-12 col-md-4">
+          <label>
+            {{ 'application.applicationTwo.common.individual.email' | translate }}
+          </label>
+          <div class="input-group input-group-sm">
+            <input name="email"
+                   class="form-control"
+                   #email="ngModel"
+                   required
+                   [disabled]="isDisabled"
+                   [(ngModel)]="model.applicant.individual.email" />
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container
+                  *ngIf="model.applicant.applicantType === applicantTypes.legalEntity || model.applicant.applicantType === applicantTypes.nonGovernmentalOrganization">
+      <div class="row">
+        <div class="form-group col-sm-12 col-md-6">
+          <label>
+            {{ 'application.applicationTwo.common.legalEntity.name' | translate }}
+          </label>
+          <div class="input-group input-group-sm">
+            <input name="legalEntityName"
+                   class="form-control"
+                   #legalEntityName="ngModel"
+                   required
+                   [disabled]="isDisabled"
+                   [(ngModel)]="model.applicant.legalEntity.legalEntityName" />
+          </div>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-2">
+          <label>
+            {{ 'application.applicationTwo.common.legalEntity.uin' | translate }}
+          </label>
+          <div class="input-group input-group-sm">
+            <input name="uin"
+                   class="form-control"
+                   #uin="ngModel"
+                   required
+                   [disabled]="isDisabled"
+                   [(ngModel)]="model.applicant.legalEntity.uin" />
+          </div>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-4">
+          <label>
+            {{ 'application.applicationTwo.common.legalEntity.email' | translate }}
+          </label>
+          <div class="input-group input-group-sm">
+            <input name="email"
+                   class="form-control"
+                   #email="ngModel"
+                   required
+                   [disabled]="isDisabled"
+                   [(ngModel)]="model.applicant.legalEntity.email" />
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <operator-info [model]="model.operator"
+                   [applicantType]="model.applicant.applicantType"
+                   (operatorChangeEvent)="onOperatorChange($event)"
+                   [isEditMode]="isEditMode"
+                   [isDisabled]="true">
+    </operator-info>
+
+    <ng-container *ngIf="model.operator">
+      <div class="row">
+        <div class="form-group col-sm-12 col-md-4 m-0">
+          <div class="form-group d-flex m-0 align-items-center">
+            <label class="w-75 overflow-hidden text-truncate">
+              {{ 'operator.common.activityOptions' | translate }}
+            </label>
+            <span class="d-inline-flex">
+              <app-help-tooltip class="ml-1"
+                                tooltipText="{{ 'operator.common.activityOptions' | translate }}">
+              </app-help-tooltip>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="row align-items-end mb-3">
+        <div class="form-group col-sm-11 col-md-4 mb-0">
+          <select class="custom-select custom-select-sm"
+                  name="activityOfferingType"
+                  #activityOfferingType="ngModel"
+                  [(ngModel)]="model.activityOfferingType"
+                  (ngModelChange)="onActivityOfferingTypeChange()"
+                  [disabled]="!isEditMode">
+            <option [ngValue]="activityOfferingTypes.listed">
+              {{ 'operator.common.listedActivity' | translate }}
+            </option>
+            <option [ngValue]="activityOfferingTypes.notListed">
+              {{ 'operator.common.notListed' | translate }}
+            </option>
+            <option [ngValue]="activityOfferingTypes.diffuseNature">
+              {{ 'operator.common.diffuseNature' | translate }}
+            </option>
+          </select>
+        </div>
+        <button *ngIf="isEditMode"
+                class="btn btn-sm btn-danger btn-remove"
+                type="button"
+                [disabled]="!isEditMode"
+                (click)="removeActivityOfferingType()">
+          <app-icon icon="trash"
+                    width="12"
+                    height="12"></app-icon>
+        </button>
+      </div>
+    </ng-container>
+
+    <ng-container *ngFor="let activityOffering of model.applicationTwoActivityOfferings; let i = index">
+      <div class="px-4">
+        <ng-container *ngIf="i === 0">
+          <hr>
+        </ng-container>
+
+        <div *ngIf="model.applicationTwoActivityOfferings[i].activityId === null || model.applicationTwoActivityOfferings[i].activityId === undefined"
+             class="row">
+          <div class="form-group col-sm-12 col-md-12">
+            <app-async-select name="activityOfferings-{{ i }}"
+                              #activityOfferings="ngModel"
+                              [(ngModel)]="model.applicationTwoActivityOfferings[i]"
+                              (ngModelChange)="onActivityChange(i, $event)"
+                              [disabled]="!isEditMode"
+                              [required]="true"
+                              [collection]="unusedActivityOffering">
+            </app-async-select>
+          </div>
+        </div>
+
+        <div *ngIf="model.applicationTwoActivityOfferings[i]?.activity?.id">
+          <div class="row">
+            <div class="form-group col-sm-12 col-md-12">
+              <label>
+                {{ 'operator.common.activity' | translate }}
+              </label>
+              <input type="text"
+                     name="activity-{{ i }}"
+                     #activity="ngModel"
+                     class="form-control form-control-sm"
+                     [ngModel]="getActivityNameWithSubActivityCode(activityOffering)"
+                     required
+                     disabled>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-sm-12 col-md-12">
+              <label>
+                {{ 'operator.common.subActivity' | translate }}
+              </label>
+              <input type="text"
+                     name="subActivity-{{ i }}"
+                     #subActivity="ngModel"
+                     class="form-control form-control-sm"
+                     [ngModel]="activityOffering.subActivity.name"
+                     required
+                     disabled>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-sm-12 col-md-4">
+              <label>
+                {{ 'operator.common.operatorAuthorityRiosv' | translate }}
+              </label>
+              <input type="text"
+                     name="operatorAuthorityRiosv-{{ i }}"
+                     #operatorAuthorityRiosv="ngModel"
+                     class="form-control form-control-sm"
+                     [ngModel]="activityOffering.authorityRiosv?.name"
+                     required
+                     disabled>
+            </div>
+            <div class="form-group col-sm-12 col-md-4">
+              <label>
+                {{ 'operator.common.operatorAuthorityBasin' | translate }}
+              </label>
+              <input type="text"
+                     name="operatorAuthorityBasin-{{ i }}"
+                     #operatorAuthorityBasin="ngModel"
+                     class="form-control form-control-sm"
+                     [ngModel]="activityOffering.authorityBasin?.name"
+                     required
+                     disabled>
+            </div>
+            <div class="form-group col-sm-12 col-md-4">
+              <label>
+                {{ 'operator.common.operatorTerrain' | translate }}
+              </label>
+              <input type="text"
+                     name="operatorTerrain-{{ i }}"
+                     #operatorTerrain="ngModel"
+                     class="form-control form-control-sm"
+                     [ngModel]="activityOffering.terrain?.name"
+                     required
+                     disabled>
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-sm-12 float-md-left">
+            <button *ngIf="isEditMode"
+                    class="btn btn-sm btn-danger btn-remove"
+                    type="button"
+                    [disabled]="!isEditMode"
+                    (click)="removeActivityOffering(i, model.applicationTwoActivityOfferings[i])">
+              <app-icon class="mr-1"
+                        icon="trash"
+                        width="12"
+                        height="12"></app-icon>
+              {{ 'operator.common.removeActivityOffering' | translate }}
+            </button>
+          </div>
+        </div>
+        <hr>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="model.activityOfferingType === activityOfferingTypes.notListed">
+      <div class="row">
+        <div class="form-group col-sm-12">
+          <label>
+            {{ 'operator.common.notListedDescription' | translate }}
+          </label>
+          <input type="text"
+                 name="notListedDescription"
+                 #notListedDescription="ngModel"
+                 class="form-control form-control-sm"
+                 [(ngModel)]="model.notListedDescription"
+                 required
+                 [disabled]="!isEditMode">
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="model.activityOfferingType === activityOfferingTypes.diffuseNature">
+      <div class="row">
+        <div class="form-group col-sm-12">
+          <label>
+            {{ 'operator.common.diffuseNatureDescription' | translate }}
+          </label>
+          <input type="text"
+                 name="diffuseNatureDescription"
+                 #diffuseNatureDescription="ngModel"
+                 class="form-control form-control-sm"
+                 [(ngModel)]="model.diffuseNatureDescription"
+                 required
+                 [disabled]="!isEditMode">
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="row"
+         [ngClass]="{'pl-4': model.applicationTwoActivityOfferings?.length > 0}"
+         *ngIf="model.activityOfferingType === activityOfferingTypes.listed">
+      <div class="col-sm-12 float-md-left">
+        <button *ngIf="isEditMode && model.applicationTwoActivityOfferings?.length < model.operator?.activityOfferings?.length"
+                class="btn btn-sm btn-blue mt-1 mb-3"
+                type="button"
+                [disabled]="!canAddActivityOffering"
+                (click)="addActivityOffering()">
+          <app-icon icon="plus-lg"
+                    width="12"
+                    height="12"></app-icon>
+          {{ 'operator.common.addActivityOffering' | translate }}
+        </button>
+      </div>
+    </div>
+
+    <ng-container *ngFor="let authority of model.applicationTwoAuthorities; let i = index">
+      <ng-container *ngIf="i === 0">
+        <div class="row">
+          <div class="form-group col-sm-12 col-md-4 m-0">
+            <label>
+              {{ 'application.applicationTwo.common.applicantTypes.authority' | translate }}
+            </label>
+          </div>
+        </div>
+      </ng-container>
+
+      <div class="row align-items-end mb-2">
+        <div class="form-group col-sm-11 col-md-4 mb-0">
+          <app-async-select #authority="ngModel"
+                            name="authority-{{ i }}"
+                            restUrl="Authority/Select"
+                            [(ngModel)]="model.applicationTwoAuthorities[i].authority"
+                            (ngModelChange)="fillAuthority($event, i)"
+                            [disabled]="!isEditMode"
+                            [required]="true"
+                            [excludeAlreadyAdded]="true"
+                            [params]="applicationTwoAuthorityIds">
+          </app-async-select>
+        </div>
+        <button *ngIf="isEditMode"
+                class="btn btn-sm btn-danger btn-remove"
+                type="button"
+                (click)="removeAuthority(i)">
+          <app-icon icon="trash"
+                    width="12"
+                    height="12"></app-icon>
+        </button>
+      </div>
+    </ng-container>
+
+    <div class="row">
+      <div class="col-sm-12 float-md-left">
+        <button *ngIf="isEditMode"
+                class="btn btn-sm btn-blue mt-1 mb-3"
+                type="button"
+                [disabled]="!canAddAuthority"
+                (click)="addAuthority()">
+          <app-icon icon="plus-lg"
+                    width="12"
+                    height="12"></app-icon>
+          {{ 'application.applicantForm.buttons.addAuthority' | translate }}
+        </button>
+      </div>
+    </div>
+
+    <ng-container *ngIf="model.codes && model.codes.length > 0">
+      <ng-container *ngFor="let code of model.codes; let i = index">
+        <ng-container *ngIf="i === 0">
+          <div class="row">
+            <div class="form-group col-sm-12 col-md-4 m-0">
+              <label>
+                {{ 'application.applicationTwo.common.code' | translate }}
+              </label>
+            </div>
+          </div>
+        </ng-container>
+
+        <div class="row align-items-end mb-2">
+          <div class="form-group col-sm-11 col-md-4 mb-0">
+            <app-async-select #code="ngModel"
+                              name="code-{{ i }}"
+                              restUrl="Code/Select"
+                              [(ngModel)]="model.codes[i]"
+                              [disabled]="!isEditMode"
+                              [required]="true"
+                              [excludeAlreadyAdded]="true"
+                              [params]="applicationTwoCodeIds">
+            </app-async-select>
+          </div>
+          <button *ngIf="isEditMode"
+                  class="btn btn-sm btn-danger btn-remove"
+                  type="button"
+                  (click)="removeCode(i)">
+            <app-icon icon="trash"
+                      width="12"
+                      height="12"></app-icon>
+          </button>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="(!model.codes || model.codes.length === 0) && !isEditMode">
+      <div class="mb-2">{{ 'application.applicationTwo.missingCode' | translate }}
+        <app-icon icon="x-lg"
+                  style="color: red"
+                  width="12"
+                  height="12"></app-icon>
+      </div>
+    </ng-container>
+
+    <div class="row">
+      <div class="col-sm-12 float-md-left">
+        <button *ngIf="isEditMode"
+                class="btn btn-sm btn-blue mt-1 mb-3"
+                type="button"
+                [disabled]="!canAddCode"
+                (click)="addCode()">
+          <app-icon icon="plus-lg"
+                    width="12"
+                    height="12"></app-icon>
+          {{ 'application.applicationTwo.common.buttons.addCode' | translate }}
+        </button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-sm-12 col-md-6">
+        <div class="form-group d-flex m-0 align-items-center">
+          <label class="w-75 overflow-hidden text-truncate">
+            {{ 'application.applicationTwo.common.proceedings' | translate }}
+          </label>
+          <span class="d-inline-flex">
+            <app-help-tooltip class="ml-1"
+                              tooltipText=" {{ 'application.applicationTwo.common.proceedings' | translate }}">
+            </app-help-tooltip>
+          </span>
+        </div>
+        <select class="custom-select custom-select-sm"
+                [ngClass]="{'red-border': (model.proceedingType === undefined || model.proceedingType === null) && model.proceedingInfoAbsence === false}"
+                name="proceedingType"
+                #applicationTworoceedingType="ngModel"
+                [(ngModel)]="model.proceedingType"
+                (ngModelChange)="onProceedingTypeChange($event)"
+                [disabled]="!isEditMode || model.proceedingInfoAbsence"
+                required>
+          <option [ngValue]="proceedingType.preTrial">
+            {{ 'application.applicationTwo.common.proceedingType.preTrial' | translate }}
+          </option>
+          <option [ngValue]="proceedingType.legal">
+            {{ 'application.applicationTwo.common.proceedingType.legal' | translate }}
+          </option>
+          <option [ngValue]="proceedingType.both">
+            {{ 'application.applicationTwo.common.proceedingType.both' | translate }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group col-sm-6 align-self-center mb-0 checkboxes">
+        <div class="form-check mb-0">
+          <label class="form-check-label"
+                 [ngClass]="{'hover': isEditMode}">
+            <input type="checkbox"
+                   class="form-check-input hover"
+                   #proceedingInfoAbsence="ngModel"
+                   name="proceedingInfoAbsence"
+                   [disabled]="!isEditMode"
+                   [(ngModel)]="model.proceedingInfoAbsence"
+                   (ngModelChange)="onProceedingInfoAbsenceChange()">
+            {{ 'application.applicationTwo.common.proceedingInfoAbsence' | translate }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <ng-container
+                  *ngIf="model.proceedingType === proceedingType.preTrial || model.proceedingType === proceedingType.both">
+      <ng-container *ngFor="let prosecutor of model.applicationTwoProsecutors; let i = index">
+        <ng-container *ngIf="i === 0">
+          <div class="row">
+            <div class="form-group col-sm-12 col-md-4 m-0">
+              <label>
+                {{ 'application.applicationTwo.common.prosecutor' | translate }}
+              </label>
+            </div>
+          </div>
+        </ng-container>
+
+        <div class="row align-items-end mb-2">
+          <div class="form-group col-sm-11 col-md-4 mb-0">
+            <app-async-select #prosecutor="ngModel"
+                              name="prosecutor-{{ i }}"
+                              restUrl="Prosecutor/Select"
+                              [(ngModel)]="model.applicationTwoProsecutors[i].prosecutor"
+                              (ngModelChange)="fillProsecutor($event, i)"
+                              [disabled]="!isEditMode"
+                              [required]="true"
+                              [excludeAlreadyAdded]="true"
+                              [params]="applicationTwoProsecutorsIds">
+            </app-async-select>
+          </div>
+          <button *ngIf="isEditMode"
+                  class="btn btn-sm btn-danger btn-remove"
+                  type="button"
+                  (click)="removeProsecutor(i)">
+            <app-icon icon="trash"
+                      width="12"
+                      height="12"></app-icon>
+          </button>
+        </div>
+      </ng-container>
+
+      <div class="row">
+        <div class="col-sm-12 float-md-left">
+          <button *ngIf="isEditMode"
+                  class="btn btn-sm btn-blue mt-1 mb-3"
+                  type="button"
+                  [disabled]="!canAddProsecutor"
+                  (click)="addProsecutor()">
+            <app-icon icon="plus-lg"
+                      width="12"
+                      height="12"></app-icon>
+            {{ 'application.applicationTwo.common.buttons.addProsecutor' | translate }}
+          </button>
+        </div>
+      </div>
+
+      <ng-container *ngFor="let ministryOfInterior of model.applicationTwoMinistryOfInteriors let i = index">
+        <ng-container *ngIf="i === 0">
+          <div class="row">
+            <div class="form-group col-sm-12 col-md-4 m-0">
+              <label>
+                {{ 'application.applicationTwo.common.ministryOfInterior' | translate }}
+              </label>
+            </div>
+          </div>
+        </ng-container>
+
+        <div class="row align-items-end mb-2">
+          <div class="form-group col-sm-11 col-md-4 mb-0">
+            <app-async-select #ministryOfInterior="ngModel"
+                              name="ministryOfInterior-{{ i }}"
+                              restUrl="MinistryOfInterior/Select"
+                              [(ngModel)]="model.applicationTwoMinistryOfInteriors[i].ministryOfInterior"
+                              (ngModelChange)="fillMinistryOfInterior($event, i)"
+                              [disabled]="!isEditMode"
+                              [required]="true"
+                              [excludeAlreadyAdded]="true"
+                              [params]="applicationTwoMinistryOfInteriorsIds">
+            </app-async-select>
+          </div>
+          <button *ngIf="isEditMode"
+                  class="btn btn-sm btn-danger btn-remove"
+                  type="button"
+                  (click)="removeMinistryOfInterior(i)">
+            <app-icon icon="trash"
+                      width="12"
+                      height="12"></app-icon>
+          </button>
+        </div>
+      </ng-container>
+
+      <div class="row">
+        <div class="col-sm-12 float-md-left">
+          <button *ngIf="isEditMode"
+                  class="btn btn-sm btn-blue mt-1 mb-3"
+                  type="button"
+                  [disabled]="!canAddMinistryOfInterior"
+                  (click)="addMinistryOfInterior()">
+            <app-icon icon="plus-lg"
+                      width="12"
+                      height="12"></app-icon>
+            {{ 'application.applicationTwo.common.buttons.addMinistryOfInterior' | translate }}
+          </button>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="model.proceedingType === proceedingType.legal || model.proceedingType === proceedingType.both">
+      <ng-container *ngFor="let administrativeCourt of model.applicationTwoAdministrativeCourts let i = index">
+        <ng-container *ngIf="i === 0">
+          <div class="row">
+            <div class="form-group col-sm-12 col-md-4 m-0">
+              <label>
+                {{ 'application.applicationTwo.common.administrativeCourt' | translate }}
+              </label>
+            </div>
+          </div>
+        </ng-container>
+        <div class="row align-items-end mb-2">
+          <div class="form-group col-sm-11 col-md-4 mb-0">
+            <app-async-select #administrativeCourt="ngModel"
+                              name="administrativeCourt-{{ i }}"
+                              restUrl="AdministrativeCourt/Select"
+                              [(ngModel)]="model.applicationTwoAdministrativeCourts[i].administrativeCourt"
+                              (ngModelChange)="fillAdministrativeCourt($event, i)"
+                              [disabled]="!isEditMode"
+                              [required]="true"
+                              [excludeAlreadyAdded]="true"
+                              [params]="applicationTwoAdministrativeCourtsIds">
+            </app-async-select>
+          </div>
+          <button *ngIf="isEditMode"
+                  class="btn btn-sm btn-danger btn-remove"
+                  type="button"
+                  (click)="removeAdministrativeCourt(i)">
+            <app-icon icon="trash"
+                      width="12"
+                      height="12"></app-icon>
+          </button>
+        </div>
+      </ng-container>
+
+      <div class="row">
+        <div class="col-sm-12 float-md-left">
+          <button *ngIf="isEditMode"
+                  class="btn btn-sm btn-blue mt-1 mb-3"
+                  type="button"
+                  [disabled]="!canAddAdministrativeCourt"
+                  (click)="addAdministrativeCourt()">
+            <app-icon icon="plus-lg"
+                      width="12"
+                      height="12"></app-icon>
+            {{ 'application.applicationTwo.common.buttons.addAdministrativeCourt' | translate }}
+          </button>
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="row">
+      <div class="form-group col-sm-12 col-md-6">
+        <div class="form-group d-flex m-0 align-items-center"
+             [ngClass]="{'mt-2': !isEditMode}">
+          <label class="w-75 overflow-hidden text-truncate">
+            {{ 'application.applicationTwo.common.proceedingInfo' | translate }}
+          </label>
+          <span class="d-inline-flex">
+            <app-help-tooltip class="ml-1"
+                              tooltipText=" {{ 'application.applicationTwo.common.proceedingInfo' | translate }}">
+            </app-help-tooltip>
+          </span>
+        </div>
+        <input type="text"
+               name="proceedingInfo"
+               #proceedingInfo="ngModel"
+               class="form-control form-control-sm"
+               [(ngModel)]="model.proceedingInfo"
+               [disabled]="!isEditMode">
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="form-group col-sm-12 col-md-6">
+        <label>
+          {{ 'application.applicationTwo.common.legalProcedureResult' | translate }}
+        </label>
+        <input type="text"
+               name="legalProcedureResult"
+               #legalProcedureResult="ngModel"
+               class="form-control form-control-sm"
+               [(ngModel)]="model.legalProcedureResult"
+               [disabled]="!isEditMode"
+               required>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-sm-12 col-md-6">
+        <div class="form-group d-flex m-0 align-items-center">
+          <label class="w-75 overflow-hidden text-truncate">
+            {{ 'application.applicationTwo.common.preventionProcedureResult' | translate }}
+          </label>
+          <span class="d-inline-flex">
+            <app-help-tooltip class="ml-1"
+                              tooltipText=" {{ 'application.applicationTwo.common.preventionProcedureResult' | translate }}">
+            </app-help-tooltip>
+          </span>
+        </div>
+        <input type="text"
+               name="preventionProcedureResult"
+               #preventionProcedureResult="ngModel"
+               class="form-control form-control-sm"
+               [(ngModel)]="model.preventionProcedureResult"
+               [disabled]="!isEditMode || model.hasPreventionProcedureResult"
+               required>
+      </div>
+      <div class="form-group col-md-6 col-sm-12 align-self-center mb-0 checkboxes">
+        <div class="form-check mb-0">
+          <label class="form-check-label"
+                 [ngClass]="{'hover': isEditMode}">
+            <input type="checkbox"
+                   class="form-check-input hover"
+                   #hasPreventionProcedureResult="ngModel"
+                   name="hasPreventionProcedureResult"
+                   [disabled]="!isEditMode"
+                   [(ngModel)]="model.hasPreventionProcedureResult"
+                   (ngModelChange)="onHasPreventionProcedureResultChange()">
+            {{ 'application.applicationTwo.common.inapplicable' | translate }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-sm-12 col-md-6">
+        <div class="form-group d-flex m-0 align-items-center">
+          <label class="w-75 overflow-hidden text-truncate">
+            {{ 'application.applicationTwo.common.removalProcedureResult' | translate }}
+          </label>
+          <span class="d-inline-flex">
+            <app-help-tooltip class="ml-1"
+                              tooltipText=" {{ 'application.applicationTwo.common.removalProcedureResult' | translate }}">
+            </app-help-tooltip>
+          </span>
+        </div>
+        <input type="text"
+               name="removalProcedureResult"
+               #removalProcedureResult="ngModel"
+               class="form-control form-control-sm"
+               [(ngModel)]="model.removalProcedureResult"
+               [disabled]="!isEditMode || model.hasRemovalProcedureResult"
+               required>
+      </div>
+      <div class="form-group col-md-6 col-sm-12 align-self-center mb-0 checkboxes">
+        <div class="form-check mb-0">
+          <label class="form-check-label"
+                 [ngClass]="{'hover': isEditMode}">
+            <input type="checkbox"
+                   class="form-check-input hover"
+                   #hasRemovalProcedureResult="ngModel"
+                   name="hasRemovalProcedureResult"
+                   [disabled]="!isEditMode"
+                   [(ngModel)]="model.hasRemovalProcedureResult"
+                   (ngModelChange)="onHasRemovalProcedureResultChange()">
+            {{ 'application.applicationTwo.common.inapplicable' | translate }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-sm-12 col-md-12">
+        <label>
+          {{ 'application.applicationTwo.common.actionsTaken' | translate }}
+        </label>
+        <div class="textarea-wrapper">
+          <textarea name="actionsTaken"
+                    #actionsTaken="ngModel"
+                    class="form-control form-control-sm"
+                    [maxlength]="maxTextLength1024"
+                    [disabled]="!isEditMode"
+                    [(ngModel)]="model.actionsTaken"
+                    rows="3"></textarea>
+          <span class="used-chars">
+            {{ model.actionsTaken === undefined ||
+            model.actionsTaken === null ?
+            0 :
+            model.actionsTaken?.length }}/{{ maxTextLength1024 }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-sm-12 col-md-4">
+        <label>
+          {{ 'application.applicationTwo.common.status' | translate }}
+        </label>
+        <select class="custom-select custom-select-sm"
+                [ngClass]="{'red-border': model.caseStatus === undefined || model.caseStatus === null}"
+                name="caseStatus"
+                #applicationTowCaseStatus="ngModel"
+                [(ngModel)]="model.caseStatus"
+                (ngModelChange)="onCaseStatusChange()"
+                [disabled]="!isEditMode"
+                required>
+          <option [ngValue]="caseStatus.completed">
+            {{ caseStatusLocalization[caseStatus.completed] }}
+          </option>
+          <option [ngValue]="caseStatus.active">
+            {{ caseStatusLocalization[caseStatus.active] }}
+          </option>
+        </select>
+      </div>
+      <ng-container *ngIf="model.caseStatus === caseStatus.completed">
+        <div class="form-group col-md-2 col-sm-12">
+          <div class="form-group d-flex m-0 align-items-center">
+            <label class="w-75 overflow-hidden text-truncate">
+              {{ 'application.applicationTwo.common.preventionOrRemovalProcedureFinishDate' | translate }}
+            </label>
+            <span class="d-inline-flex">
+              <app-help-tooltip class="ml-1"
+                                tooltipText=" {{ 'application.applicationTwo.common.preventionOrRemovalProcedureFinishDate' | translate }}">
+              </app-help-tooltip>
+            </span>
+          </div>
+          <div class="input-group input-group-sm">
+            <input name="preventionOrRemovalProcedureFinishDate"
+                   class="form-control"
+                   ngbDatepicker
+                   placeholder="дд/мм/гггг"
+                   [ngStyle]="{'border': preventionOrRemovalProcedureFinishDate.status === 'INVALID' ? '1px solid #dc3545' : null}"
+                   #preventionOrRemovalProcedureFinishDate="ngModel"
+                   #preventionOrRemovalProcedureFinishDateDatepicker="ngbDatepicker"
+                   [(ngModel)]="model.preventionOrRemovalProcedureFinishDate"
+                   validDate
+                   [disabled]="!isEditMode"
+                   required
+                   maxlength="20">
+            <div class="input-group-append">
+              <button class="btn btn-sm btn-outline-primary"
+                      type="button"
+                      [disabled]="!isEditMode"
+                      (click)="preventionOrRemovalProcedureFinishDateDatepicker.toggle()">
+                <app-icon icon="calendar2-event"
+                          width="12"
+                          height="12"></app-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-sm-12 col-md-6">
+          <label>
+            {{ 'application.applicationTwo.common.preventionOrRemovalProcedureFinishInformation' | translate }}
+          </label>
+          <input type="text"
+                 name="preventionOrRemovalProcedureFinishInformation"
+                 #preventionOrRemovalProcedureFinishInformation="ngModel"
+                 class="form-control form-control-sm"
+                 [(ngModel)]="model.preventionOrRemovalProcedureFinishInformation"
+                 [disabled]="!isEditMode"
+                 required>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-sm-12 col-md-3">
+        <div class="form-group d-flex m-0 align-items-center">
+          <label class="w-75 overflow-hidden text-truncate">
+            {{ 'application.applicationTwo.common.paidByResponsibleParties' | translate }}
+          </label>
+          <span class="d-inline-flex hide-tooltip">
+            <app-help-tooltip class="ml-1"
+                              tooltipText="{{ 'application.applicationTwo.common.paidByResponsibleParties' | translate }}">
+            </app-help-tooltip>
+          </span>
+        </div>
+        <input type="number"
+               name="paidByResponsibleParties"
+               #paidByResponsibleParties="ngModel"
+               class="form-control form-control-sm"
+               [(ngModel)]="model.paidByResponsibleParties"
+               [disabled]="!isEditMode"
+               step=".01"
+               [min]="minAmountValue"
+               required>
+      </div>
+      <div class="form-group col-sm-12 col-md-3">
+        <div class="form-group d-flex m-0 align-items-center">
+          <label class="w-75 overflow-hidden text-truncate">
+            {{ 'application.applicationTwo.common.recoveredSubsequentlyByResponsibleParties' | translate }}
+          </label>
+          <span class="d-inline-flex">
+            <app-help-tooltip class="ml-1"
+                              tooltipText="{{ 'application.applicationTwo.common.recoveredSubsequentlyByResponsibleParties' | translate }}">
+            </app-help-tooltip>
+          </span>
+        </div>
+        <input type="number"
+               name="recoveredSubsequentlyByResponsibleParties"
+               #recoveredSubsequentlyByResponsibleParties="ngModel"
+               class="form-control form-control-sm"
+               [(ngModel)]="model.recoveredSubsequentlyByResponsibleParties"
+               [disabled]="!isEditMode"
+               step=".01"
+               [min]="minAmountValue"
+               required>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-sm-12 col-md-3">
+        <div class="form-group d-flex m-0 align-items-center">
+          <label class="w-75 overflow-hidden text-truncate">
+            {{ 'application.applicationTwo.common.unreimbursedExpenseValue' | translate }}
+          </label>
+          <span class="d-inline-flex">
+            <app-help-tooltip class="ml-1"
+                              tooltipText=" {{ 'application.applicationTwo.common.unreimbursedExpenseValue' | translate }}">
+            </app-help-tooltip>
+          </span>
+        </div>
+        <input type="number"
+               name="unreimbursedExpenseValue"
+               #unreimbursedExpenseValue="ngModel"
+               class="form-control form-control-sm"
+               [(ngModel)]="model.unreimbursedExpenseValue"
+               [disabled]="!isEditMode || model.hasUnreimbursedExpense"
+               step=".01"
+               [min]="minAmountValue"
+               required>
+      </div>
+      <div class="form-group col-sm-12 col-md-6">
+        <label>
+          {{ 'application.applicationTwo.common.unreimbursedExpense' | translate }}
+        </label>
+        <input type="text"
+               name="unreimbursedExpense"
+               #unreimbursedExpense="ngModel"
+               class="form-control form-control-sm"
+               [(ngModel)]="model.unreimbursedExpense"
+               [disabled]="!isEditMode || model.hasUnreimbursedExpense">
+      </div>
+      <div class="form-group col-md-3 col-sm-12 align-self-center mb-0 checkboxes">
+        <div class="form-check mb-0">
+          <label class="form-check-label"
+                 [ngClass]="{'hover': isEditMode}">
+            <input type="checkbox"
+                   class="form-check-input hover"
+                   #hasUnreimbursedExpense="ngModel"
+                   name="hasUnreimbursedExpense"
+                   [disabled]="!isEditMode"
+                   [(ngModel)]="model.hasUnreimbursedExpense"
+                   (ngModelChange)="onHasUnreimbursedExpenseChange()">
+            {{ 'application.applicationTwo.common.hasUnreimbursedExpense' | translate }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-sm-12 col-md-6">
+        <label>
+          {{ 'application.applicationTwo.common.additionalExpenseText' | translate }}
+        </label>
+        <input type="text"
+               name="additionalExpenseText"
+               #additionalExpenseText="ngModel"
+               class="form-control form-control-sm"
+               [(ngModel)]="model.additionalExpenseText"
+               [disabled]="!isEditMode">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-sm-12 col-md-5">
+        <label>
+          {{ 'application.applicationTwo.common.paymentSource' | translate }}
+        </label>
+        <select class="custom-select custom-select-sm"
+                [ngClass]="{'red-border': model.paymentSource === undefined || model.paymentSource === null}"
+                name="paymentSource"
+                #applicationTwoPaymentSource="ngModel"
+                [(ngModel)]="model.paymentSource"
+                (ngModelChange)="onPaymentSourceChange()"
+                [disabled]="!isEditMode"
+                required>
+          <option [ngValue]="paymentSource.authority">
+            {{ paymentSourceLocalization[paymentSource.authority] }}
+          </option>
+          <option [ngValue]="paymentSource.operator">
+            {{ paymentSourceLocalization[paymentSource.operator] }}
+          </option>
+          <option [ngValue]="paymentSource.other">
+            {{ paymentSourceLocalization[paymentSource.other] }}
+          </option>
+        </select>
+      </div>
+      <ng-container *ngIf="model.paymentSource === paymentSource.other">
+        <div class="form-group col-sm-12 col-md-7">
+          <label>
+            {{ 'application.applicationTwo.common.otherPaymentSource' | translate }}
+          </label>
+          <input type="text"
+                 name="otherPaymentSource"
+                 #otherPaymentSource="ngModel"
+                 class="form-control form-control-sm"
+                 [(ngModel)]="model.otherPaymentSource"
+                 [disabled]="!isEditMode"
+                 required>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="px-4">
+      <hr>
+      <div class="row">
+        <div class="form-group col-md-6 col-sm-12">
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="checkbox"
+                     class="form-check-input"
+                     #hasInsurancePolicy="ngModel"
+                     name="hasInsurancePolicy"
+                     [disabled]="!isEditMode || model.hasNoCollateral"
+                     [(ngModel)]="model.hasInsurancePolicy"
+                     (ngModelChange)="onHasInsurancePolicyChange()">
+              {{ 'application.applicationTwo.common.hasInsurancePolicy' | translate }}
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="checkbox"
+                     class="form-check-input"
+                     #hasBankGuarantee="ngModel"
+                     name="hasBankGuarantee"
+                     [disabled]="!isEditMode || model.hasNoCollateral"
+                     [(ngModel)]="model.hasBankGuarantee"
+                     (ngModelChange)="onHasBankGuaranteeChange()">
+              {{ 'application.applicationTwo.common.hasBankGuarantee' | translate }}
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="checkbox"
+                     class="form-check-input"
+                     #hasMortgage="ngModel"
+                     name="hasMortgage"
+                     [disabled]="!isEditMode || model.hasNoCollateral"
+                     [(ngModel)]="model.hasMortgage"
+                     (ngModelChange)="onHasMortgageChange()">
+              {{ 'application.applicationTwo.common.hasMortgage' | translate }}
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="checkbox"
+                     class="form-check-input"
+                     #hasStake="ngModel"
+                     name="hasStake"
+                     [disabled]="!isEditMode || model.hasNoCollateral"
+                     [(ngModel)]="model.hasStake"
+                     (ngModelChange)="onHasStakeChange()">
+              {{ 'application.applicationTwo.common.hasStake' | translate }}
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="checkbox"
+                     class="form-check-input"
+                     #hasNoCollateral="ngModel"
+                     name="hasNoCollateral"
+                     [disabled]="!isEditMode"
+                     [(ngModel)]="model.hasNoCollateral"
+                     (ngModelChange)="onHasNoCollateralChange()">
+              {{ 'application.applicationTwo.common.hasNoCollateral' | translate }}
+            </label>
+          </div>
+        </div>
+      </div>
+      <hr>
+
+      <ng-container *ngIf="model.hasInsurancePolicy">
+        <label class="mt-2 fw-bold">{{ 'application.applicationTwo.common.hasInsurancePolicy' | translate }}</label>
+
+        <div class="row">
+          <div class="form-group col-sm-12 col-md-6">
+            <label>
+              {{ 'application.applicationTwo.common.insurancePolicy.companyName' | translate }}
+            </label>
+            <div class="input-group input-group-sm">
+              <input name="insurancePolicyCompanyName"
+                     class="form-control"
+                     #insurancePolicyCompanyName="ngModel"
+                     required
+                     [disabled]="!isEditMode"
+                     [(ngModel)]="model.insurancePolicy.companyName" />
+            </div>
+          </div>
+          <div class="form-group col-sm-12 col-md-3">
+            <label>
+              {{ 'application.applicationTwo.common.insurancePolicy.policyNumber' | translate }}
+            </label>
+            <div class="input-group input-group-sm">
+              <input name="insurancePolicyPolicyNumber"
+                     class="form-control"
+                     #insurancePolicyPolicyNumber="ngModel"
+                     required
+                     [disabled]="!isEditMode"
+                     [(ngModel)]="model.insurancePolicy.policyNumber" />
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-md-3 col-sm-12">
+            <label>
+              {{ 'application.applicationTwo.common.insurancePolicy.policyDate' | translate }}
+            </label>
+            <div class="input-group input-group-sm">
+              <input name="insurancePolicyDate"
+                     class="form-control"
+                     ngbDatepicker
+                     placeholder="дд/мм/гггг"
+                     [ngStyle]="{'border': insurancePolicyDate.status === 'INVALID' ? '1px solid #dc3545' : null}"
+                     #insurancePolicyDate="ngModel"
+                     #insurancePolicyDateDatepicker="ngbDatepicker"
+                     [(ngModel)]="model.insurancePolicy.policyDate"
+                     validDate
+                     [disabled]="!isEditMode"
+                     required
+                     maxlength="20">
+              <div class="input-group-append">
+                <button class="btn btn-sm btn-outline-primary"
+                        type="button"
+                        [disabled]="!isEditMode"
+                        (click)="insurancePolicyDateDatepicker.toggle()">
+                  <app-icon icon="calendar2-event"
+                            width="12"
+                            height="12"></app-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-3 col-sm-12">
+            <label>
+              {{ 'application.applicationTwo.common.insurancePolicy.insuranceStart' | translate }}
+            </label>
+            <div class="input-group input-group-sm">
+              <input name="insuranceStart"
+                     class="form-control"
+                     ngbDatepicker
+                     placeholder="дд/мм/гггг"
+                     [ngStyle]="{'border': insuranceStart.status === 'INVALID' ? '1px solid #dc3545' : null}"
+                     #insuranceStart="ngModel"
+                     #insuranceStartDatepicker="ngbDatepicker"
+                     [(ngModel)]="model.insurancePolicy.insuranceStart"
+                     (ngModelChange)="onInsuranceDateChange()"
+                     validDate
+                     [disabled]="!isEditMode"
+                     required
+                     maxlength="20" />
+              <div class="input-group-append">
+                <button class="btn btn-sm btn-outline-primary"
+                        type="button"
+                        [disabled]="!isEditMode"
+                        (click)="insuranceStartDatepicker.toggle()">
+                  <app-icon icon="calendar2-event"
+                            width="12"
+                            height="12"></app-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-3 col-sm-12">
+            <label>
+              {{ 'application.applicationTwo.common.insurancePolicy.insuranceEnd' | translate }}
+            </label>
+            <div class="input-group input-group-sm">
+              <input name="insuranceEnd"
+                     class="form-control"
+                     ngbDatepicker
+                     placeholder="дд/мм/гггг"
+                     [ngStyle]="{'border': insuranceEnd.status === 'INVALID' ? '1px solid #dc3545' : null}"
+                     #insuranceEnd="ngModel"
+                     #insuranceEndDatepicker="ngbDatepicker"
+                     [(ngModel)]="model.insurancePolicy.insuranceEnd"
+                     (ngModelChange)="onInsuranceDateChange()"
+                     validDate
+                     [disabled]="!isEditMode"
+                     required
+                     maxlength="20"
+                     [minDate]="insuranceMinEndDate" />
+              <div class="input-group-append">
+                <button class="btn btn-sm btn-outline-primary"
+                        type="button"
+                        [disabled]="!isEditMode"
+                        (click)="insuranceEndDatepicker.toggle()">
+                  <app-icon icon="calendar2-event"
+                            width="12"
+                            height="12"></app-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-sm-12 col-md-3">
+            <div class="form-group d-flex m-0 align-items-center">
+              <label class="w-75 overflow-hidden text-truncate">
+                {{ 'application.applicationTwo.common.insurancePolicy.responsibilityLimit' | translate }}
+              </label>
+              <span class="d-inline-flex">
+                <app-help-tooltip class="ml-1"
+                                  tooltipText="{{ 'application.applicationTwo.common.insurancePolicy.responsibilityLimit' | translate }}">
+                </app-help-tooltip>
+              </span>
+            </div>
+            <input class="form-control form-control-sm"
+                   type="number"
+                   name="insuranceResponsibilityLimit"
+                   #insuranceResponsibilityLimit="ngModel"
+                   [(ngModel)]="model.insurancePolicy.responsibilityLimit"
+                   [disabled]="!isEditMode"
+                   step=".01"
+                   [min]="minAmountValue"
+                   required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-sm-12 col-md-12">
+            <label>
+              {{ 'application.applicationTwo.common.insurancePolicy.additionalInformation' | translate }}
+            </label>
+            <input class="form-control form-control-sm"
+                   type="text"
+                   name="insurancePolicyAdditionalInformation"
+                   #insurancePolicyAdditionalInformation="ngModel"
+                   [(ngModel)]="model.insurancePolicy.additionalInformation"
+                   [disabled]="!isEditMode">
+          </div>
+        </div>
+
+        <hr>
+      </ng-container>
+
+      <ng-container *ngIf="model.hasBankGuarantee">
+        <label class="mt-2 fw-bold">{{ 'application.applicationTwo.common.hasBankGuarantee' | translate }}</label>
+
+        <div class="row">
+          <div class="form-group col-sm-12 col-md-6">
+            <label>
+              {{ 'application.applicationTwo.common.bankGuarantee.bankName' | translate }}
+            </label>
+            <div class="input-group input-group-sm">
+              <input name="bankGuaranteeBankName"
+                     class="form-control"
+                     #bankGuaranteeBankName="ngModel"
+                     required
+                     [disabled]="!isEditMode"
+                     [(ngModel)]="model.bankGuarantee.bankName" />
+            </div>
+          </div>
+          <div class="form-group col-sm-12 col-md-3">
+            <label>
+              {{ 'application.applicationTwo.common.bankGuarantee.guaranteeNumber' | translate }}
+            </label>
+            <div class="input-group input-group-sm">
+              <input name="bankGuaranteeNumber"
+                     class="form-control"
+                     #bankGuaranteeNumber="ngModel"
+                     required
+                     [disabled]="!isEditMode"
+                     [(ngModel)]="model.bankGuarantee.guaranteeNumber" />
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-md-3 col-sm-12">
+            <label>
+              {{ 'application.applicationTwo.common.bankGuarantee.guaranteeDate' | translate }}
+            </label>
+            <div class="input-group input-group-sm">
+              <input name="bankGuaranteeDate"
+                     class="form-control"
+                     ngbDatepicker
+                     placeholder="дд/мм/гггг"
+                     [ngStyle]="{'border': bankGuaranteeDate.status === 'INVALID' ? '1px solid #dc3545' : null}"
+                     #bankGuaranteeDate="ngModel"
+                     #bankGuaranteeDateDatepicker="ngbDatepicker"
+                     [(ngModel)]="model.bankGuarantee.guaranteeDate"
+                     validDate
+                     [disabled]="!isEditMode"
+                     required
+                     maxlength="20">
+              <div class="input-group-append">
+                <button class="btn btn-sm btn-outline-primary"
+                        type="button"
+                        [disabled]="!isEditMode"
+                        (click)="bankGuaranteeDateDatepicker.toggle()">
+                  <app-icon icon="calendar2-event"
+                            width="12"
+                            height="12"></app-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-3 col-sm-12">
+            <label>
+              {{ 'application.applicationTwo.common.bankGuarantee.guaranteeStart' | translate }}
+            </label>
+            <div class="input-group input-group-sm">
+              <input name="bankGuaranteeStart"
+                     class="form-control"
+                     ngbDatepicker
+                     placeholder="дд/мм/гггг"
+                     [ngStyle]="{'border': bankGuaranteeStart.status === 'INVALID' ? '1px solid #dc3545' : null}"
+                     #bankGuaranteeStart="ngModel"
+                     #bankGuaranteeStartDatepicker="ngbDatepicker"
+                     [(ngModel)]="model.bankGuarantee.guaranteeStart"
+                     (ngModelChange)="onBankGuaranteeDateChange()"
+                     validDate
+                     [disabled]="!isEditMode"
+                     required
+                     maxlength="20">
+              <div class="input-group-append">
+                <button class="btn btn-sm btn-outline-primary"
+                        type="button"
+                        [disabled]="!isEditMode"
+                        (click)="bankGuaranteeStartDatepicker.toggle()">
+                  <app-icon icon="calendar2-event"
+                            width="12"
+                            height="12"></app-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-3 col-sm-12">
+            <label>
+              {{ 'application.applicationTwo.common.bankGuarantee.guaranteeEnd' | translate }}
+            </label>
+            <div class="input-group input-group-sm">
+              <input name="bankGuaranteeEnd"
+                     class="form-control"
+                     ngbDatepicker
+                     placeholder="дд/мм/гггг"
+                     [ngStyle]="{'border': bankGuaranteeEnd.status === 'INVALID' ? '1px solid #dc3545' : null}"
+                     #bankGuaranteeEnd="ngModel"
+                     #bankGuaranteeEndDatepicker="ngbDatepicker"
+                     [(ngModel)]="model.bankGuarantee.guaranteeEnd"
+                     (ngModelChange)="onBankGuaranteeDateChange()"
+                     validDate
+                     [disabled]="!isEditMode"
+                     required
+                     maxlength="20"
+                     [minDate]="bankGuaranteeMinEndDate" />
+              <div class="input-group-append">
+                <button class="btn btn-sm btn-outline-primary"
+                        type="button"
+                        [disabled]="!isEditMode"
+                        (click)="bankGuaranteeEndDatepicker.toggle()">
+                  <app-icon icon="calendar2-event"
+                            width="12"
+                            height="12"></app-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-sm-12 col-md-3">
+            <label>
+              {{ 'application.applicationTwo.common.bankGuarantee.value' | translate }}
+            </label>
+            <input class="form-control form-control-sm"
+                   type="number"
+                   name="bankGuaranteeValue"
+                   #bankGuaranteeValue="ngModel"
+                   [(ngModel)]="model.bankGuarantee.value"
+                   [disabled]="!isEditMode"
+                   step=".01"
+                   [min]="minAmountValue"
+                   required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-sm-12 col-md-12">
+            <label>
+              {{ 'application.applicationTwo.common.bankGuarantee.additionalInformation' | translate }}
+            </label>
+            <input class="form-control form-control-sm"
+                   type="text"
+                   name="bankGuaranteeAdditionalInformation"
+                   #bankGuaranteeAdditionalInformation="ngModel"
+                   [(ngModel)]="model.bankGuarantee.additionalInformation"
+                   [disabled]="!isEditMode">
+          </div>
+        </div>
+
+        <hr>
+      </ng-container>
+
+      <ng-container *ngIf="model.hasMortgage">
+        <label class="mt-2 fw-bold">{{ 'application.applicationTwo.common.hasMortgage' | translate }}</label>
+
+        <div class="row">
+          <div class="form-group col-sm-12 col-md-5">
+            <label>
+              {{ 'application.applicationTwo.common.mortgage.mortgageType' | translate }}
+            </label>
+            <select class="custom-select custom-select-sm"
+                    [ngClass]="{'red-border': model.mortgage.mortgageType === undefined || model.mortgage.mortgageType === null}"
+                    name="mortgageType"
+                    #applicationTwoMortgageType="ngModel"
+                    [(ngModel)]="model.mortgage.mortgageType"
+                    [disabled]="!isEditMode"
+                    required>
+              <option [ngValue]="mortgageType.realEstate">
+                {{ mortgageTypeLocalization[mortgageType.realEstate] }}
+              </option>
+              <option [ngValue]="mortgageType.itemizationRightsOfRealEstate">
+                {{ mortgageTypeLocalization[mortgageType.itemizationRightsOfRealEstate] }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group col-sm-12 col-md-3">
+            <label>
+              {{ 'application.applicationTwo.common.mortgage.mortgageNumber' | translate }}
+            </label>
+            <div class="input-group input-group-sm">
+              <input name="mortgageNumber"
+                     class="form-control"
+                     #mortgageNumber="ngModel"
+                     required
+                     [disabled]="!isEditMode"
+                     [(ngModel)]="model.mortgage.mortgageNumber" />
+            </div>
+          </div>
+
+          <div class="form-group col-md-3 col-sm-12">
+            <label>
+              {{ 'application.applicationTwo.common.mortgage.mortgageDate' | translate }}
+            </label>
+            <div class="input-group input-group-sm">
+              <input name="mortgageDate"
+                     class="form-control"
+                     ngbDatepicker
+                     placeholder="дд/мм/гггг"
+                     [ngStyle]="{'border': mortgageDate.status === 'INVALID' ? '1px solid #dc3545' : null}"
+                     #mortgageDate="ngModel"
+                     #mortgageDateDatepicker="ngbDatepicker"
+                     [(ngModel)]="model.mortgage.mortgageDate"
+                     validDate
+                     [disabled]="!isEditMode"
+                     required
+                     maxlength="20">
+              <div class="input-group-append">
+                <button class="btn btn-sm btn-outline-primary"
+                        type="button"
+                        [disabled]="!isEditMode"
+                        (click)="mortgageDateDatepicker.toggle()">
+                  <app-icon icon="calendar2-event"
+                            width="12"
+                            height="12"></app-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-sm-12 col-md-9">
+            <label>
+              {{ 'application.applicationTwo.common.mortgage.mortgageDescription' | translate }}
+            </label>
+            <input class="form-control form-control-sm"
+                   type="text"
+                   name="mortgageDescription"
+                   #mortgageDescription="ngModel"
+                   [(ngModel)]="model.mortgage.mortgageDescription"
+                   [disabled]="!isEditMode"
+                   required>
+          </div>
+
+          <div class="form-group col-sm-12 col-md-3">
+            <label>
+              {{ 'application.applicationTwo.common.mortgage.value' | translate }}
+            </label>
+            <input class="form-control form-control-sm"
+                   type="number"
+                   name="mortgageValue"
+                   #mortgageValue="ngModel"
+                   [(ngModel)]="model.mortgage.value"
+                   [disabled]="!isEditMode"
+                   step=".01"
+                   [min]="minAmountValue"
+                   required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-sm-12 col-md-12">
+            <label>
+              {{ 'application.applicationTwo.common.mortgage.additionalInformation' | translate }}
+            </label>
+            <input class="form-control form-control-sm"
+                   type="text"
+                   name="mortgageAdditionalInformation"
+                   #mortgageAdditionalInformation="ngModel"
+                   [(ngModel)]="model.mortgage.additionalInformation"
+                   [disabled]="!isEditMode">
+          </div>
+        </div>
+
+        <hr>
+      </ng-container>
+
+      <ng-container *ngIf="model.hasStake">
+        <label class="mt-2 fw-bold">{{ 'application.applicationTwo.common.hasStake' | translate }}</label>
+
+        <div class="row">
+          <div class="form-group col-sm-12 col-md-3">
+            <label>
+              {{ 'application.applicationTwo.common.stake.stakeNumber' | translate }}
+            </label>
+            <div class="input-group input-group-sm">
+              <input name="stakeNumber"
+                     class="form-control"
+                     #stakeNumber="ngModel"
+                     required
+                     [disabled]="!isEditMode"
+                     [(ngModel)]="model.stake.stakeNumber" />
+            </div>
+          </div>
+
+          <div class="form-group col-md-3 col-sm-12">
+            <label>
+              {{ 'application.applicationTwo.common.stake.stakeDate' | translate }}
+            </label>
+            <div class="input-group input-group-sm">
+              <input name="stakeDate"
+                     class="form-control"
+                     ngbDatepicker
+                     placeholder="дд/мм/гггг"
+                     [ngStyle]="{'border': stakeDate.status === 'INVALID' ? '1px solid #dc3545' : null}"
+                     #stakeDate="ngModel"
+                     #stakeDateDatepicker="ngbDatepicker"
+                     [(ngModel)]="model.stake.stakeDate"
+                     validDate
+                     [disabled]="!isEditMode"
+                     required
+                     maxlength="20">
+              <div class="input-group-append">
+                <button class="btn btn-sm btn-outline-primary"
+                        type="button"
+                        [disabled]="!isEditMode"
+                        (click)="stakeDateDatepicker.toggle()">
+                  <app-icon icon="calendar2-event"
+                            width="12"
+                            height="12"></app-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-sm-12 col-md-9">
+            <label>
+              {{ 'application.applicationTwo.common.stake.stakeDescription' | translate }}
+            </label>
+            <input class="form-control form-control-sm"
+                   type="text"
+                   name="stakeDescription"
+                   #stakeDescription="ngModel"
+                   [(ngModel)]="model.stake.stakeDescription"
+                   [disabled]="!isEditMode"
+                   required>
+          </div>
+
+          <div class="form-group col-sm-12 col-md-3">
+            <label>
+              {{ 'application.applicationTwo.common.stake.value' | translate }}
+            </label>
+            <input class="form-control form-control-sm"
+                   type="number"
+                   name="stakeValue"
+                   #stakeValue="ngModel"
+                   [(ngModel)]="model.stake.value"
+                   [disabled]="!isEditMode"
+                   step=".01"
+                   [min]="minAmountValue"
+                   required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-sm-12 col-md-12">
+            <label>
+              {{ 'application.applicationTwo.common.stake.additionalInformation' | translate }}
+            </label>
+            <input class="form-control form-control-sm"
+                   type="text"
+                   name="stakeAdditionalInformation"
+                   #stakeAdditionalInformation="ngModel"
+                   [(ngModel)]="model.stake.additionalInformation"
+                   [disabled]="!isEditMode">
+          </div>
+        </div>
+
+        <hr>
+      </ng-container>
+
+      <ng-container *ngIf="model.hasNoCollateral">
+        <label class="mt-2 fw-bold">{{ 'application.applicationTwo.common.hasNoCollateral' | translate }}</label>
+
+        <div class="row">
+          <div class="form-group col-sm-12 col-md-12">
+            <label>
+              {{ 'application.applicationTwo.common.noCollateralAdditionalInformation' | translate }}
+            </label>
+            <input class="form-control form-control-sm"
+                   type="text"
+                   name="noCollateralAdditionalInformation"
+                   #noCollateralAdditionalInformation="ngModel"
+                   [(ngModel)]="model.noCollateralAdditionalInformation"
+                   [disabled]="!isEditMode"
+                   required>
+          </div>
+        </div>
+
+        <hr>
+      </ng-container>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-sm-12 col-md-12">
+        <label>
+          {{ 'application.applicationTwo.common.additionalInformation' | translate }}
+        </label>
+        <div class="textarea-wrapper">
+          <textarea name="additionalInformation"
+                    #additionalInformation="ngModel"
+                    class="form-control form-control-sm"
+                    [maxlength]="maxTextLength1024"
+                    [disabled]="!isEditMode"
+                    [(ngModel)]="model.additionalInformation"
+                    [disabled]="!isEditMode"
+                    rows="3"></textarea>
+          <span class="used-chars">
+            {{ model.additionalInformation === undefined ||
+            model.additionalInformation === null ?
+            0 :
+            model.additionalInformation?.length }}/{{ maxTextLength1024 }}</span>
+        </div>
+      </div>
+    </div>
+
+    <ng-container *ngIf="!isFileFormDisplayed; else displayFilePanel">
+      <div *ngIf="isEditMode"
+           class="row mt-3">
+        <div class="col-sm-12 float-md-left">
+          <button type="button"
+                  class="btn btn-sm btn-primary"
+                  (click)="displayFileForm()">
+            <app-icon icon="file-earmark-plus"></app-icon>
+            {{ 'buttons.attachFile' | translate }}
+          </button>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #displayFilePanel>
+      <app-application-file-form [(files)]="model.applicationTwoFiles"
+                                 [(isFileFormDisplayed)]="isFileFormDisplayed"
+                                 (isValidForm)="changeFormValidStatus($event)"
+                                 [isEditMode]="isEditMode"
+                                 [isViewMode]="isViewMode"></app-application-file-form>
+
+
+    </ng-template>
+
+  </app-part-panel>
+</form>

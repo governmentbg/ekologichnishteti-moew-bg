@@ -1,0 +1,20 @@
+.noevents {
+    pointer-events: none;
+}
+
+.form-control-invalid-static {
+    border: 1px solid #dc3545;
+    box-shadow: none;
+}
+
+.control-disabled {
+    background-color: #e9ecef;
+}
+
+a.text-overflow {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 80%;
+}
+  

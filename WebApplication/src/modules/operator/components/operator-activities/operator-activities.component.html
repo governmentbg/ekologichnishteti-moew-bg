@@ -1,0 +1,233 @@
+<ng-template ngFor
+             let-activityOffering
+             [ngForOf]="activityOfferings"
+             let-i="index">
+    <div class="row ml-1">
+        <collapsable-label heading="{{activityOffering.activity.name}}"
+                           fontSize="fs-14"
+                           [isCollapsed]="true">
+            <div body>
+                <form #operatorModifyActivityOfferingForm="ngForm">
+                    <div class="row">
+                        <div class="form-group col-sm-12 col-md-12">
+                            <label>
+                                {{ 'operator.common.subActivity' | translate }}
+                            </label>
+                            <app-async-select #subActivity="ngModel"
+                                              name="subActivity-{{ i }}"
+                                              restUrl="SubActivity/Select"
+                                              [(ngModel)]="activityOffering.subActivity"
+                                              (ngModelChange)="activityOffering.subActivityId = $event?.id"
+                                              [required]="true"
+                                              [disabled]="!activityOffering.isInEditMode"
+                                              [filter]="{activityId: activityOffering.activityId}">
+                            </app-async-select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-12 col-md-4">
+                            <label>
+                                {{ 'operator.common.operatorAuthorityRiosv' | translate }}
+                            </label>
+                            <app-async-select #authorityRiosv="ngModel"
+                                              name="authorityRiosv"
+                                              restUrl="Authority/Select"
+                                              [(ngModel)]="activityOffering.authorityRiosv"
+                                              (ngModelChange)="activityOffering.authorityRiosvId = $event?.id"
+                                              [allowClear]="true"
+                                              [disabled]="!activityOffering.isInEditMode"
+                                              [filter]="{type: authorityType.riosv}">
+                            </app-async-select>
+                        </div>
+
+                        <div class="form-group col-sm-12 col-md-4">
+                            <label>
+                                {{ 'operator.common.operatorAuthorityBasin' | translate }}
+                            </label>
+                            <app-async-select #authorityBasin="ngModel"
+                                              name="authorityBasin"
+                                              restUrl="Authority/Select"
+                                              [(ngModel)]="activityOffering.authorityBasin"
+                                              (ngModelChange)="activityOffering.authorityBasinId = $event?.id"
+                                              [allowClear]="true"
+                                              [disabled]="!activityOffering.isInEditMode"
+                                              [filter]="{type: authorityType.bduv}">
+                            </app-async-select>
+                        </div>
+
+                        <div class="form-group col-sm-12 col-md-4">
+                            <label>
+                                {{ 'operator.common.operatorTerrain' | translate }}
+                            </label>
+                            <app-async-select #activityOfferingTerrain="ngModel"
+                                              name="activityOfferingTerrain"
+                                              restUrl="TerrainNomenclature/Select"
+                                              [(ngModel)]="activityOffering.terrain"
+                                              (ngModelChange)="activityOffering.terrainId = $event?.id"
+                                              [params]="operatorId"
+                                              [allowClear]="true"
+                                              [disabled]="!activityOffering.isInEditMode">
+                            </app-async-select>
+                        </div>
+                    </div>
+
+                    <div class="row"
+                         *ngIf="activityOffering.terrain?.address">
+                        <div class="form-group col-sm-12 col-md-12">
+                            <label>
+                                {{ "operator.common.terrains.address" | translate }}
+                            </label>
+                            <div class="input-group input-group-sm">
+                                <input name="address"
+                                       class="form-control"
+                                       #address="ngModel"
+                                       [(ngModel)]="activityOffering.terrain.address"
+                                       [disabled]="true">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 float-md-left">
+                            <button *ngIf="!activityOffering.isInEditMode"
+                                    class="btn btn-sm btn-warning mt-1 mb-3"
+                                    type="button"
+                                    (click)="enableActivityOfferingModification(activityOffering)">
+                                <app-icon icon="pencil"
+                                          width="12"
+                                          height="12"></app-icon>
+                                {{ "operator.common.modifyActivityOffering" | translate }}
+                            </button>
+
+                            <button *ngIf="activityOffering.isInEditMode"
+                                    class="btn btn-sm btn-success mt-1 mb-3 mr-1"
+                                    type="button"
+                                    (click)="modifyActivityOffering(activityOffering)"
+                                    [disabled]="operatorModifyActivityOfferingForm.invalid">
+                                {{ "operator.common.save" | translate }}
+                            </button>
+
+                            <button *ngIf="activityOffering.isInEditMode"
+                                    class="btn btn-sm btn-danger mt-1 mb-3"
+                                    type="button"
+                                    (click)="cancelActivityOfferingModification(activityOffering)">
+                                {{ "operator.common.cancel" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </collapsable-label>
+    </div>
+</ng-template>
+
+<form #operatorAddActivityOfferingForm="ngForm"
+      id="operatorAddActivityOfferingForm">
+    <div class="ml-3">
+        <ng-container *ngIf="isActivityOfferingFormDisplayed">
+            <div class="row">
+                <div class="form-group col-sm-12 col-md-12">
+                    <label>
+                        {{ 'operator.common.activity' | translate }}
+                    </label>
+                    <app-async-select #activity="ngModel"
+                                      name="activity"
+                                      restUrl="Activity/Select"
+                                      [(ngModel)]="newActivityOffering.activity"
+                                      (ngModelChange)="onActivityChange($event)"
+                                      [required]="true">
+                    </app-async-select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-sm-12 col-md-12">
+                    <label>
+                        {{ 'operator.common.subActivity' | translate }}
+                    </label>
+                    <app-async-select #subActivity="ngModel"
+                                      name="subActivity"
+                                      restUrl="SubActivity/Select"
+                                      [(ngModel)]="newActivityOffering.subActivity"
+                                      (ngModelChange)="newActivityOffering.subActivityId = $event?.id"
+                                      [required]="true"
+                                      [disabled]="newActivityOffering.activityId === undefined || newActivityOffering.activityId === null || newActivityOffering.activityId <= 0"
+                                      [filter]="{activityId: newActivityOffering.activityId}">
+                    </app-async-select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-12 col-md-4">
+                    <label>
+                        {{ 'operator.common.operatorAuthorityRiosv' | translate }}
+                    </label>
+                    <app-async-select #authorityRiosv="ngModel"
+                                      name="authorityRiosv"
+                                      restUrl="Authority/Select"
+                                      [(ngModel)]="newActivityOffering.authorityRiosv"
+                                      (ngModelChange)="newActivityOffering.authorityRiosvId = $event?.id"
+                                      [filter]="{type: authorityType.riosv}"
+                                      [allowClear]="newActivityOffering.authorityRiosvId">
+                    </app-async-select>
+                </div>
+
+                <div class="form-group col-sm-12 col-md-4">
+                    <label>
+                        {{ 'operator.common.operatorAuthorityBasin' | translate }}
+                    </label>
+                    <app-async-select #authorityBasin="ngModel"
+                                      name="authorityBasin"
+                                      restUrl="Authority/Select"
+                                      [(ngModel)]="newActivityOffering.authorityBasin"
+                                      (ngModelChange)="newActivityOffering.authorityBasinId = $event?.id"
+                                      [filter]="{type: authorityType.bduv}"
+                                      [allowClear]="newActivityOffering.authorityBasinId">
+                    </app-async-select>
+                </div>
+
+                <div class="form-group col-sm-12 col-md-4">
+                    <label>
+                        {{ 'operator.common.operatorTerrain' | translate }}
+                    </label>
+                    <app-async-select #terrain="ngModel"
+                                      name="terrain"
+                                      restUrl="TerrainNomenclature/Select"
+                                      [(ngModel)]="newActivityOffering.terrain"
+                                      (ngModelChange)="newActivityOffering.terrainId = $event?.id"
+                                      [params]="operatorId"
+                                      [allowClear]="newActivityOffering.terrainId">
+                    </app-async-select>
+                </div>
+            </div>
+        </ng-container>
+
+        <div class="row">
+            <div class="col-sm-12 float-md-left">
+                <button *ngIf="!isActivityOfferingFormDisplayed"
+                        class="btn btn-sm btn-blue mt-1 mb-3"
+                        type="button"
+                        (click)="displayActivityOfferingForm()">
+                    <app-icon icon="plus-lg"
+                              width="12"
+                              height="12"></app-icon>
+                    {{ "operator.common.addActivityOffering" | translate }}
+                </button>
+
+                <button *ngIf="isActivityOfferingFormDisplayed"
+                        class="btn btn-sm btn-success mt-1 mb-3 mr-1"
+                        type="button"
+                        (click)="addActivityOffering()"
+                        [disabled]="operatorAddActivityOfferingForm.invalid || !canSubmit">
+                    {{ "operator.common.save" | translate }}
+                </button>
+
+                <button *ngIf="isActivityOfferingFormDisplayed"
+                        class="btn btn-sm btn-danger mt-1 mb-3"
+                        type="button"
+                        (click)="cancelAddingActivityOffering()">
+                    {{ "operator.common.cancel" | translate }}
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

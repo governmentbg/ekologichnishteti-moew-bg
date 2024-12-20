@@ -1,0 +1,24 @@
+<user-common [model]="model"
+             [isEditMode]="isEditMode"
+             [isPasswordRequired]="isPasswordRequired"
+             (isValidForm)="changeFormValidStatus($event)">
+  <div header-buttons
+       class="float-md-right">
+    <button *ngIf="isEditMode"
+            class="btn btn-primary btn-sm"
+            [disabled]="!canSubmit"
+            (click)="editUser()">
+      {{ "user.view.save" | translate }}
+    </button>
+    <button *ngIf="isEditMode"
+            class="btn btn-outline-primary btn-sm ms-2"
+            (click)="cancelEdit()">
+      {{ "user.view.cancel" | translate }}
+    </button>
+    <button *ngIf="!isEditMode"
+            class="btn btn-primary btn-sm"
+            (click)="enableEditing()">
+      {{ "user.view.edit" | translate }}
+    </button>
+  </div>
+</user-common>

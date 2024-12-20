@@ -1,0 +1,32 @@
+<div class="dropdown-toggle"
+     data-toggle="dropdown"
+     aria-haspopup="true"
+     aria-expanded="false">
+  {{ fullname }}
+</div>
+<div class="dropdown-menu dropdown-menu-right">
+  <button class="btn btn-sm dropdown-item"
+          (click)="routeTo('/user/profile')">
+    {{ 'buttons.profile' | translate }}
+  </button>
+
+  <ng-container *ngIf="isAdmin">
+    <button class="btn btn-sm dropdown-item"
+            (click)="routeTo('/user/search')">
+      {{ 'buttons.users' | translate }}
+    </button>
+  </ng-container>
+
+  <ng-container *ngIf="isAdmin || isMosv || isAuthorizedEntityActive">
+    <button class="btn btn-sm dropdown-item"
+            (click)="routeTo('/operator/search')">
+      {{ 'buttons.operators' | translate }}
+    </button>
+  </ng-container>
+
+
+  <button class="btn btn-sm dropdown-item"
+          (click)="logout()">
+    {{ 'buttons.exit' | translate }}
+  </button>
+</div>

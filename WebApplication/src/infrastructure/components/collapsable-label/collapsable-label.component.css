@@ -1,0 +1,15 @@
+.collapsable-label:hover {
+    color: #135496;
+}
+  
+.collapsable-label-red:hover {
+    color: #ff0000;
+}
+  
+.collapsable-label-red {
+    color: #ff0000;
+}
+  
+.heading-icon {
+    min-width: 13px;
+}

@@ -1,0 +1,132 @@
+<div class="search-panel shadow bg-white rounded mb-5">
+  <div class="row">
+    <div class="form-group col-sm-12 col-md-3">
+      <label>
+        {{ "application.search.dateFrom" | translate }}
+      </label>
+      <div class="input-group input-group-sm">
+        <input name="dateFrom"
+               class="form-control"
+               ngbDatepicker
+               placeholder="дд/мм/гггг"
+               [ngStyle]="{'border': dateFrom.status === 'INVALID' ? '1px solid #dc3545' : null}"
+               #dateFrom="ngModel"
+               #dateFromDatepicker="ngbDatepicker"
+               [(ngModel)]="filter.dateFrom"
+               validDate
+               [maxDate]="maxDate"
+               maxlength="10">
+        <div class="input-group-append">
+          <button class="btn btn-sm btn-outline-primary"
+                  type="button"
+                  (click)="dateFromDatepicker.toggle()">
+            <app-icon icon="calendar2-event"
+                      width="12"
+                      height="12"></app-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group col-sm-12 col-md-3">
+      <label>
+        {{ "application.search.dateTo" | translate }}
+      </label>
+      <div class="input-group input-group-sm">
+        <input name="dateTo"
+               class="form-control"
+               ngbDatepicker
+               placeholder="дд/мм/гггг"
+               [ngStyle]="{'border': dateTo.status === 'INVALID' ? '1px solid #dc3545' : null}"
+               #dateTo="ngModel"
+               #dateToDatepicker="ngbDatepicker"
+               [(ngModel)]="filter.dateTo"
+               validDate
+               [maxDate]="maxDate"
+               maxlength="10">
+        <div class="input-group-append">
+          <button class="btn btn-sm btn-outline-primary"
+                  type="button"
+                  (click)="dateToDatepicker.toggle()">
+            <app-icon icon="calendar2-event"
+                      width="12"
+                      height="12"></app-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-sm-12">
+      <div class="float-md-left">
+        <button type="button"
+                class="btn btn-sm btn-secondary"
+                (click)="clearFilter()">
+          <app-icon icon="trash"></app-icon>
+          {{ "buttons.clear" | translate }}
+        </button>
+      </div>
+
+      <div class="float-md-right">
+        <button type="button"
+                class="btn btn-sm btn-outline-primary"
+                (click)="changeLanguage()">
+          <app-icon icon="translate"
+                    width="16"
+                    height="16"></app-icon>
+          <ng-container *ngIf="filter.isBg; else displayEn">
+            {{ "buttons.en" | translate }}
+          </ng-container>
+          <ng-template #displayEn>
+            {{ "buttons.bg" | translate }}
+          </ng-template>
+        </button>
+        <button type="button"
+                class="btn btn-sm btn-outline-primary ms-3"
+                (click)="export()">
+          <app-icon icon="file-earmark-word"
+                    width="16"
+                    height="16"></app-icon>
+          {{ "buttons.export" | translate }}
+        </button>
+        <button type="button"
+                class="btn btn-sm btn-primary ms-3"
+                (click)="search()">
+          <app-icon icon="search"
+                    class="thicker-icon"
+                    width="12"
+                    height="12"></app-icon>
+          {{ "buttons.search" | translate }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<div class="summary">
+  <div class="main-title">{{ (filter.isBg ? "report.summary.finishedApplications" :
+    "report.summaryEn.finishedApplications") | translate }}</div>
+  <div *ngIf="summaryReportDto?.finishedSummaries.length === 0"
+       class="noApps">
+    {{ (filter.isBg ? "report.summary.noApplicationsOfThisType" : "report.summaryEn.noApplicationsOfThisType") |
+    translate }}
+  </div>
+  <summary-common-component [summaries]="summaryReportDto?.finishedSummaries"
+                            [isBg]="filter.isBg"></summary-common-component>
+</div>
+
+<div class="summary">
+  <div class="main-title">{{ (filter.isBg ? "report.summary.onGoingApplications" :
+    "report.summaryEn.onGoingApplications") | translate }}</div>
+  <div *ngIf="summaryReportDto?.onGoingSummaries.length === 0"
+       class="noApps">
+    {{ (filter.isBg ? "report.summary.noApplicationsOfThisType" : "report.summaryEn.noApplicationsOfThisType") |
+    translate }}
+  </div>
+  <summary-common-component [summaries]="summaryReportDto?.onGoingSummaries"
+                            [isBg]="filter.isBg"></summary-common-component>
+</div>

@@ -1,0 +1,15 @@
+.summary {
+  margin-bottom: 6em;
+}
+
+.main-title {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 2em;
+}
+
+.noApps {
+  font-size: 18px;
+  text-align: center;
+  font-style: italic;
+}

@@ -1,0 +1,99 @@
+<form #operatorCorrespondenceForm="ngForm">
+    <div class="row">
+        <div class="form-group col-sm-12 col-md-3">
+            <label>
+                {{ "operator.common.settlement" | translate }}
+            </label>
+            <app-async-select name="settlement"
+                              #settlement="ngModel"
+                              restUrl="Settlement/Select"
+                              [(ngModel)]="operatorCorrespondence.settlement"
+                              (ngModelChange)="operatorCorrespondence.settlementId= $event.id"
+                              [disabled]="!isEditMode"
+                              [required]="true">
+            </app-async-select>
+        </div>
+        <div class="form-group col-sm-12 col-md-7">
+            <label>
+                {{ "operator.common.operatorCorrespondence.correspondenceAddress" | translate }}
+            </label>
+            <div class="input-group input-group-sm">
+                <input name="correspondenceAddress"
+                       class="form-control"
+                       #correspondenceAddress="ngModel"
+                       [(ngModel)]="operatorCorrespondence.correspondenceAddress"
+                       [disabled]="!isEditMode"
+                       required>
+            </div>
+        </div>
+        <div class="form-group col-sm-12 col-md-2">
+            <label>
+                {{ "operator.common.postalCode" | translate }}
+            </label>
+            <div class="input-group input-group-sm">
+                <input name="postalCode"
+                       class="form-control"
+                       #postalCode="ngModel"
+                       [(ngModel)]="operatorCorrespondence.postalCode"
+                       [disabled]="!isEditMode"
+                       pattern="{{numberRegex}}">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-sm-12 col-md-6">
+            <label>
+                {{ "operator.common.operatorCorrespondence.contactPerson" | translate }}
+            </label>
+            <div class="input-group input-group-sm">
+                <input name="contactPerson"
+                       class="form-control"
+                       #contactPerson="ngModel"
+                       [(ngModel)]="operatorCorrespondence.contactPerson"
+                       [disabled]="!isEditMode"
+                       required>
+            </div>
+        </div>
+        <div class="form-group col-sm-12 col-md-2">
+            <label>
+                {{ "operator.common.phone" | translate }}
+            </label>
+            <div class="input-group input-group-sm">
+                <input name="phone"
+                       class="form-control"
+                       #phone="ngModel"
+                       [(ngModel)]="operatorCorrespondence.phone"
+                       [disabled]="!isEditMode"
+                       required
+                       pattern="{{phoneRegex}}">
+            </div>
+        </div>
+        <div class="form-group col-sm-12 col-md-2">
+            <label>
+                {{ "operator.common.fax" | translate }}
+            </label>
+            <div class="input-group input-group-sm">
+                <input name="fax"
+                       class="form-control"
+                       #fax="ngModel"
+                       [(ngModel)]="operatorCorrespondence.fax"
+                       [disabled]="!isEditMode">
+            </div>
+        </div>
+        <div class="form-group col-sm-12 col-md-2">
+            <label>
+                {{ "operator.common.email" | translate }}
+            </label>
+            <div class="input-group input-group-sm">
+                <input name="email"
+                       class="form-control"
+                       #email="ngModel"
+                       [(ngModel)]="operatorCorrespondence.email"
+                       [disabled]="!isEditMode"
+                       required
+                       pattern="{{emailRegex}}">
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,21 @@
+<header class="mb-5">
+  <div class="container d-flex align-items-center">
+    <div class="d-flex nav align-items-center"
+         style="color: #ffffff;">
+      <a routerLink=""
+         class="logo-link">
+        <img src="./../assets/coa.png">
+      </a>
+
+      <div class="title">
+        <h5>{{ 'common.moew' | translate }}</h5>
+        <h6>{{ 'common.zopoesht' | translate }}</h6>
+      </div>
+
+      <app-menu *ngIf="isLoggedIn"
+                class="ml-auto d-flex align-items-right"
+                [menuItems]="menuItems"></app-menu>
+    </div>
+
+  </div>
+</header>

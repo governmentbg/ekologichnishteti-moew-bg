@@ -1,0 +1,13 @@
+insert into country(name, isactive, version, code, namealt, vieworder) values ('Австрия',true,0,'AT','Austria',2);
+insert into country(name, isactive, version, code, namealt, vieworder) values ('България',true,0,'BG','Bulgaria',2);
+insert into country(name, isactive, version, code, namealt, vieworder) values ('Германия',true,0,'DE','Germany',2);
+insert into country(name, isactive, version, code, namealt, vieworder) values ('Гърция',true,0,'GR','Greece',2);
+insert into country(name, isactive, version, code, namealt, vieworder) values ('Молдова',true,0,'MD','Moldova, Republic of',2);
+insert into country(name, isactive, version, code, namealt, vieworder) values ('Румъния',true,0,'RO','Romania',2);
+insert into country(name, isactive, version, code, namealt, vieworder) values ('Северна Македония',true,0,'MK','North Macedonia, the Former Yugoslav Republic of',2);
+insert into country(name, isactive, version, code, namealt, vieworder) values ('Словакия',true,0,'SK','Slovakia',2);
+insert into country(name, isactive, version, code, namealt, vieworder) values ('Сърбия',true,0,'RS','Serbia',2);
+insert into country(name, isactive, version, code, namealt, vieworder) values ('Турция',true,0,'TR','Turkey',2);
+insert into country(name, isactive, version, code, namealt, vieworder) values ('Украйна',true,0,'UA','Ukraine',2);
+insert into country(name, isactive, version, code, namealt, vieworder) values ('Унгария',true,0,'HU','Hungary',2);
+insert into country(name, isactive, version, code, namealt, vieworder) values ('Хърватска',true,0,'HR','Croatia',2);

@@ -1,0 +1,76 @@
+<ng-container *ngIf="!hasApplicationTwo">
+  <div class="subheader">
+    <p style="font-weight: bold;">{{ 'application.view.currentState' | translate }}:&nbsp;
+    <h6 style="color: red; font-weight: bold;">
+      {{ commitStateLocalization[applicationOne.commitState] }}
+    </h6>
+    <ng-container *ngIf="applicationOne.locks.length">
+      &nbsp;(
+      <ng-container *ngFor="let lock of applicationOne.locks; let i = index">
+        <span *ngIf="i !== 0">
+          ,&nbsp;
+        </span>
+        <p
+           style="width:400px; max-width: fit-content; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: red;">
+          {{ lock.userFullName }}
+        </p>
+        <span class="d-flex">
+          <app-help-tooltip class="ml-1"
+                            [tooltipText]="lock.userAuthorityName">
+          </app-help-tooltip>
+        </span>
+      </ng-container>
+      )
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="hasApplicationTwo">
+  <div class="subheader">
+    <p style="font-weight: bold;">{{ 'application.view.currentState' | translate }}:&nbsp;
+    <h6 style="color: red; font-weight: bold;">
+      {{ applicationTwoCommitStateLocalization[applicationTwo.commitState] }}
+    </h6>
+    <ng-container *ngIf="applicationTwo.locks.length">
+      &nbsp;(
+      <ng-container *ngFor="let lock of applicationTwo.locks; let i = index">
+        <span *ngIf="i !== 0">
+          ,&nbsp;
+        </span>
+        <p
+           style="width:400px; max-width: fit-content; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: red;">
+          {{ lock.userFullName }}
+        </p>
+        <span class="d-flex">
+          <app-help-tooltip class="ml-1"
+                            [tooltipText]="lock.userAuthorityName">
+          </app-help-tooltip>
+        </span>
+      </ng-container>
+      )
+    </ng-container>
+  </div>
+</ng-container>
+
+
+<app-application-one-view [(model)]="applicationOne"
+                          [isEditMode]="isEditMode && applicationOne.hasPermissionToEdit"
+                          [applicationOneId]="applicationOneId"
+                          [modelBasicName]="modelBasicName"
+                          (startedAppTwo)="startAppTwo()"></app-application-one-view>
+
+<ng-container *ngIf="applicationOne.commitState === commitStates.entered && hasApplicationTwo">
+  <app-application-two-view [(model)]="applicationTwo"
+                            [applicationOneType]="applicationOne.applicationOneType"
+                            [loadApplicationTwo]="false"
+                            [isEditMode]="isEditModeTwo && applicationTwo.hasPermissionToEdit"
+                            [scroll]="scroll">
+
+  </app-application-two-view>
+</ng-container>
+
+<ng-container *ngIf="applicationOne.commitState === commitStates.entered && newApplicationTwo">
+  <app-application-two-new [applicationOneDto]="applicationOne">
+
+  </app-application-two-new>
+</ng-container>

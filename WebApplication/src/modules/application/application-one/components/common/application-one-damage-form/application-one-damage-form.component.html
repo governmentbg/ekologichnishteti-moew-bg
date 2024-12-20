@@ -1,0 +1,46 @@
+<form #applicationOneDamageForm="ngForm">
+  <div class="row">
+    <div class="form-group col-sm-12">
+      <label>
+        {{ 'application.damage.occurenceConsequences' | translate }}
+      </label>
+      <div class="textarea-wrapper">
+        <textarea name="occurenceConsequences"
+                  #occurenceConsequences="ngModel"
+                  class="form-control form-control-sm"
+                  [maxlength]="maxTextLength1024"
+                  [disabled]="!isEditMode"
+                  [(ngModel)]="model.applicationOneDamage.occurenceConsequences"
+                  required
+                  rows="3"></textarea>
+        <span class="used-chars">
+          {{ model.applicationOneDamage.occurenceConsequences === undefined ||
+          model.applicationOneDamage.occurenceConsequences === null ?
+          0 :
+          model.applicationOneDamage.occurenceConsequences?.length }}/{{ maxTextLength1024 }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-sm-12">
+      <label>
+        {{ 'application.damage.measuresTaken' | translate }}
+      </label>
+      <div class="textarea-wrapper">
+        <textarea name="measuresTaken"
+                  #measuresTaken="ngModel"
+                  class="form-control form-control-sm"
+                  [maxlength]="maxTextLength1024"
+                  [disabled]="!isEditMode"
+                  [(ngModel)]="model.applicationOneDamage.measuresTaken"
+                  required
+                  rows="3"></textarea>
+        <span class="used-chars">
+          {{ model.applicationOneDamage.measuresTaken === undefined ||
+          model.applicationOneDamage.measuresTaken === null ?
+          0 :
+          model.applicationOneDamage.measuresTaken?.length }}/{{ maxTextLength1024 }}</span>
+      </div>
+    </div>
+  </div>
+</form>

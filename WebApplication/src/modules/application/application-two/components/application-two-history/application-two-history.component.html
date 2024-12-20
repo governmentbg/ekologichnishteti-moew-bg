@@ -1,0 +1,40 @@
+<div class="mb-4">
+  <a [routerLink]="
+     ['/application/one/', recentApplicationOneId]">
+    &lt; {{ 'buttons.back' | translate }}
+  </a>
+</div>
+
+<table class="table search-table table-bordered">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col"
+          style="width: 26%">{{ 'application.history.date' | translate }}</th>
+      <th scope="col"
+          style="width: 26%">{{ 'application.history.user' | translate }}</th>
+      <th scope="col"
+          style="width: 40%;">{{ 'application.history.archivedReason' | translate }}</th>
+      <th scope="col"
+          style="width: 8%;">{{ 'application.history.view' | translate }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let application of applications">
+      <td>{{ application.modificationDate | date: 'dd.MM.yyyy, HH:mm:ss' }}ч.</td>
+      <td>{{ application.userFullName }}</td>
+      <td>{{ applicationHistoryTypeLocalization[application.type] }}</td>
+      <td *ngIf="application.type !== applicationHistoryTypes.complete && 
+          application.type !== applicationHistoryTypes.cancelModification &&
+          application.type !== applicationHistoryTypes.modification"
+          class="text-center">
+        <button type="button"
+                class="btn btn-sm btn-outline-primary"
+                [routerLink]="['/application/two', application.applicationId]">
+          <app-icon icon="search"
+                    width="16"
+                    height="16"></app-icon>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

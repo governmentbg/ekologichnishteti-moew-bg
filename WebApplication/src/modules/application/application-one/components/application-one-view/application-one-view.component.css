@@ -1,0 +1,17 @@
+.form-header {
+  font-size: large;
+  font-weight: bold;
+}
+
+.form {
+  margin-bottom: 4em;
+}
+
+.form-subheader {
+  display: flex;
+  align-items: baseline;
+}
+
+.control-btns {
+  margin-left: auto;
+}

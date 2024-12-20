@@ -1,0 +1,45 @@
+@media only screen and (max-width: 767px) {
+  .hide-tooltip {
+    display: none !important;
+  }
+
+  .checkboxes {
+    margin-bottom: 16px !important;
+    margin-top: -14px;
+  }
+}
+
+.red-border {
+  border: 1px solid #dc3545;
+}
+
+.textarea-wrapper {
+  position: relative;
+}
+
+.used-chars {
+  position: absolute;
+  bottom: 0px;
+  right: 10px;
+  opacity: 50%;
+  font-size: 14px;
+}
+
+.btn-remove {
+  display: flex;
+  height: fit-content;
+  width: fit-content;
+}
+
+.btn-blue {
+  background-color: #135496;
+  color: white;
+}
+
+.btn-blue:hover {
+  background-color: #113e6b;
+}
+
+.red-border {
+  border: 1px solid #dc3545;
+}

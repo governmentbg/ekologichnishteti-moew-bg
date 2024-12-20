@@ -1,0 +1,555 @@
+<form #applicationOneBasicForm="ngForm">
+  <div class="row">
+    <div class="form-group col-sm-12 col-md-4">
+      <label>
+        {{ 'application.basic.incomingDocNumber' | translate }}
+      </label>
+      <input type="text"
+             name="incomingDocNumber"
+             #incomingDocNumber="ngModel"
+             class="form-control form-control-sm"
+             [disabled]="!isEditMode"
+             [(ngModel)]="model.applicationOneBasic.incomingDocNumber">
+    </div>
+    <div class="form-group col-sm-12 col-md-4">
+      <label>
+        {{ 'application.basic.name' | translate }}
+      </label>
+      <input type="text"
+             name="name"
+             #name="ngModel"
+             class="form-control form-control-sm"
+             [disabled]="!isEditMode"
+             [(ngModel)]="modelBasicName">
+    </div>
+
+    <div class="form-group col-sm-12 col-md-4"
+         *ngIf="isViewMode">
+      <label>
+        {{ 'application.basic.registerNumber' | translate }}
+      </label>
+      <input type="text"
+             name="registerNumber"
+             #registerNumber="ngModel"
+             class="form-control form-control-sm"
+             [disabled]="true"
+             [(ngModel)]="model.registerNumber"
+             required>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-sm-12">
+      <div class="form-check">
+        <label class="form-check-label"
+               [ngClass]="{'hover': isEditMode}">
+          <input type="checkbox"
+                 class="form-check-input hover"
+                 #hasSpeciesDamage="ngModel"
+                 name="hasSpeciesDamage"
+                 [disabled]="!isEditMode"
+                 [required]="!model.applicationOneBasic.hasWaterDamage && !model.applicationOneBasic.hasSoilDamage"
+                 [(ngModel)]="model.applicationOneBasic.hasSpeciesDamage"
+                 [ngClass]="{'red-border': !isAnyChecked()}">
+          {{ 'application.basic.hasSpeciesDamage' | translate }}
+        </label>
+
+      </div>
+      <div class="form-check">
+        <label class="form-check-label"
+               [ngClass]="{'hover': isEditMode}">
+          <input type="checkbox"
+                 class="form-check-input hover"
+                 #hasWaterDamage="ngModel"
+                 name="hasWaterDamage"
+                 id="hasWaterDamage"
+                 [disabled]="!isEditMode"
+                 [required]="!model.applicationOneBasic.hasSpeciesDamage && !model.applicationOneBasic.hasSoilDamage"
+                 [(ngModel)]="model.applicationOneBasic.hasWaterDamage"
+                 [ngClass]="{'red-border': !isAnyChecked()}">
+          {{ 'application.basic.hasWaterDamage' | translate }}
+        </label>
+      </div>
+      <div class="form-check">
+        <label class="form-check-label"
+               [ngClass]="{'hover': isEditMode}">
+          <input type="checkbox"
+                 class="form-check-input hover"
+                 #hasSoilDamage="ngModel"
+                 name="hasSoilDamage"
+                 id="hasSoilDamage"
+                 [disabled]="!isEditMode"
+                 [required]="!model.applicationOneBasic.hasWaterDamage && !model.applicationOneBasic.hasSpeciesDamage"
+                 [(ngModel)]="model.applicationOneBasic.hasSoilDamage"
+                 [ngClass]="{'red-border': !isAnyChecked()}">
+          {{ 'application.basic.hasSoilDamage' | translate }}
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-3">
+    <operator-info [(model)]="model.applicationOneBasic.operator"
+                   [applicantType]="model.applicant.applicantType"
+                   (operatorChangeEvent)="onOperatorChange($event)"
+                   [isEditMode]="isEditMode"
+                   [isDisabled]="true">
+    </operator-info>
+  </div>
+
+  <ng-container *ngIf="model.applicationOneBasic.operator">
+    <div class="row">
+      <div class="form-group col-sm-12 col-md-4 m-0">
+        <div class="form-group d-flex m-0 align-items-center">
+          <label class="w-75 overflow-hidden text-truncate">
+            {{ 'operator.common.activityOptions' | translate }}
+          </label>
+          <span class="d-inline-flex">
+            <app-help-tooltip class="ml-1"
+                              tooltipText="{{ 'operator.common.activityOptions' | translate }}">
+            </app-help-tooltip>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row align-items-end mb-3">
+      <div class="form-group col-sm-11 col-md-4 mb-0">
+        <select class="custom-select custom-select-sm"
+                name="activityOfferingType"
+                #activityOfferingType="ngModel"
+                [(ngModel)]="model.applicationOneBasic.activityOfferingType"
+                (ngModelChange)="onActivityOfferingTypeChange()"
+                [disabled]="!isEditMode">
+          <option [ngValue]="activityOfferingTypes.listed">
+            {{ 'operator.common.listedActivity' | translate }}
+          </option>
+          <option [ngValue]="activityOfferingTypes.notListed">
+            {{ 'operator.common.notListed' | translate }}
+          </option>
+          <option [ngValue]="activityOfferingTypes.diffuseNature">
+            {{ 'operator.common.diffuseNature' | translate }}
+          </option>
+        </select>
+      </div>
+      <button *ngIf="isEditMode"
+              class="btn btn-sm btn-danger btn-remove"
+              type="button"
+              [disabled]="!isEditMode"
+              (click)="removeActivityOfferingType()">
+        <app-icon icon="trash"
+                  width="12"
+                  height="12"></app-icon>
+      </button>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="model.applicationOneBasic.operator?.id > 0">
+    <ng-container *ngFor="let activityOffering of model.applicationOneBasic.activityOfferings; let i = index">
+      <div class="px-4">
+        <ng-container *ngIf="i === 0">
+          <hr>
+        </ng-container>
+
+        <div *ngIf="model.applicationOneBasic.activityOfferings[i].activityId === null || model.applicationOneBasic.activityOfferings[i].activityId === undefined"
+             class="row">
+          <div class="form-group col-sm-12 col-md-12">
+            <app-async-select name="activityOfferings-{{ i }}"
+                              #activityOfferings="ngModel"
+                              [(ngModel)]="model.applicationOneBasic.activityOfferings[i]"
+                              (ngModelChange)="onActivityChange(i, $event)"
+                              [disabled]="!isEditMode"
+                              [required]="true"
+                              [collection]="unusedActivityOffering">
+            </app-async-select>
+          </div>
+        </div>
+
+        <div *ngIf="model.applicationOneBasic.activityOfferings[i]?.activity?.id">
+          <div class="row">
+            <div class="form-group col-sm-12 col-md-12">
+              <label>
+                {{ 'operator.common.activity' | translate }}
+              </label>
+              <input type="text"
+                     name="activity-{{ i }}"
+                     #activity="ngModel"
+                     class="form-control form-control-sm"
+                     [ngModel]="getActivityNameWithSubActivityCode(activityOffering)"
+                     required
+                     disabled>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-sm-12 col-md-12">
+              <label>
+                {{ 'operator.common.subActivity' | translate }}
+              </label>
+              <input type="text"
+                     name="subActivity-{{ i }}"
+                     #subActivity="ngModel"
+                     class="form-control form-control-sm"
+                     [ngModel]="activityOffering.subActivity.name"
+                     required
+                     disabled>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-sm-12 col-md-4">
+              <label>
+                {{ 'operator.common.operatorAuthorityRiosv' | translate }}
+              </label>
+              <input type="text"
+                     name="operatorAuthorityRiosv-{{ i }}"
+                     #operatorAuthorityRiosv="ngModel"
+                     class="form-control form-control-sm"
+                     [ngModel]="activityOffering.authorityRiosv?.name"
+                     required
+                     disabled>
+            </div>
+            <div class="form-group col-sm-12 col-md-4">
+              <label>
+                {{ 'operator.common.operatorAuthorityBasin' | translate }}
+              </label>
+              <input type="text"
+                     name="operatorAuthorityBasin-{{ i }}"
+                     #operatorAuthorityBasin="ngModel"
+                     class="form-control form-control-sm"
+                     [ngModel]="activityOffering.authorityBasin?.name"
+                     required
+                     disabled>
+            </div>
+            <div class="form-group col-sm-12 col-md-4">
+              <label>
+                {{ 'operator.common.operatorTerrain' | translate }}
+              </label>
+              <input type="text"
+                     name="operatorTerrain-{{ i }}"
+                     #operatorTerrain="ngModel"
+                     class="form-control form-control-sm"
+                     [ngModel]="activityOffering.terrain?.name"
+                     required
+                     disabled>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12 float-md-left">
+            <button *ngIf="isEditMode"
+                    class="btn btn-sm btn-danger btn-remove"
+                    type="button"
+                    (click)="removeActivityOffering(i, model.applicationOneBasic.activityOfferings[i])">
+              <app-icon class="mr-1"
+                        icon="trash"
+                        width="12"
+                        height="12"></app-icon>
+              {{ 'operator.common.removeActivityOffering' | translate }}
+            </button>
+          </div>
+        </div>
+
+        <hr>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="model.applicationOneBasic.activityOfferingType === activityOfferingTypes.notListed">
+      <div class="row">
+        <div class="form-group col-sm-12">
+          <label>
+            {{ 'operator.common.notListedDescription' | translate }}
+          </label>
+          <input type="text"
+                 name="notListedDescription"
+                 #notListedDescription="ngModel"
+                 class="form-control form-control-sm"
+                 [(ngModel)]="model.applicationOneBasic.notListedDescription"
+                 required
+                 [disabled]="!isEditMode">
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="model.applicationOneBasic.activityOfferingType === activityOfferingTypes.diffuseNature">
+      <div class="row">
+        <div class="form-group col-sm-12">
+          <label>
+            {{ 'operator.common.diffuseNatureDescription' | translate }}
+          </label>
+          <input type="text"
+                 name="diffuseNatureDescription"
+                 #diffuseNatureDescription="ngModel"
+                 class="form-control form-control-sm"
+                 [(ngModel)]="model.applicationOneBasic.diffuseNatureDescription"
+                 required
+                 [disabled]="!isEditMode">
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="row"
+         [ngClass]="{'pl-4': model.applicationOneBasic?.activityOfferings?.length}"
+         *ngIf="model.applicationOneBasic?.activityOfferingType === activityOfferingTypes.listed">
+      <div class="col-sm-12 float-md-left">
+        <button *ngIf="isEditMode && model.applicationOneBasic.activityOfferings?.length < model.applicationOneBasic.operator.activityOfferings?.length"
+                class="btn btn-sm btn-blue mt-1 mb-3"
+                type="button"
+                [disabled]="!canAddActivityOffering"
+                (click)="addActivityOffering()">
+          <app-icon icon="plus-lg"
+                    width="12"
+                    height="12"></app-icon>
+          {{ 'operator.common.addActivityOffering' | translate }}
+        </button>
+      </div>
+    </div>
+  </ng-container>
+
+
+  <ng-container
+                *ngIf="model.applicationOneBasic.territorialRanges && model.applicationOneBasic.territorialRanges.length > 0">
+    <ng-container *ngFor="let territorialRange of model.applicationOneBasic.territorialRanges; let i = index">
+      <ng-container *ngIf="i === 0">
+        <div class="row">
+          <div class="form-group col-sm-12 col-md-6 m-0">
+            <div class="form-group d-flex m-0 align-items-center">
+              <label class="w-75 overflow-hidden text-truncate">
+                {{ 'application.basic.territorialRange' | translate }}
+              </label>
+              <span class="d-inline-flex">
+                <app-help-tooltip class="ml-1"
+                                  tooltipText="{{ 'application.basic.territorialRange' | translate }}">
+                </app-help-tooltip>
+              </span>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <div class="row align-items-end mb-2">
+        <div class="form-group col-sm-11 col-md-6 mb-0">
+          <app-async-select name="territorialRange-{{ i }}"
+                            #territorialRange="ngModel"
+                            restUrl="Authority/Select"
+                            [(ngModel)]="model.applicationOneBasic.territorialRanges[i]"
+                            (ngModelChange)="fillTerritorialRange()"
+                            [disabled]="!isEditMode"
+                            [required]="true"
+                            [excludeAlreadyAdded]="true"
+                            [params]="applicationOneTerritorialRangeIds">
+          </app-async-select>
+        </div>
+        <button *ngIf="isEditMode"
+                class="btn btn-sm btn-danger btn-remove"
+                type="button"
+                [disabled]="!isEditMode"
+                (click)="removeTerritorialRange(i)">
+          <app-icon icon="trash"
+                    width="12"
+                    height="12"></app-icon>
+        </button>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <div class="row">
+    <div class="col-sm-12 float-md-left">
+      <button *ngIf="isEditMode"
+              class="btn btn-sm btn-blue mt-1 mb-3"
+              type="button"
+              [disabled]="!canAddTerritorialRange"
+              (click)="addTerritorialRange()">
+        <app-icon icon="plus-lg"
+                  width="12"
+                  height="12"></app-icon>
+        {{ 'application.basic.addTerritorialRange' | translate }}
+      </button>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="form-group col-sm-12 col-md-12">
+      <label class="w-75 overflow-hidden text-truncate">
+        {{ 'application.basic.occurenceLocation' | translate }}
+      </label>
+      <div class="textarea-wrapper">
+        <textarea name="occurenceLocation"
+                  #occurenceLocation="ngModel"
+                  class="form-control form-control-sm"
+                  [ngClass]="{'red-border': occurenceLocation.invalid}"
+                  [maxlength]="maxTextLength1024"
+                  [disabled]="!isEditMode"
+                  required
+                  [(ngModel)]="model.applicationOneBasic.occurenceLocation"
+                  rows="3"></textarea>
+        <span class="used-chars">
+          {{ model.applicationOneBasic.occurenceLocation === undefined ||
+          model.applicationOneBasic.occurenceLocation === null ?
+          0 :
+          model.applicationOneBasic.occurenceLocation?.length }}/{{ maxTextLength1024 }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-sm-12 col-md-12">
+      <label class="w-75 overflow-hidden text-truncate">
+        {{ 'application.basic.occurenceReasons' | translate }}
+      </label>
+      <div class="textarea-wrapper">
+        <textarea name="occurenceReasons"
+                  #occurenceReasons="ngModel"
+                  class="form-control form-control-sm"
+                  [ngClass]="{'red-border': occurenceReasons.invalid}"
+                  [maxlength]="maxTextLength1024"
+                  [disabled]="!isEditMode"
+                  required
+                  [(ngModel)]="model.applicationOneBasic.occurenceReasons"
+                  rows="3"></textarea>
+        <span class="used-chars">
+          {{ model.applicationOneBasic.occurenceReasons === undefined ||
+          model.applicationOneBasic.occurenceReasons === null ?
+          0 :
+          model.applicationOneBasic.occurenceReasons?.length }}/{{ maxTextLength1024 }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-sm-12">
+      <label>
+        {{ 'application.basic.additionalInformation' | translate }}
+      </label>
+      <div class="textarea-wrapper">
+        <textarea name="additionalInformation"
+                  #additionalInformation="ngModel"
+                  class="form-control form-control-sm"
+                  [ngClass]="{'red-border': additionalInformation.invalid}"
+                  [maxlength]="maxTextLength1024"
+                  [disabled]="!isEditMode"
+                  [(ngModel)]="model.applicationOneBasic.additionalInformation"
+                  rows="3"></textarea>
+        <span class="used-chars">
+          {{ model.applicationOneBasic.additionalInformation === undefined ||
+          model.applicationOneBasic.additionalInformation === null ?
+          0 :
+          model.applicationOneBasic.additionalInformation?.length }}/{{ maxTextLength1024 }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-sm-12 col-md-3 d-flex align-items-center">
+      <div class="form-check">
+        <label class="form-check-label"
+               [ngClass]="{'hover': isEditMode}">
+          <input type="checkbox"
+                 class="form-check-input hover"
+                 #hasInternationalElement="ngModel"
+                 name="hasInternationalElement"
+                 [disabled]="!isEditMode"
+                 [(ngModel)]="model.applicationOneBasic.hasInternationalElement"
+                 (ngModelChange)="onInternationalElementChange()">
+          {{ 'application.hasInternationalElement' | translate }}
+        </label>
+      </div>
+    </div>
+  </div>
+
+
+  <ng-container *ngIf="model.applicationOneBasic.hasInternationalElement">
+    <div class="row">
+      <div class="form-group col-sm-12 col-md-6">
+        <label>
+          {{ 'application.culpritCountry' | translate }}
+        </label>
+        <app-async-select #culpritCountry="ngModel"
+                          name="culpritCountry"
+                          restUrl="Country/Select"
+                          [(ngModel)]="model.applicationOneBasic.culpritCountry"
+                          (ngModelChange)="model.applicationOneBasic.culpritCountryId = $event.id"
+                          [disabled]="!isEditMode"
+                          [required]="true">
+        </app-async-select>
+      </div>
+    </div>
+    <ng-container
+                  *ngIf="model.applicationOneBasic.affectedCountries && model.applicationOneBasic.affectedCountries.length > 0">
+      <ng-container *ngFor="let affectedCountry of model.applicationOneBasic.affectedCountries; let i = index">
+        <ng-container *ngIf="i === 0">
+          <div class="row">
+            <div class="form-group col-sm-12 col-md-6 mb-0">
+              <label>
+                {{ 'application.affectedCountry' | translate }}
+              </label>
+            </div>
+          </div>
+        </ng-container>
+        <div class="row mb-2">
+          <div class="form-group col-sm-12 col-md-3 mb-0">
+            <app-async-select name="affectedCountry--{{ i }}"
+                              #affectedCountry="ngModel"
+                              restUrl="Country/Select"
+                              [(ngModel)]="model.applicationOneBasic.affectedCountries[i]"
+                              (ngModelChange)="fillAffectedCountry()"
+                              [disabled]="!isEditMode"
+                              [required]="true"
+                              [excludeAlreadyAdded]="true"
+                              [params]="applicationOneAffectedCountryIds">
+            </app-async-select>
+          </div>
+          <button *ngIf="isEditMode"
+                  class="btn btn-sm btn-danger btn-remove"
+                  type="button"
+                  [disabled]="!isEditMode"
+                  (click)="removeAffectedCountry(i)">
+            <app-icon icon="trash"
+                      width="12"
+                      height="12"></app-icon>
+          </button>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <div class="row">
+      <div class="col-sm-12 float-md-left">
+        <button *ngIf="isEditMode"
+                class="btn btn-sm btn-blue mt-1 mb-3"
+                type="button"
+                [disabled]="!canAddAffectedCountry"
+                (click)="addAffectedCountry()">
+          <app-icon icon="plus-lg"
+                    width="12"
+                    height="12"></app-icon>
+          {{ 'application.basic.addAffectedCountry' | translate }}
+        </button>
+      </div>
+    </div>
+
+  </ng-container>
+
+  <ng-container *ngIf="model.applicationOneBasic.hasInternationalElement">
+    <div class="row">
+      <div class="form-group col-sm-12">
+        <label>
+          {{ 'application.internationalElementDescription' | translate }}
+        </label>
+        <div class="textarea-wrapper">
+          <textarea name="internationalElementDescription"
+                    #internationalElementDescription="ngModel"
+                    class="form-control form-control-sm"
+                    [maxlength]="maxTextLength1024"
+                    [disabled]="!isEditMode"
+                    [(ngModel)]="model.applicationOneBasic.internationalElementDescription"
+                    pattern="{{lettersAndNumbersRegex}}"
+                    rows="3"></textarea>
+          <span class="used-chars">
+            {{ model.applicationOneBasic.internationalElementDescription === undefined ||
+            model.applicationOneBasic.internationalElementDescription === null ?
+            0 :
+            model.applicationOneBasic.internationalElementDescription?.length }}/{{ maxTextLength1024 }}</span>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</form>

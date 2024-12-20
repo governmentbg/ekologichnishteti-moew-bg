@@ -1,0 +1,36 @@
+<div class="mb-4">
+  <a [routerLink]="
+     ['/administrativeExpenses']">
+    &lt; {{ 'buttons.back' | translate }}
+  </a>
+</div>
+
+<p class="font-weight-bold mb-2">
+  {{ authorityName }}
+  {{ "annualAdministrativeExpenses.forAPeriod" | translate }}
+  {{ periodName }}
+</p>
+
+<table class="table search-table table-bordered">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col"
+          class="col-md-3">{{ "annualAdministrativeExpenses.date" | translate }}</th>
+      <th scope="col"
+          class="col-md-4">{{ "annualAdministrativeExpenses.user" | translate }}</th>
+      <th scope="col"
+          class="col-md-3">{{ "annualAdministrativeExpenses.authority" | translate }}</th>
+      <th scope="col"
+          class="col-md-2">{{ "annualAdministrativeExpenses.amount" | translate }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let history of histories">
+      <td>{{ history.modificationDate | date: 'dd.MM.yyyy, HH:mm:ss' }}ч.</td>
+      <td>{{ history.userFullName }}</td>
+      <td>{{ history.userAuthority === null ? ("annualAdministrativeExpenses.mosv" | translate) :
+        history.userAuthority.name }}</td>
+      <td>{{ history.annualAdministrativeExpenseAmount }}</td>
+    </tr>
+  </tbody>
+</table>

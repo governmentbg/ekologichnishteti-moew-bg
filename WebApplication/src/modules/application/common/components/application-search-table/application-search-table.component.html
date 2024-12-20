@@ -1,0 +1,116 @@
+<table class="table search-table table-bordered">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col"
+          class="col-md-1">
+        {{ "application.table.registerNumber" | translate }}
+      </th>
+      <th scope="col"
+          class="col-md-2">
+        {{ "application.table.applicant" | translate }}
+      </th>
+      <th scope="col"
+          class="col-md-2">
+        {{ 'application.table.authority' | translate }}
+      </th>
+      <th scope="col"
+          class="col-md-2">
+        {{ "application.table.applicationType" | translate }}
+      </th>
+      <th scope="col"
+          class="col-md-1">
+        {{ "application.table.name" | translate }}
+      </th>
+      <th scope="col"
+          class="col-md-1">
+        {{ "application.table.date" | translate }}
+      </th>
+      <th scope="col"
+          class="col-md-2">
+        {{ "application.table.state" | translate }}
+      </th>
+      <th scope="col"
+          class="col-md-1">
+        {{ "application.table.action" | translate }}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngIf="model && model.length > 0;
+      else
+      noResult">
+      <tr *ngFor="let application of model"
+          class="body-row-height">
+        <td>
+          {{ application.registerNumber }}
+        </td>
+        <td>
+          <ng-container *ngIf="application.applicantType === applicantTypes.authority">
+            <i>{{ 'application.about.authority' | translate }}</i><br>
+          </ng-container>
+          <ng-container *ngIf="application.applicantType === applicantTypes.operator">
+            <i>{{ 'application.about.operator' | translate }}</i><br>
+          </ng-container>
+          <ng-container *ngIf="application.applicantType === applicantTypes.individual">
+            <i>{{ 'application.about.individual' | translate }}</i><br>
+          </ng-container>
+          <ng-container *ngIf="application.applicantType === applicantTypes.legalEntity">
+            <i>{{ 'application.about.legalEntity' | translate }}</i><br>
+          </ng-container>
+          <ng-container *ngIf="application.applicantType === applicantTypes.nonGovernmentalOrganization">
+            <i>{{ 'application.about.nonGovernmentalOrganization' | translate }}</i><br>
+          </ng-container>
+          {{ application.applicantName }}
+        </td>
+        <td>
+          <ng-container *ngFor="let applicationAuthority of application.applicationAuthorities">
+            <div class="mb-1">
+              {{ applicationAuthority.authority?.name }}
+            </div>
+          </ng-container>
+          <ng-container *ngIf="application.applicationAuthorities.length === 0">
+            -
+          </ng-container>
+        </td>
+        <td>
+          {{ applicationTypeLocalization[application.applicationOneType] }}
+        </td>
+        <td>
+          {{ application.basicName === null ?
+          ('application.table.application' | translate) + ' ' + application.rootId:
+          application.basicName }}
+        </td>
+        <td>
+          {{ application.createDate | date:'dd.MM.yyyy' }}
+        </td>
+        <td>
+          <ng-container *ngIf="!application.hasApplicationTwo || application.applicationTwoCommitState === commitStates.pending; 
+                        else 
+                        appTwoCommiState">
+            {{ commitStateLocalization[application.commitState] }}
+          </ng-container>
+          <ng-template #appTwoCommiState>
+            {{ commitStateLocalization[application.applicationTwoCommitState] }}
+          </ng-template>
+        </td>
+        <td class="text-center">
+          <button type="button"
+                  class="btn btn-sm btn-outline-primary"
+                  (click)="routeToView(application.id)">
+            <app-icon icon="search"
+                      width="16"
+                      height="16"></app-icon>
+          </button>
+        </td>
+      </tr>
+    </ng-container>
+    <ng-template #noResult>
+      <tr>
+        <td colspan="7"
+            class="text-center">
+          {{ 'application.table.noResults' | translate }}
+        </td>
+      </tr>
+    </ng-template>
+  </tbody>
+</table>

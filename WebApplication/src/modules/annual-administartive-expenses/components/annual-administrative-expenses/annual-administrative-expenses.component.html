@@ -1,0 +1,124 @@
+<ng-container
+              *ngIf="(annualAdministrativeExpenses && annualAdministrativeExpenses?.length > 0); else displayAddAnnualAdministrativeExpenseButton">
+  <form #annualAdministrativeExpensesForm="ngForm">
+    <table class="table search-table table-bordered mt-2">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col"
+              class="col-md-5 align-middle">
+            {{ "annualAdministrativeExpenses.authority" | translate }}
+          </th>
+          <th scope="col"
+              class="col-md-5 align-middle">
+            {{ "annualAdministrativeExpenses.amount" | translate }}
+          </th>
+          <th scope="col"
+              class="col-md-1 align-middle">
+          </th>
+          <th scope="col"
+              class="col-md-1 text-center">
+            <button class="btn btn-sm btn-success"
+                    type="button"
+                    [disabled]="!canAddAnnualAdministrativeExpense"
+                    (click)="addNewAnnualAdministrativeExpense()">
+              <app-icon icon="plus-lg"
+                        width="12"
+                        height="12"
+                        class="t"></app-icon>
+            </button>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="annualAdministrativeExpenses && annualAdministrativeExpenses.length > 0">
+          <ng-container *ngFor="let item of annualAdministrativeExpenses; let i = index">
+            <tr>
+              <td>
+                <app-async-select #authority="ngModel"
+                                  name="authority-{{ i }}"
+                                  restUrl="Authority/Select"
+                                  [(ngModel)]="item.authority"
+                                  (ngModelChange)="item.authorityId = $event.id"
+                                  [disabled]="!item.isInEditMode || !isAdmin"
+                                  [required]="true"
+                                  [excludeAlreadyAdded]="true"
+                                  [params]="usedAuthorityIds">
+                </app-async-select>
+              </td>
+              <td>
+                <input type="number"
+                       name="annualAdministrativeExpenseAmount-{{ i }}"
+                       class="form-control form-control-sm"
+                       [(ngModel)]="item.amount"
+                       step=".01"
+                       required
+                       [disabled]="!item.isInEditMode">
+              </td>
+              <td class="text-center">
+                <button *ngIf="!item.isInEditMode"
+                        class="btn btn-sm btn-warning"
+                        type="button"
+                        (click)="edit(i)">
+                  <app-icon icon="pencil"
+                            width="12"
+                            height="12"></app-icon>
+                </button>
+                <button *ngIf="item.isInEditMode && item.id > 0"
+                        class="btn btn-sm btn-success"
+                        type="button"
+                        [disabled]="!item.authorityId || !(item.amount > 0)"
+                        (click)="modify(item)">
+                  <app-icon icon="floppy-fill"
+                            width="12"
+                            height="12"></app-icon>
+                </button>
+                <button *ngIf="item.isInEditMode && item.id === undefined"
+                        class="btn btn-sm btn-success"
+                        type="button"
+                        [disabled]="!item.authorityId || !(item.amount > 0)"
+                        (click)="add(item, i)">
+                  <app-icon icon="floppy-fill"
+                            width="12"
+                            height="12"></app-icon>
+                </button>
+              </td>
+              <td class="text-center">
+                <button *ngIf="!item.isInEditMode && isAdmin"
+                        class="btn btn-sm btn-outline-primary"
+                        type="button"
+                        [routerLink]="['/administrativeExpenses/history',  item.rootId]">
+                  <app-icon icon="search"
+                            width="16"
+                            height="16"></app-icon>
+                </button>
+                <button *ngIf="item.isInEditMode && item.id === undefined"
+                        class="btn btn-sm btn-danger"
+                        type="button"
+                        (click)="remove(i)">
+                  <app-icon icon="trash"
+                            width="12"
+                            height="12"></app-icon>
+                </button>
+              </td>
+            </tr>
+          </ng-container>
+        </ng-container>
+      </tbody>
+    </table>
+  </form>
+</ng-container>
+
+<ng-template #displayAddAnnualAdministrativeExpenseButton>
+  <div class="row">
+    <div class="col-sm-12 float-md-left">
+      <button class="btn btn-sm btn-blue mt-1 mb-3"
+              type="button"
+              (click)="addNewAnnualAdministrativeExpense()">
+        <app-icon icon="plus-lg"
+                  width="12"
+                  height="12"></app-icon>
+        {{ "annualAdministrativeExpenses.addAnnualAdministrativeExpense" | translate }}
+      </button>
+    </div>
+  </div>
+</ng-template>

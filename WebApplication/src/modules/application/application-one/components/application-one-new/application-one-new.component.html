@@ -1,0 +1,92 @@
+<div class="form">
+  <div class="form-header">
+    {{ 'application.applicationOne' | translate }}
+  </div>
+  <app-part-panel header="{{ 'application.common.infoSource' | translate }}">
+    <app-application-about-form [(model)]="model"
+                                (isValidForm)="changeFormValidStatus('applicationOneAboutForm', $event)"
+                                [isEditMode]="isEditMode"
+                                [isViewMode]="isViewMode">
+    </app-application-about-form>
+  </app-part-panel>
+
+  <app-part-panel header="{{ 'application.common.infoBase' | translate }}">
+    <app-application-basic-form [(model)]="model"
+                                [(modelBasicName)]="modelBasicName"
+                                (isValidForm)="changeFormValidStatus('applicationOneBasicForm', $event)"
+                                [isEditMode]="isEditMode"
+                                [isViewMode]="isViewMode">
+    </app-application-basic-form>
+  </app-part-panel>
+
+
+  <app-part-panel header="{{ 'application.common.infoFull' | translate }}"
+                  *ngIf="model.applicationOneType">
+
+    <ng-container *ngIf="model.applicationOneType === applicationOneTypes.reportedDamage">
+      <app-application-one-legal-entity-form [(model)]="model"
+                                             (isValidForm)="changeFormValidStatus('applicationOneLegalEntityForm', $event)"
+                                             [isEditMode]="isEditMode"
+                                             [isViewMode]="isViewMode"></app-application-one-legal-entity-form>
+    </ng-container>
+
+    <ng-container *ngIf="model.applicationOneType === applicationOneTypes.threat">
+      <app-application-one-threat-form [(model)]="model"
+                                       (isValidForm)="changeFormValidStatus('applicationOneThreadForm', $event)"
+                                       [isEditMode]="isEditMode"
+                                       [isViewMode]="isViewMode"></app-application-one-threat-form>
+    </ng-container>
+
+    <ng-container *ngIf="model.applicationOneType === applicationOneTypes.damage">
+      <app-application-one-damage-form [(model)]="model"
+                                       (isValidForm)="changeFormValidStatus('applicationOneDamageForm', $event)"
+                                       [isEditMode]="isEditMode"
+                                       [isViewMode]="isViewMode"></app-application-one-damage-form>
+    </ng-container>
+  </app-part-panel>
+
+  <ng-container *ngIf="!isFileFormDisplayed; else displayFilePanel">
+    <div class="row mt-3">
+      <div class="col-sm-12">
+        <div class="float-md-left">
+          <button type="button"
+                  class="btn btn-sm btn-primary"
+                  [disabled]="!isEditMode"
+                  (click)="displayFileForm()">
+            <app-icon icon="file-earmark-plus"></app-icon>
+            {{ 'buttons.attachFile' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #displayFilePanel>
+    <app-part-panel header="{{ 'application.common.files' | translate }}">
+      <app-application-file-form [(files)]="model.applicationOneFiles"
+                                 [(isFileFormDisplayed)]="isFileFormDisplayed"
+                                 (isValidForm)="changeFormValidStatus('applicationFileForm', $event)"
+                                 [isEditMode]="isEditMode"
+                                 [isViewMode]="isViewMode"></app-application-file-form>
+
+
+    </app-part-panel>
+  </ng-template>
+
+  <div class="d-flex mt-4 mb-4">
+    <div class="ml-auto">
+      <button class="btn btn-sm btn-danger mr-1"
+              (click)="routeTo('/application/search')">
+        {{ 'buttons.cancel' | translate }}
+      </button>
+      <button class="btn btn-sm btn-success"
+              [disabled]="!canSubmit"
+              (click)="sendApplicationOne()">
+        <app-icon icon="pencil"
+                  class="mr-1"
+                  width="14"
+                  height="14"></app-icon>
+        {{ 'buttons.create' | translate }}
+      </button>
+    </div>
+  </div>
+</div>

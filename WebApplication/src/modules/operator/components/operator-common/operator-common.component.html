@@ -1,0 +1,186 @@
+<form #operatorForm="ngForm">
+  <div class="card">
+    <div class="card-header">
+      {{ "operator.common.operatorData" | translate }}
+      <ng-content select="[header-buttons]"></ng-content>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="form-group col-sm-12 col-md-4">
+          <label>
+            {{ "operator.common.operatorType" | translate }}
+          </label>
+          <select class="custom-select custom-select-sm"
+                  [ngClass]="{'red-border': operator.type === undefined || operator.type === null}"
+                  name="operatorType"
+                  [(ngModel)]="operator.type"
+                  [disabled]="!isEditMode"
+                  required>
+            <option [ngValue]="operatorTypes.person">
+              {{ operatorTypeLocalization[operatorTypes.person] | translate }}
+            </option>
+            <option [ngValue]="operatorTypes.legalEntity">
+              {{ operatorTypeLocalization[operatorTypes.legalEntity] | translate }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <ng-container *ngIf="operator.type === operatorTypes.person">
+          <div class="form-group col-sm-12 col-md-4">
+            <label>
+              {{ "operator.common.firstName" | translate }}
+            </label>
+            <div class="input-group input-group-sm">
+              <input name="firstName"
+                     class="form-control"
+                     #firstName="ngModel"
+                     [(ngModel)]="operator.firstName"
+                     [disabled]="!isEditMode"
+                     required>
+            </div>
+          </div>
+          <div class="form-group col-sm-12 col-md-4">
+            <label>
+              {{ "operator.common.middleName" | translate }}
+            </label>
+            <div class="input-group input-group-sm">
+              <input name="middleName"
+                     class="form-control"
+                     #middleName="ngModel"
+                     [(ngModel)]="operator.middleName"
+                     [disabled]="!isEditMode"
+                     required>
+            </div>
+          </div>
+          <div class="form-group col-sm-12 col-md-4">
+            <label>
+              {{ "operator.common.lastName" | translate }}
+            </label>
+            <div class="input-group input-group-sm">
+              <input name="lastName"
+                     class="form-control"
+                     #lastName="ngModel"
+                     [(ngModel)]="operator.lastName"
+                     [disabled]="!isEditMode"
+                     required>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="operator.type === operatorTypes.legalEntity">
+          <div class="form-group col-sm-12 col-md-6">
+            <label>
+              {{ "operator.common.legalEntityName" | translate }}
+            </label>
+            <div class="input-group input-group-sm">
+              <input name="legalEntityName"
+                     class="form-control"
+                     #legalEntityName="ngModel"
+                     [(ngModel)]="operator.legalEntityName"
+                     [disabled]="!isEditMode"
+                     required>
+            </div>
+          </div>
+          <div class="form-group col-sm-12 col-md-2">
+            <label>
+              {{ "operator.common.legalEntityUic" | translate }}
+            </label>
+            <div class="input-group input-group-sm">
+              <input name="legalEntityUic"
+                     class="form-control"
+                     #legalEntityUic="ngModel"
+                     [(ngModel)]="operator.legalEntityUic"
+                     [disabled]="!isEditMode"
+                     required
+                     pattern="{{numberRegex}}">
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="row">
+        <label class="mt-2 fw-bold">{{ "operator.common.managementAddress" | translate }}</label>
+        <div class="form-group col-sm-12 col-md-3">
+          <label>
+            {{ "operator.common.settlement" | translate }}
+          </label>
+          <app-async-select name="settlement"
+                            #settlement="ngModel"
+                            restUrl="Settlement/Select"
+                            [(ngModel)]="operator.settlement"
+                            (ngModelChange)="operator.settlementId= $event.id"
+                            [disabled]="!isEditMode"
+                            [required]="true">
+          </app-async-select>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-7">
+          <label>
+            {{ "operator.common.managementAddress" | translate }}
+          </label>
+          <div class="input-group input-group-sm">
+            <input name="managementAddress"
+                   class="form-control"
+                   #managementAddress="ngModel"
+                   [(ngModel)]="operator.managementAddress"
+                   [disabled]="!isEditMode"
+                   required>
+          </div>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-2">
+          <label>
+            {{ "operator.common.postalCode" | translate }}
+          </label>
+          <div class="input-group input-group-sm">
+            <input name="postalCode"
+                   class="form-control"
+                   #postalCode="ngModel"
+                   [(ngModel)]="operator.postalCode"
+                   [disabled]="!isEditMode"
+                   pattern="{{numberRegex}}">
+          </div>
+        </div>
+      </div>
+
+      <div class="row"
+           *ngIf="operator && operator.operatorCorrespondence">
+        <collapsable-label heading="Данни за кореспонденция"
+                           fontSize="fs-16"
+                           [isCollapsed]="false">
+          <operator-correspondence body
+                                   [operatorCorrespondence]="operator.operatorCorrespondence"
+                                   [isEditMode]="isEditMode"
+                                   (isValidForm)="changeFormValidStatus($event)">
+          </operator-correspondence>
+        </collapsable-label>
+      </div>
+
+      <ng-container *ngIf="operator?.id > 0">
+        <div class="row">
+          <collapsable-label heading="Площадки на оператора"
+                             fontSize="fs-16"
+                             [isCollapsed]="false">
+            <operator-terrains body
+                               [(terrains)]="operator.terrains"
+                               [operatorId]="operator.id">
+            </operator-terrains>
+          </collapsable-label>
+        </div>
+
+        <div class="row">
+          <collapsable-label heading="Информация за всички дейности на оператора"
+                             fontSize="fs-16"
+                             [isCollapsed]="false">
+            <operator-activities body
+                                 [(activityOfferings)]="operator.activityOfferings"
+                                 [operatorId]="operator.id"
+                                 [terrains]="operator.terrains">
+            </operator-activities>
+          </collapsable-label>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</form>
